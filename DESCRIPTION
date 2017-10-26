@@ -11,6 +11,6 @@ Depends:
     R (>= 3.2.0)
 Imports: knitr (>= 1.17), tufte (>= 0.2)
 Suggests:
-  rmarkdown, formatR
+    rmarkdown, formatR
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1

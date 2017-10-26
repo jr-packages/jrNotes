@@ -38,7 +38,7 @@ set_knitr_options = function( tidy = FALSE,
                               collapse = TRUE,
                               cache = TRUE,
                               fig.align = "center"
-                              ) {
+) {
   knitr::opts_chunk$set(
     tidy =tidy,
     echo=echo,
