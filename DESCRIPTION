@@ -1,0 +1,16 @@
+Package: jrNotes
+Type: Package
+Title: Jumping Rivers: Helper Package for Notes
+Version: 0.1.0
+Authors@R: c(person("Jamie", "Owen", email="jamie@jumpingrivers.com", role = c("aut", "cre")),
+              person("Colin", "Gillespie", email="colin@jumpingrivers.com", role = "aut"))
+Description: Default settings and helper functions for course notes.
+URL: https://www.jumpingrivers.com/
+License: GPL-3
+Depends:
+    R (>= 3.2.0)
+Imports: knitr (>= 1.17), tufte (>= 0.2)
+Suggests:
+  rmarkdown, formatR
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
