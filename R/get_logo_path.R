@@ -16,9 +16,9 @@ create_title_page = function(main, running) {
   title_str = paste0("
 \\newsavebox{\\titleimage}
 \\savebox{\\titleimage}{\\includegraphics[width=1.2\\textwidth]{", logo_path, "}}
-\\title[", main, "]{%
+\\title[", running, "]{%
   \\setlength{\\parindent}{0pt}%
-  ", running, " \\par \\vspace{4cm}
+  ", main, " \\par \\vspace{4cm}
   \\usebox{\\titleimage}}
 \\author[jumpingrivers.com]{}
 \\publisher{jumpingrivers.com}")
