@@ -23,7 +23,7 @@ set_options = function(digits = 3,
 #'
 #' Set consistent knitr options
 #' @param tidy FALSE
-#' @param echo FALSE
+#' @param echo TRUE
 #' @param highlight TRUE
 #' @param comment #>
 #' @param collapse TRUE
@@ -31,13 +31,13 @@ set_options = function(digits = 3,
 #' @param fig.align center
 #' @export
 #' @import knitr
-set_knitr_options = function( tidy = FALSE,
-                              echo=FALSE,
-                              highlight = TRUE,
-                              comment = "#>",
-                              collapse = TRUE,
-                              cache = TRUE,
-                              fig.align = "center"
+set_knitr_options = function(tidy = FALSE,
+                             echo = TRUE,
+                             highlight = TRUE,
+                             comment = "#>",
+                             collapse = TRUE,
+                             cache = TRUE,
+                             fig.align = "center"
 ) {
   knitr::opts_chunk$set(
     tidy =tidy,

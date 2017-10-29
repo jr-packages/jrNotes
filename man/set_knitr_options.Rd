@@ -4,13 +4,13 @@
 \alias{set_knitr_options}
 \title{Set consistent knitr options}
 \usage{
-set_knitr_options(tidy = FALSE, echo = FALSE, highlight = TRUE,
+set_knitr_options(tidy = FALSE, echo = TRUE, highlight = TRUE,
   comment = "#>", collapse = TRUE, cache = TRUE, fig.align = "center")
 }
 \arguments{
 \item{tidy}{FALSE}
 
-\item{echo}{FALSE}
+\item{echo}{TRUE}
 
 \item{highlight}{TRUE}
 
