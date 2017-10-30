@@ -5,7 +5,8 @@
 \title{Set consistent knitr options}
 \usage{
 set_knitr_options(tidy = FALSE, echo = TRUE, highlight = TRUE,
-  comment = "#>", collapse = TRUE, cache = TRUE, fig.align = "center")
+  comment = "#>", collapse = TRUE, cache = TRUE, fig.align = "center",
+  fig.width = 4, fig.height = 4)
 }
 \arguments{
 \item{tidy}{FALSE}
