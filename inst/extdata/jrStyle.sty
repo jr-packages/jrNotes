@@ -33,8 +33,15 @@
 \definecolor{messagecolor}{rgb}{0, 0, 0}
 \definecolor{warningcolor}{rgb}{1, 0, 1}
 \definecolor{errorcolor}{rgb}{1, 0, 0}
-\newenvironment{knitrout}{\setlength{\topsep}{0mm}}{}
 
+%Remove indent after code chunk
+\makeatletter
+\newcommand*{\@doendeq}{%
+  \everypar{{\setbox\z@\lastbox}\everypar{}}%
+}
+
+\newenvironment{knitrout}{\setlength{\topsep}{0mm}}{\aftergroup\@doendeq%
+}
 \usepackage{alltt}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 
