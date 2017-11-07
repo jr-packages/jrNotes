@@ -30,7 +30,7 @@ set_options = function(digits = 3,
 #' @param cache TRUE
 #' @param fig.align center
 #' @param fig.width 4
-#' @param fig.width 4
+#' @param fig.height 4
 #' @export
 #' @import knitr
 set_knitr_options = function(tidy = FALSE,
