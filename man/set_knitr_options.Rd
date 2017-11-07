@@ -25,7 +25,7 @@ set_knitr_options(tidy = FALSE, echo = TRUE, highlight = TRUE,
 
 \item{fig.width}{4}
 
-\item{fig.width}{4}
+\item{fig.height}{4}
 }
 \description{
 Set consistent knitr options
