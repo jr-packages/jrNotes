@@ -29,6 +29,8 @@ set_options = function(digits = 3,
 #' @param collapse TRUE
 #' @param cache TRUE
 #' @param fig.align center
+#' @param fig.width 4
+#' @param fig.height 4
 #' @export
 #' @import knitr
 set_knitr_options = function(tidy = FALSE,
@@ -37,7 +39,9 @@ set_knitr_options = function(tidy = FALSE,
                              comment = "#>",
                              collapse = TRUE,
                              cache = TRUE,
-                             fig.align = "center"
+                             fig.align = "center",
+                             fig.width = 4,
+                             fig.height = 4
 ) {
   knitr::opts_chunk$set(
     tidy =tidy,
@@ -46,6 +50,8 @@ set_knitr_options = function(tidy = FALSE,
     comment = comment,
     collapse = collapse,
     cache = cache,
-    fig.align=fig.align)
+    fig.align=fig.align,
+    fig.width = fig.width,
+    fig.height = fig.height)
 }
 
