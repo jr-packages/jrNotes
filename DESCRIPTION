@@ -8,7 +8,8 @@ URL: https://www.jumpingrivers.com/
 License: GPL-3
 Depends:
     R (>= 3.2.0)
-Imports: knitr (>= 1.17), tufte (>= 0.2)
+Imports: knitr (>= 1.17), tufte (>= 0.2), jrData
+Remotes: jr-packages/jrData
 Suggests:
     rmarkdown, formatR
 VignetteBuilder: knitr
