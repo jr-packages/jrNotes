@@ -2,6 +2,7 @@
 
 export(create_jrStyle)
 export(create_title_page)
+export(create_version)
 export(fig)
 export(get_logo_path)
 export(knitr_colours)

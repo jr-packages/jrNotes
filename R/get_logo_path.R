@@ -31,3 +31,14 @@ create_jrStyle = function() {
   fname = system.file("extdata", "jrStyle.sty", package = "jrNotes", mustWork = TRUE)
   file.copy(fname, to = "jrStyle.sty", overwrite = TRUE)
 }
+
+#' @export
+#' @rdname  get_logo_path
+create_version = function() {
+  version_str = paste0("
+\\begin{table}[!b]
+Version ", readLines("VERSION"), "
+  \\end{table}")
+  version_str
+}
+
