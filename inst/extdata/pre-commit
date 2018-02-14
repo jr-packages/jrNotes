@@ -1,0 +1,128 @@
+#!/bin/bash
+set -e ## exit on any error
+#set -x
+
+test $# -gt 0 && {
+    test "$1" == "--install" && {
+        # install this
+        mv "$0" "$(git rev-parse --show-toplevel)/.git/hooks/pre-commit"
+        exit 0
+    }
+    exit 1
+}
+
+## TODO: test VERSION string format : ^\d.\d$
+
+
+exec < /dev/tty ## enable keyboard input
+
+INITIAL_VERSION=1.0
+VERSION_FILE="notes/VERSION"
+
+# simple [y/N] function
+function confirm {
+    read -n1 -p "$1 [y/N] " response
+    echo
+    [[ "$response" =~ ^y|Y ]]
+    return $?
+}
+
+function vercheck {
+    [[ "$1" =~ ^[0-9]+\.[0-9]+$ ]] || {
+        echo "ERROR: VERSION is not in format 'MAJOR.MINOR'."
+        exit 1
+    }
+}
+
+test -d notes && {
+
+    ## check for VERSION file
+    test -f notes/VERSION || {
+        echo "ERROR: There is a notes directory but no VERSION file."
+        confirm "Create this file now?" && {
+            touch "$VERSION_FILE"
+            echo "$INITIAL_VERSION" > "$VERSION_FILE"
+            echo "Version set to 1.0, please add this file and commit."
+        } || echo "Please create and add this file."
+        exit 1
+    }
+
+    ## check for notes changes
+    #CHANGES="$(git diff --cached --name-status|awk '$1 != "D" && $2~/^notes\// {print $0}')"
+    CHANGES="$(git diff --cached --name-status|awk '$2~/^notes\// {print $0}')"
+    test -n "$CHANGES" && {
+        echo "Changes detected in notes directory:"
+        echo $CHANGES
+
+        ## get previous VERSION
+        git show "HEAD:$VERSION_FILE" &>/dev/null && {
+            PREVIOUS_VERSION="$(git show HEAD:"$VERSION_FILE")"
+        } || {
+            PREVIOUS_VERSION="0.0"
+        }
+        vercheck "$PREVIOUS_VERSION"
+        PREVIOUS_MAJOR="${PREVIOUS_VERSION%%.*}"
+        PREVIOUS_MINOR="${PREVIOUS_VERSION#*.}"
+
+        ## get current VERSION
+        git show :"$VERSION_FILE" &>/dev/null && {
+            CURRENT_VERSION="$(git show :"$VERSION_FILE")"
+        } || {
+            echo "ERROR: VERSION file not staged for commit."
+            exit 1
+        }
+        vercheck "$CURRENT_VERSION"
+        CURRENT_MAJOR="${CURRENT_VERSION%%.*}"
+        CURRENT_MINOR="${CURRENT_VERSION#*.}"
+    
+
+        test "$CURRENT_MAJOR" -gt "$PREVIOUS_MAJOR" && {
+            echo "Info: Major version change detected."
+            exit 0
+        }
+        test "$CURRENT_MINOR" -gt "$PREVIOUS_MINOR" && {
+            echo "Info: Minor version change detected."
+            exit 0
+        }
+
+        echo "ERROR: Changes detected but VERSION file not updated."
+        echo "Current version: $CURRENT_MAJOR.$CURRENT_MINOR"
+        echo "Please choose:"
+        echo "  j) Ma[j]or changes"
+        echo "  n) Mi[n]or changes"
+        echo "  x) E[x]it and manually update VERSION"
+        read -n1 -p "Response: " response
+        echo
+        [[ "$response" =~ ^j|J ]] && {
+            NEXT_MAJOR=$(expr $CURRENT_MAJOR + 1)
+            echo "${NEXT_MAJOR}.0" > "$VERSION_FILE"
+            echo "Version updated to ${NEXT_MAJOR}.0."
+            git add notes/VERSION
+            #echo "Please stage and commit!!"
+            #exit 1
+            exit 0
+        }
+        [[ "$response" =~ ^n|N ]] && {
+            NEXT_MINOR=$(expr $CURRENT_MINOR + 1)
+            echo "${CURRENT_MAJOR}.${NEXT_MINOR}" > "$VERSION_FILE"
+            echo "Version updated to ${CURRENT_MAJOR}.${NEXT_MINOR}."
+            git add notes/VERSION
+            #echo "Please stage and commit!!"
+            #exit 1
+            exit 0
+        }
+        echo "Please update your VERSION file."
+        exit 1
+
+    } || {
+        echo "No changes detected in notes directory."
+        exit 0
+    }
+
+} || {
+    echo "JR: Notes pre-commit hook installed but no notes directory."
+    echo "JR: Doing nothing extra."
+    exit 0
+}
+
+exit 1

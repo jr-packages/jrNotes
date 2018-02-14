@@ -42,3 +42,10 @@ Version ", readLines("VERSION"), "
   version_str
 }
 
+#' @export
+#' @rdname  get_logo_path
+create_hook = function() {
+  fname = system.file("extdata", "pre-commit", package = "jrNotes", mustWork = TRUE)
+  file.copy(fname, to = ".git/hooks/pre-commit", overwrite = TRUE)
+  Sys.chmod(".git/hooks/pre-commit", mode = "0700", use_umask = FALSE)
+}

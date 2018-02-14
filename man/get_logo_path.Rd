@@ -5,6 +5,7 @@
 \alias{create_title_page}
 \alias{create_jrStyle}
 \alias{create_version}
+\alias{create_hook}
 \title{Latex style and title pages}
 \usage{
 get_logo_path()
@@ -14,6 +15,8 @@ create_title_page(main, running)
 create_jrStyle()
 
 create_version()
+
+create_hook()
 }
 \arguments{
 \item{main}{Front page title}
