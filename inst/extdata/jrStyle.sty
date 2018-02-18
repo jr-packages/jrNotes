@@ -45,3 +45,11 @@
 \usepackage{alltt}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 
+
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+\makeatother
+\setcounter{secnumdepth}{1}
