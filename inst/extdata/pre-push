@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+LAST_VERSION_COMMIT="$(git blame -p notes/VERSION|head -1|cut -c-40)"
+LAST_VERSION_COMMIT_SHORT="$(echo $LAST_VERSION_COMMIT|cut -c-8)"
+LAST_VERSION="$(cat notes/VERSION)"
+
+echo "Latest VERSION is $LAST_VERSION from commit $(echo $LAST_VERSION_COMMIT_SHORT)"
+
+CHANGES="$(git diff --name-only "$LAST_VERSION_COMMIT" HEAD notes/)"
+test -n "$CHANGES" && {
+    echo "ERROR: There have been changes in the notes/ directory since the last VERSION update."
+    echo "Files:"
+    git diff --name-status "$LAST_VERSION_COMMIT" HEAD notes/|sed 's/^/    /'
+    echo "Please update your VERSION file."
+    exit 1
+}
+
+exit 0
