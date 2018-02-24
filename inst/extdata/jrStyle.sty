@@ -53,3 +53,7 @@
 \patchcmd{\ttlh@hang}{\noindent}{}{}{}
 \makeatother
 \setcounter{secnumdepth}{1}
+
+% Avoids font warning using xelatex (and make the headings a bit nicer)
+\usepackage{fontspec}
+\setmainfont[SmallCapsFeatures={LetterSpace=10}]{Linux Libertine O}

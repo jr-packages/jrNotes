@@ -1,3 +1,6 @@
+# 0.1.8
+  * Add to jrStyle.sty to correct fonts on section headings
+
 # 0.1.7
   * Change jrStyle.sty to give numberings in notes (bug in titlesec)
   * Change pre-commit to pre-push
