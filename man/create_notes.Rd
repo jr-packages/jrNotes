@@ -25,10 +25,3 @@ The function will force you to comply.}
 Creates a Jumping Rivers style notes directory.
 This assumes you have set up a private SSH key for Git.
 }
-\examples{
-# create a notes directory in your current working directory called jRtheo_notes
-create_notes(name = "jRtheo_notes")
-
-# create a notes directory in the home directory
-create_notes(name = "jRtheo_notes", path = "~/")
-}
