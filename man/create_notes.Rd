@@ -4,20 +4,31 @@
 \alias{create_notes}
 \title{Create Notes}
 \usage{
-create_notes(name = "jrNotes_Example", path = "~/")
+create_notes(name = "jRexample_notes", path = NULL, push = FALSE)
 }
 \arguments{
 \item{name}{The title of the notes directory you want to create
-i.e. jRintroduction_notes. This defaults to "jrNotes_Example", which will break the function.
-This is in order to stop you accidentally creating GitLab project after GitLab project!
+i.e. jRintroduction_notes. This defaults to "jRexample_notes".
+To force you to create a directory with a name other than the default,
+the default will break the function.
 Unless the proper notation for a jumping rivers notes directory is
-followed the function will have a paddy!}
+followed the function will have a paddy! i.e. must start with a "jR" and end in "_notes".}
 
-\item{path}{The path where you want to place the notes. Default is home.
-This must be a full path from the home directory and end in a /.
-However, the function will force you to do this.}
+\item{path}{The path where you want to place the notes. Default is NULL, which will create
+the notes directory inside your current working directory. When the path is specified,
+it must be a full path from the home directory, so must start with a "~".
+The function will force you to comply.}
+
+\item{push}{A logical. TRUE to push and create the repo, FALSE to not. Default is FALSE.}
 }
 \description{
 Creates a Jumping Rivers style notes directory.
 This assumes you have set up a private SSH key for Git.
+}
+\examples{
+# create a notes directory in your current working directory called jRtheo_notes
+create_notes(name = "jRtheo_notes")
+
+# create a notes directory in the home directory
+create_notes(name = "jRtheo_notes", path = "~/")
 }
