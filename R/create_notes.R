@@ -13,12 +13,6 @@
 #' it must be a full path from the home directory, so must start with a "~".
 #' The function will force you to comply.
 #' @param push A logical. TRUE to push and create the repo, FALSE to not. Default is FALSE.
-#' @examples
-#' # create a notes directory in your current working directory called jRtheo_notes
-#' create_notes(name = "jRtheo_notes")
-#'
-#' # create a notes directory in the home directory
-#' create_notes(name = "jRtheo_notes", path = "~/")
 #' @export
 create_notes = function (name = "jRexample_notes", path = NULL, push = FALSE)
 {
