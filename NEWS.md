@@ -1,3 +1,6 @@
+# 0.1.9
+  * Add to gitignore
+
 # 0.1.8
   * Add to jrStyle.sty to correct fonts on section headings
 
