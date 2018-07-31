@@ -5,7 +5,7 @@
 \title{Set Standard options}
 \usage{
 set_options(digits = 3, dplyr.print_min = 4, dplyr.print_max = 4,
-  htmltools.dir.version = FALSE)
+  htmltools.dir.version = FALSE, min_pandoc_version = 2.2)
 }
 \arguments{
 \item{digits}{3}
@@ -15,7 +15,9 @@ set_options(digits = 3, dplyr.print_min = 4, dplyr.print_max = 4,
 \item{dplyr.print_max}{4}
 
 \item{htmltools.dir.version}{FALSE}
+
+\item{min_pandoc_version}{2.2}
 }
 \description{
-Set consistent options for notes
+Set consistent options for notes / check pandoc version
 }
