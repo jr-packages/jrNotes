@@ -5,20 +5,24 @@
 #' @param dplyr.print_min 4
 #' @param dplyr.print_max 4
 #' @param htmltools.dir.version FALSE
-#' @param min_pandoc_version 2.2
+#' @param makefile TRUE
 #' @export
 set_options = function(digits = 3,
                        dplyr.print_min = 4,
                        dplyr.print_max = 4,
                        htmltools.dir.version = FALSE,
-                       min_pandoc_version = 2.2
+                       makefile = TRUE
 ) {
-  min_pandoc_version = as.numeric_version(min_pandoc_version)
-  pandoc_version = system2("pandoc", args = "-v", stdout = TRUE)
-  pandoc_version = as.numeric_version(strsplit(pandoc_version[1], "pandoc ")[[1]][2])
 
-  if(pandoc_version < min_pandoc_version){
-    stop(paste0("Rstudio pandoc version must be ", min_pandoc_version,  " or higher"))
+  if (makefile) {
+    if (file.exists("check")) {
+      x = file.info("check")$mtime
+      if (Sys.time() - x > 5) {
+        stop("You must run using a Makefile")
+      }
+    } else{
+      stop("You must run using a Makefile")
+    }
   }
 
   options(digits = digits,

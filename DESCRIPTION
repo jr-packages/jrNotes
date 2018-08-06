@@ -13,4 +13,4 @@ Remotes: jr-packages/jrData
 Suggests:
     rmarkdown (>= 1.8), formatR
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
