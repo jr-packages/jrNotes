@@ -1,6 +1,6 @@
 #' @export
 #' @rdname  get_logo_path
-create_hook = function() {
+create_githook = function() {
   fname = system.file("extdata", "pre-push", package = "jrNotes", mustWork = TRUE)
   file.copy(fname, to = ".git/hooks/pre-push", overwrite = TRUE)
   Sys.chmod(".git/hooks/pre-push", mode = "0700", use_umask = FALSE)

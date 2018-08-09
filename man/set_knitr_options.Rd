@@ -6,7 +6,7 @@
 \usage{
 set_knitr_options(tidy = FALSE, echo = TRUE, highlight = TRUE,
   comment = "#>", collapse = TRUE, cache = TRUE,
-  fig.align = "center", fig.width = 4, fig.height = 4)
+  fig.align = "center", fig.width = 4, fig.height = 4, ...)
 }
 \arguments{
 \item{tidy}{FALSE}
@@ -26,6 +26,8 @@ set_knitr_options(tidy = FALSE, echo = TRUE, highlight = TRUE,
 \item{fig.width}{4}
 
 \item{fig.height}{4}
+
+\item{...}{Additional arguments passed to opt_chunk}
 }
 \description{
 Set consistent knitr options
