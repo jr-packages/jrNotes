@@ -11,7 +11,7 @@ set_options = function(digits = 3,
                        dplyr.print_min = 4,
                        dplyr.print_max = 4,
                        htmltools.dir.version = FALSE,
-                       makefile = TRUE
+                       makefile = FALSE
 ) {
 
   if (makefile) {
