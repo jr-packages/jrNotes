@@ -5,7 +5,7 @@
 #' @param dplyr.print_min 4
 #' @param dplyr.print_max 4
 #' @param htmltools.dir.version FALSE
-#' @param makefile TRUE
+#' @param makefile FALSE
 #' @export
 set_options = function(digits = 3,
                        dplyr.print_min = 4,
