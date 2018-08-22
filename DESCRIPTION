@@ -11,6 +11,6 @@ Depends:
 Imports: knitr (>= 1.20), tufte (>= 0.3), jrData
 Remotes: jr-packages/jrData
 Suggests:
-    rmarkdown (>= 1.8), formatR
+    rmarkdown (>= 1.9.17), formatR
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
