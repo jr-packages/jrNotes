@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_githook.R, R/get_logo_path.R
 \name{create_githook}
 \alias{create_githook}
-\alias{get_logo_path}
+\alias{create_logo}
 \alias{create_title_page}
 \alias{create_jrStyle}
 \alias{create_version}
@@ -10,7 +10,7 @@
 \usage{
 create_githook()
 
-get_logo_path()
+create_logo()
 
 create_title_page(main, running)
 

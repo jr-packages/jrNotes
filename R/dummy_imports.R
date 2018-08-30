@@ -1,2 +1,2 @@
-#' @import tufte
+#' @import tufte glue
 NULL

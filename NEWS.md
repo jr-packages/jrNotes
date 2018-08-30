@@ -1,5 +1,9 @@
+# 0.3.2
+  * Copy logo; fixes annoying bug involving spaces and directory names.
+
 # 0.3.1
   * Normalise path for logo
+  
 # 0.1.9
   * Add to gitignore
 

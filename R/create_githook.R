@@ -1,5 +1,5 @@
 #' @export
-#' @rdname  get_logo_path
+#' @rdname  create_logo
 create_githook = function() {
   fname = system.file("extdata", "pre-push", package = "jrNotes", mustWork = TRUE)
   file.copy(fname, to = ".git/hooks/pre-push", overwrite = TRUE)
