@@ -3,7 +3,8 @@
 #' Returns path to logo
 #' @export
 get_logo_path = function() {
-  system.file("extdata", "logo.png", package = "jrNotes", mustWork = TRUE)
+ path = system.file("extdata", "logo.png", package = "jrNotes", mustWork = TRUE)
+ normalizePath(path)
 }
 
 #' @param main Front page title

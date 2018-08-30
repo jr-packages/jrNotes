@@ -1,3 +1,5 @@
+# 0.3.1
+  * Normalise path for logo
 # 0.1.9
   * Add to gitignore
 
