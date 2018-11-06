@@ -13,6 +13,7 @@ create_logo = function() {
 #' @export
 create_title_page = function(main, running) {
   create_logo()
+  client = Sys.getenv("CLIENT")
     title_str = paste0("
 \\newsavebox{\\titleimage}
 \\savebox{\\titleimage}{\\includegraphics[width=1.2\\textwidth]{logo.png}}
@@ -20,7 +21,7 @@ create_title_page = function(main, running) {
   \\setlength{\\parindent}{0pt}%
   ", main, " \\par \\vspace{4cm}
   \\usebox{\\titleimage}}
-\\author[jumpingrivers.com]{}
+\\author[jumpingrivers.com]{", client, "}
 \\publisher{jumpingrivers.com}")
   cat(title_str, file = "titlepage.tex")
 }
@@ -35,9 +36,10 @@ create_jrStyle = function() {
 #' @export
 #' @rdname  create_logo
 create_version = function() {
+  year = substr(Sys.Date(), 1, 4)
   version_str = paste0("
 \\begin{table}[!b]
-Version ", readLines("VERSION"), "
-  \\end{table}")
+Version ", readLines("VERSION"), " \\hfill \\textcopyright Jumping Rivers Ltd, ", year,
+"\\end{table}")
   version_str
 }
