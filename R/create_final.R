@@ -12,7 +12,8 @@ create_final = function() {
   l = readLines(git_config)
   git_url = l[grep(pattern = "\turl", l) ]
 
-  pkg = stringr::str_match(git_url, "course_notes/(.*)_notes.git")[,2]
+  pkg = stringr::str_match(git_url, "course_notes/(.*)/(.*)_notes.git")
+  pkg = pkg[,length(pkg)]
   x = vignette(package = pkg)
   dir.create("final", showWarnings = FALSE)
   pkg_loc = system.file(package = pkg)

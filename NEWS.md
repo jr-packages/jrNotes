@@ -1,3 +1,6 @@
+# 0.3.4
+  * Bug in create_final due to re-arranging of gitlab repos
+
 # 0.3.2
   * Copy logo; fixes annoying bug involving spaces and directory names.
 
