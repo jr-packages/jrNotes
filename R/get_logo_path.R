@@ -36,10 +36,16 @@ create_jrStyle = function() {
 #' @export
 #' @rdname  create_logo
 create_version = function() {
+  create_githook()
+
   year = substr(Sys.Date(), 1, 4)
-  version_str = paste0("
-\\begin{table}[!b]
-Version ", readLines("VERSION"), " \\hfill \\textcopyright Jumping Rivers Ltd, ", year,
-"\\end{table}")
+  version = readLines("VERSION")
+  version_dots = strsplit(version, split = "\\.")[[1]]
+  if (length(version_dots) != 3) {
+    stop("Version should take the form of X.Y.Z", call. = FALSE)
+  }
+  version_str = glue("\\begin{table}[!b]
+     Version <version>\\hfill \\textcopyright Jumping Rivers Ltd <year>
+     \\end{table}", .open = "<", .close = ">")
   version_str
 }
