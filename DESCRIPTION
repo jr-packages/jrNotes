@@ -1,7 +1,7 @@
 Package: jrNotes
 Type: Package
 Title: Jumping Rivers: Helper Package for Notes
-Version: 0.3.4
+Version: 0.3.5
 Authors@R: person("Colin", "Gillespie", email="colin@jumpingrivers.com", role = c("aut", "cre"))
 Description: Default settings and helper functions for course notes.
 URL: https://www.jumpingrivers.com/
@@ -13,5 +13,5 @@ Remotes: jr-packages/jrData
 Suggests:
     rmarkdown (>= 1.10), formatR
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Encoding: UTF-8

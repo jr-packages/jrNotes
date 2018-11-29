@@ -1,3 +1,7 @@
+# 0.3.5
+  * Removing old knitr functions (commented out, delete when I'm sure).
+  * Git hook now enforced!
+
 # 0.3.4
   * Bug in create_final due to re-arranging of gitlab repos
 
