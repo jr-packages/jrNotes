@@ -1,29 +1,16 @@
 #' Set Standard options
 #'
-#' Set consistent options for notes / check pandoc version
+#' Set consistent options for notes
 #' @param digits 3
 #' @param dplyr.print_min 4
 #' @param dplyr.print_max 4
 #' @param htmltools.dir.version FALSE
-#' @param makefile FALSE
 #' @export
 set_options = function(digits = 3,
                        dplyr.print_min = 4,
                        dplyr.print_max = 4,
-                       htmltools.dir.version = FALSE,
-                       makefile = FALSE
+                       htmltools.dir.version = FALSE
 ) {
-
-  if (makefile) {
-    if (file.exists("check")) {
-      x = file.info("check")$mtime
-      if (Sys.time() - x > 5) {
-        stop("You must run using a Makefile")
-      }
-    } else{
-      stop("You must run using a Makefile")
-    }
-  }
 
   options(digits = digits,
           dplyr.print_min = dplyr.print_max,
