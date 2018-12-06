@@ -10,7 +10,7 @@ Depends:
     R (>= 3.4.0)
 Imports: knitr (>= 1.20), tufte (>= 0.4), jrData, glue, fs, stringr, bookdown,
   reticulate, jrPresentation
-Remotes: jr-packages/jrData
+Remotes: jr-packages/jrData, jr-packages/jrPresentation
 Suggests:
     rmarkdown (>= 1.10), formatR
 VignetteBuilder: knitr
