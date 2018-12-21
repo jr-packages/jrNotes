@@ -1,3 +1,6 @@
+# 0.3.6
+  * Detect if pdftk is installed and raise nice error if not
+
 # 0.3.5
   * Removing old knitr functions (commented out, delete when I'm sure).
   * Git hook now enforced!

@@ -7,6 +7,11 @@
 #' @import stringr
 #' @export
 create_final = function() {
+  is_pdftk = suppressWarnings(system2("which", "pdftk", stdout = TRUE, stderr = FALSE))
+  if(length(is_pdftk) == 0L) {
+    stop("Need pdftk to combine practicals - pdfhacks.com/pdftk/",
+         call. = FALSE)
+  }
   git_config = file("../.git/config")
   on.exit(close(git_config))
   l = readLines(git_config)
