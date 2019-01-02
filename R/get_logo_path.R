@@ -11,7 +11,10 @@ create_logo = function() {
 #' @param running Running title
 #' @rdname create_logo
 #' @export
-create_title_page = function(main, running) {
+create_title_page = function(main = NULL, running = NULL) {
+  if(is.null(main))  main = config::get("front")
+  if(is.null(running)) running = config::get("running")
+
   create_logo()
   client = Sys.getenv("CLIENT")
     title_str = paste0("

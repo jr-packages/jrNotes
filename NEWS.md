@@ -1,3 +1,6 @@
+# 0.3.7
+  * Move to config file for page title and version
+
 # 0.3.6
   * Detect if pdftk is installed and raise nice error if not
 

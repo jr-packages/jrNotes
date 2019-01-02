@@ -12,7 +12,7 @@ create_githook()
 
 create_logo()
 
-create_title_page(main, running)
+create_title_page(main = NULL, running = NULL)
 
 create_jrStyle()
 
