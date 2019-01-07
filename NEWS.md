@@ -1,3 +1,6 @@
+# 0.3.8
+  * Use config for knitr and python
+
 # 0.3.7
   * Move to config file for page title and version
 
