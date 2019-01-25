@@ -14,7 +14,7 @@
 #' The function will force you to comply.
 #' @param push A logical. TRUE to push and create the repo, FALSE to not. Default is FALSE.
 #' @export
-create_notes = function (name = "jRexample_notes", path = NULL, push = FALSE)
+create_note_directory = function (name = "jRexample_notes", path = NULL, push = FALSE)
 {
   if(is.null(path)){
     path = getwd()
