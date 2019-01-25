@@ -1,3 +1,6 @@
+# 0.3.9
+  * Adding generic build script
+
 # 0.3.8
   * Use config for knitr and python
 

@@ -42,7 +42,13 @@ create_version = function() {
   create_githook()
 
   year = substr(Sys.Date(), 1, 4)
-  version = readLines("VERSION")
+  if (fs::file_exists("config.yml")) {
+    con = config::get()
+    version = con$version
+  } else {
+    version = readLines("VERSION")
+  }
+
   version_dots = strsplit(version, split = "\\.")[[1]]
   if (length(version_dots) != 3) {
     stop("Version should take the form of X.Y.Z", call. = FALSE)
