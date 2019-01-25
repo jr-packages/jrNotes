@@ -2,6 +2,8 @@
 #' @importFrom fs file_exists file_delete file_copy
 #' @rdname  create_logo
 create_githook = function() {
+  if (file_exists("../.git/hooks/pre-push")) file_delete("../.git/hooks/pre-push")
+  return()
   fname = system.file("extdata", "pre-push", package = "jrNotes", mustWork = TRUE)
   if (!file_exists("../.git/hooks/")) return()
 
