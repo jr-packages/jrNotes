@@ -25,7 +25,10 @@ create_final = function() {
   pracs = fs::dir_ls(path = glue("{pkg_loc}/doc"), regexp = ".*practical.*\\.pdf$")
   pracs = glue_collapse(pracs, sep = " ")
 
+  # add attendance sheet
+  sheet = system.file("attendance/attendance.pdf", package = "jrNotes")
   notes_name = stringr::str_sub(pkg, 3)
+  fs::file_copy(sheet, glue("final/attendance_{notes_name}.pdf"), overwrite = TRUE)
   fs::file_copy("main.pdf", glue("final/notes_{notes_name}.pdf"), overwrite = TRUE)
   cmd = glue("pdftk {pracs} cat output final/practicals_{notes_name}.pdf")
   system(cmd)
