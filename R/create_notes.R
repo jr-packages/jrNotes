@@ -9,16 +9,16 @@ knit_rmd = function(fname, hashes, ...) {
   }
 
   # XXX.Rmd -> XXX.rds
-  tex_fname = stringr::str_replace(string = fname,
+  md_fname = stringr::str_replace(string = fname,
                                    pattern = "\\.Rmd$",
                                    replacement = "\\.rds")
-  tex_fname = file.path("jrnotes_cache", tex_fname)
-  message(tex_fname)
-  if (hashes[fname] == old_hashes[fname]) {
-    out = readRDS(tex_fname)
+  md_fname = file.path("jrnotes_cache", md_fname)
+  # is.na needed when new chapters are added
+  if (is.na(hashes[fname]) && hashes[fname] == old_hashes[fname]) {
+    out = readRDS(md_fname)
   } else {
     out = knitr::knit_child(fname, ...)
-    saveRDS(out, tex_fname) # Store .tex
+    saveRDS(out, md_fname) # Store .md
   }
   return(out)
 }
@@ -26,17 +26,20 @@ knit_rmd = function(fname, hashes, ...) {
 #' Generate build script
 #'
 #' Scans for chaptersX.Rmd and appendix.Rmd and builds main.pdf
+#' @param fnames If \code{NULL} scans for chaptersX.Rmd and appendix.Rmd
 #' @importFrom digest digest
 #' @export
-create_notes = function() {
-  chapters = c(
-    list.files(path = ".", pattern = "^chapter[0-9]\\.Rmd$"),
-    list.files(path = ".", pattern = "^appendix\\.Rmd$")
-  )
+create_notes = function(fnames = NULL) {
+  if(is.null(fnames)) {
+    fnames = c(
+      list.files(path = ".", pattern = "^chapter[0-9]\\.Rmd$"),
+      list.files(path = ".", pattern = "^appendix\\.Rmd$")
+    )
+  }
   fs::dir_create("jrnotes_cache")
-  if (length(chapters) == 0) return(NULL)
+  if (length(fnames) == 0) return(NULL)
 
-  hashes = vapply(chapters,
+  hashes = vapply(fnames,
                   function(i) digest::digest(readLines(i)),
                   FUN.VALUE = character(1))
 
@@ -47,9 +50,9 @@ create_notes = function() {
 
   cores = config::get("cores")
   if (is.null(cores) || cores == 1L) {
-    out = lapply(chapters, knit_rmd, hashes = hashes)
+    out = lapply(fnames, knit_rmd, hashes = hashes)
   } else {
-    out = parallel::mclapply(chapters, knit_rmd,
+    out = parallel::mclapply(fnames, knit_rmd,
                              hashes = hashes, envir = parent.frame(),
                              mc.cores = cores)
   }

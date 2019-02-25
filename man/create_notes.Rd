@@ -4,7 +4,10 @@
 \alias{create_notes}
 \title{Generate build script}
 \usage{
-create_notes()
+create_notes(fnames = NULL)
+}
+\arguments{
+\item{fnames}{If \code{NULL} scans for chaptersX.Rmd and appendix.Rmd}
 }
 \description{
 Scans for chaptersX.Rmd and appendix.Rmd and builds main.pdf
