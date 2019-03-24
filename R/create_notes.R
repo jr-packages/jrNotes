@@ -30,7 +30,6 @@ knit_rmd = function(fname, hashes) {
 #' Scans for chaptersX.Rmd and appendix.Rmd and builds main.pdf
 #' @param fnames If \code{NULL} scans for chaptersX.Rmd and appendix.Rmd
 #' @importFrom digest digest
-#' @import cli
 #' @export
 create_notes = function(fnames = NULL) {
 
