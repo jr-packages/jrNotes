@@ -1,3 +1,6 @@
+# 0.3.10
+  * Removing parallel build for create_notes. Seems buggy
+
 # 0.3.9
   * Adding generic build script
 
