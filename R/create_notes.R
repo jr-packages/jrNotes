@@ -14,11 +14,13 @@ knit_rmd = function(fname, hashes) {
   md_fname = file.path("jrnotes_cache", md_fname)
 
   # is.na needed when new chapters are added
-  if (!is.na(hashes[fname]) && hashes[fname] == old_hashes[fname]) {
+  if (!is.na(hashes[fname]) && !is.na(old_hashes[fname]) &&
+      hashes[fname] == old_hashes[fname] &&
+      fs::file_exists(md_fname)) { # Very conservative
     out = readRDS(md_fname)
   } else {
-    out = knitr::knit_child(fname, envir = new.env())
-    saveRDS(out,  md_fname) # Store .md
+    out = try(knitr::knit_child(fname, envir = globalenv()))
+    if(class(out) != "try-error") saveRDS(out, md_fname) # Store .md
   }
   return(out)
 }
@@ -28,6 +30,7 @@ knit_rmd = function(fname, hashes) {
 #' Scans for chaptersX.Rmd and appendix.Rmd and builds main.pdf
 #' @param fnames If \code{NULL} scans for chaptersX.Rmd and appendix.Rmd
 #' @importFrom digest digest
+#' @import cli
 #' @export
 create_notes = function(fnames = NULL) {
 
@@ -52,29 +55,32 @@ create_notes = function(fnames = NULL) {
   cores = config::get("cores")
   # Parallel doesn't seem to work well with knit_child
   # If something is wrong, errors, don't really work
-  # Could try just plain knit() and strip out the header?
-  #if (is.null(cores) || cores == 1L) {
+  if (is.null(cores) || cores == 1L) {
     out = lapply(fnames, knit_rmd, hashes = hashes)
-  #} else {
-  #   sc = parallel::makeCluster(cores)
-  #   on.exit(parallel::stopCluster(sc))
-  #   #parallel::clusterExport(sc,)
-  #   out = parallel::parLapply(sc, X = fnames,
-  #                             fun = knit_rmd,
-  #                             hashes = hashes)
-  #   # out = parallel::mclapply(fnames, knit_rmd,
-  #   #                          hashes = hashes,
-  #   #                          #envir = parent.frame(),
-  #   #                          mc.cores = cores,
-  #   #                          mc.cleanup = TRUE)
-  # }
-  saveRDS(out, "/tmp/tmp.rds")
-  if (length(out) == length(fnames)) {
-    last_page = out[[length(out)]]
-    out[[length(out)]] = paste(last_page, create_version(), collapse = "\n")
   } else {
-    stop("One of the files didn't knit properly", call. = FALSE)
+    out = parallel::mclapply(fnames, knit_rmd,
+                             hashes = hashes,
+                             mc.cores = cores,
+                             mc.cleanup = TRUE)
   }
+  #saveRDS(out, "/tmp/tmp.rds")
+
+  is_error = unlist(lapply(out, class))
+  hashes = hashes[is_error != "try-error"]
   saveRDS(hashes, "jrnotes_cache/hashes.rds")
+
+  for(i in seq_along(fnames)) {
+    if(is_error[i] == "try-error") {
+      err_message = glue(
+      "\n\n{fnames[i]} did not knit correctly.
+       {out[[i]]}")
+      stop(err_message, call. = FALSE)
+    }
+  }
+
+
+  last_page = out[[length(out)]]
+  out[[length(out)]] = paste(last_page, create_version(), collapse = "\n")
+
   out
 }
