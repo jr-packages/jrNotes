@@ -11,9 +11,15 @@ create_logo = function() {
 #' @param running Running title
 #' @rdname create_logo
 #' @export
-create_title_page = function(main = NULL, running = NULL) {
+create_title_page = function(main = NULL, running = NULL,  rss = NULL) {
   if(is.null(main))  main = config::get("front")
   if(is.null(running)) running = config::get("running")
+  if(is.null(rss)) rss = config::get("rss")
+  if(rss){
+    rss = "Accredited by the Royal Statistical Society"
+  } else {
+    rss = ""
+  }
 
   create_logo()
   client = Sys.getenv("CLIENT")
@@ -25,7 +31,7 @@ create_title_page = function(main = NULL, running = NULL) {
   ", main, " \\par \\vspace{4cm}
   \\usebox{\\titleimage}}
 \\author[jumpingrivers.com]{", client, "}
-\\publisher{jumpingrivers.com}")
+\\publisher{jumpingrivers.com \\newline ", rss,"}")
   cat(title_str, file = "titlepage.tex")
 }
 
