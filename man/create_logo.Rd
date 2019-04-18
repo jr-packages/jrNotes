@@ -12,7 +12,7 @@ create_githook()
 
 create_logo()
 
-create_title_page(main = NULL, running = NULL)
+create_title_page(main = NULL, running = NULL, rss = NULL)
 
 create_jrStyle()
 
@@ -22,6 +22,8 @@ create_version()
 \item{main}{Front page title}
 
 \item{running}{Running title}
+
+\item{rss}{RSS boolean}
 }
 \description{
 Returns path to logo
