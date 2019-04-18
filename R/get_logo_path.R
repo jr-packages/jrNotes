@@ -9,6 +9,7 @@ create_logo = function() {
 
 #' @param main Front page title
 #' @param running Running title
+#' @param rss RSS boolean
 #' @rdname create_logo
 #' @export
 create_title_page = function(main = NULL, running = NULL,  rss = NULL) {
@@ -16,7 +17,7 @@ create_title_page = function(main = NULL, running = NULL,  rss = NULL) {
   if(is.null(running)) running = config::get("running")
   if(is.null(rss)) rss = config::get("rss")
   if(rss){
-    rss = "Accredited by the Royal Statistical Society"
+    rss = "Accredited by the Royal Statistical Society."
   } else {
     rss = ""
   }
@@ -31,7 +32,7 @@ create_title_page = function(main = NULL, running = NULL,  rss = NULL) {
   ", main, " \\par \\vspace{4cm}
   \\usebox{\\titleimage}}
 \\author[jumpingrivers.com]{", client, "}
-\\publisher{jumpingrivers.com \\newline ", rss,"}")
+\\publisher{\\href{http://www.jumpingrivers.com}{jumpingrivers.com} \\newline ", rss,"}")
   cat(title_str, file = "titlepage.tex")
 }
 
@@ -40,6 +41,11 @@ create_title_page = function(main = NULL, running = NULL,  rss = NULL) {
 create_jrStyle = function() {
   fname = system.file("extdata", "jrStyle.sty", package = "jrNotes", mustWork = TRUE)
   file.copy(fname, to = "jrStyle.sty", overwrite = TRUE)
+}
+
+create_advert = function() {
+  fname = system.file("extdata", "advert.tex", package = "jrNotes", mustWork = TRUE)
+  file.copy(fname, to = "advert.tex", overwrite = TRUE)
 }
 
 #' @export

@@ -35,6 +35,7 @@ create_notes = function(fnames = NULL) {
 
   if(is.null(fnames)) {
     fnames = c(
+      list.files(path = ".", pattern = "^advert.tex$"),
       list.files(path = ".", pattern = "^chapter[0-9]\\.Rmd$"),
       list.files(path = ".", pattern = "^appendix\\.Rmd$")
     )
@@ -48,6 +49,7 @@ create_notes = function(fnames = NULL) {
 
   create_title_page()
   create_jrStyle()
+  create_advert()
   set_knitr_options()
   set_options()
 
