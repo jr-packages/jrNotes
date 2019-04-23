@@ -1,3 +1,6 @@
+# 0.4.1
+  * Add namer as imports. Required for `make namer` 
+
 # 0.3.10
   * Fix parallel build for create_notes - more error checking.
 
