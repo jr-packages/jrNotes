@@ -87,3 +87,20 @@
 \usepackage{fontspec}
 \setmainfont[SmallCapsFeatures={LetterSpace=10}]{Linux Libertine O}
 \setmainfont[SmallCapsFeatures={LetterSpace=15}]{Linux Libertine O}
+
+% Redefine Tufte \maketitle to not capitalise publisher
+  \renewcommand{\maketitlepage}[0]{%
+  \cleardoublepage%
+  {%
+  \sffamily%
+  \begin{fullwidth}%
+  \fontsize{18}{20}\selectfont\par\noindent\textcolor{darkgray}{\allcaps{\thanklessauthor}}%
+  \vspace{11.5pc}%
+  \fontsize{36}{40}\selectfont\par\noindent\textcolor{darkgray}{\allcaps{\thanklesstitle}}%
+  \vfill%
+  \fontsize{14}{16}\selectfont\par\noindent{\thanklesspublisher}%
+  \end{fullwidth}%
+  }
+  \thispagestyle{empty}%
+  \clearpage%
+}
