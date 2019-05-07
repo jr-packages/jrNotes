@@ -1,3 +1,7 @@
+# Latex tmp files
+*.aux
+*.log
+
 # History files
 .Rhistory
 .Rapp.history

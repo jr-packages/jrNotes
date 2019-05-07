@@ -1,3 +1,6 @@
+# 0.4.2
+  * Refactor make final
+
 # 0.4.1
   * Add namer as imports. Required for `make namer` 
 

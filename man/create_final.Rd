@@ -2,9 +2,12 @@
 % Please edit documentation in R/create_final.R
 \name{create_final}
 \alias{create_final}
+\alias{create_final_python}
 \title{Create copy of notes and practicals}
 \usage{
 create_final()
+
+create_final_python()
 }
 \description{
 Renames main.pdf to notes_pkg.pdf. Also retrieves

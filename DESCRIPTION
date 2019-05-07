@@ -1,19 +1,19 @@
 Package: jrNotes
 Type: Package
 Title: Jumping Rivers: Helper Package for Notes
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: person("Colin", "Gillespie", email="colin@jumpingrivers.com", role = c("aut", "cre"))
 Description: Default settings and helper functions for course notes.
 URL: https://www.jumpingrivers.com/
 License: GPL-3
 Depends:
     R (>= 3.4.0)
-Imports: knitr (>= 1.21), tufte (>= 0.4), jrData, glue, fs, stringr, bookdown, 
-    reticulate (>= 1.10), jrPresentation (>= 0.1.14), config, digest, purrr,
+Imports: knitr (>= 1.22), tufte (>= 0.4), jrData, glue, fs, stringr, bookdown, 
+    reticulate (>= 1.11.1), jrPresentation (>= 0.1.14), config, digest, purrr,
     namer (>= 0.1.4)
 Remotes: jr-packages/jrData, jr-packages/jrPresentation
 Suggests:
-    rmarkdown (>= 1.10), formatR
+    rmarkdown (>= 1.12), formatR
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Encoding: UTF-8
