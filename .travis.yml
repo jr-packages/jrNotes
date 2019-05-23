@@ -17,6 +17,7 @@ before_install:
 before_script:
   - wget https://raw.githubusercontent.com/jr-packages/drat/master/test_deploy.sh
   - bash test_deploy.sh
+  - rm test_deploy.sh
 
 after_success:
   - wget https://raw.githubusercontent.com/jr-packages/drat/master/deploy.sh
