@@ -14,28 +14,32 @@
 #' The function will force you to comply.
 #' @param push A logical. TRUE to push and create the repo, FALSE to not. Default is FALSE.
 #' @export
-create_note_directory = function (name = "jRexample_notes", path = NULL, push = FALSE)
-{
-  if(is.null(path)){
+create_note_directory = function(name = "jRexample_notes",
+                                 path = NULL,
+                                 push = FALSE) {
+  if (is.null(path)) {
     path = getwd()
-  }  else{
-    if(substr(path, 1, 1) != "~"){
-      stop("Path must begin with a tilda, ~ , i.e. it must start from the home directory.")
+  } else {
+    if (substr(path, 1, 1) != "~") {
+      stop("Path must begin with a tilda, ~ ,
+           i.e. it must start from the home directory.")
     }
   }
-  if(name == "jRexample_notes") {
+  if (name == "jRexample_notes") {
     stop("Please do not use the default directory name.")
   }
   if (substr(name, 1, 2) != "jR" | substr(name, nchar(name) -
                                           5, nchar(name)) != "_notes") {
-    stop("Notes repo name should take form of jRcoursename_notes", call. = FALSE)
+    stop("Notes repo name should take form of jRcoursename_notes",
+         call. = FALSE)
   }
 
   old_wd = getwd()
   on.exit(setwd(old_wd))
 
   repo_name = file.path(path, name)
-  system2("git", args = c("clone", "git@gitlab.com:jumpingrivers/tools/jRtemplate_notes.git",
+  system2("git", args = c("clone",
+                          "git@gitlab.com:jumpingrivers/tools/jRtemplate_notes.git", #nolint
                           repo_name))
 
   setwd(repo_name)
@@ -43,17 +47,17 @@ create_note_directory = function (name = "jRexample_notes", path = NULL, push = 
   ### remove current README and add general notes one
   file.remove("README.md")
   title = paste0("# ", name)
-  build_status = "Package build status: [![Build Status](https://api.travis-ci.org/jr-packages/jrXxxx.png?branch=master)](https://travis-ci.org/jr-packages/)"
+  build_status = "Package build status: [![Build Status](https://api.travis-ci.org/jr-packages/jrXxxx.png?branch=master)](https://travis-ci.org/jr-packages/)" #nolint
   writeLines(c(title, build_status), "README.md")
 
   system2("git", args = c("remote", "set-url", "origin",
                           paste0("git@gitlab.com:jumpingrivers/course_notes/",
                                  name, ".git")))
 
-  if(push) {
+  if (push) {
     system2("git", args = c("push", "-u", "origin", "master"))
   } else {
-    message("Remember to run \"git push -u origin master\" if you want to later push to and create the repo.")
+    message("Remember to run \"git push -u origin master\" if you want to later push to and create the repo.") #nolint
   }
 
   return(invisible(repo_name))

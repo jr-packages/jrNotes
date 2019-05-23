@@ -36,9 +36,9 @@ set_knitr_options = function(tidy = FALSE,
     fig.height = fig.height,
     ...)
 
-  if(fs::file_exists("config.yml")) {
+  if (fs::file_exists("config.yml")) {
     con = config::get()
-    if(!is.null(con$knitr)) {
+    if (!is.null(con$knitr)) {
       do.call(knitr::opts_chunk$set, con$knitr)
     }
   }

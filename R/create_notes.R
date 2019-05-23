@@ -7,20 +7,21 @@ knit_rmd = function(fname, hashes) {
     old_hashes = paste0(hashes, "-")
     names(old_hashes) = names(hashes)
   }
-  # XXX.Rmd -> XXX.rds
+  # Changed X.Rmd X.rds #nolint
   md_fname = stringr::str_replace(string = fname,
                                   pattern = "\\.Rmd$",
                                   replacement = "\\.rds")
   md_fname = file.path("jrnotes_cache", md_fname)
 
   # is.na needed when new chapters are added
-  if (!is.na(hashes[fname]) && !is.na(old_hashes[fname]) &&
+  if (!is.na(hashes[fname]) &&
+      !is.na(old_hashes[fname]) &&
       hashes[fname] == old_hashes[fname] &&
-      fs::file_exists(md_fname)) { # Very conservative
+      fs::file_exists(md_fname)) { # Very conservative #nolint
     out = readRDS(md_fname)
   } else {
     out = try(knitr::knit_child(fname, envir = globalenv()))
-    if(class(out) != "try-error") saveRDS(out, md_fname) # Store .md
+    if (class(out) != "try-error") saveRDS(out, md_fname) # Store .md
   }
   return(out)
 }
@@ -33,7 +34,7 @@ knit_rmd = function(fname, hashes) {
 #' @export
 create_notes = function(fnames = NULL) {
 
-  if(is.null(fnames)) {
+  if (is.null(fnames)) {
     fnames = c(
       list.files(path = ".", pattern = "^chapter[0-9]\\.Rmd$"),
       list.files(path = ".", pattern = "^appendix\\.Rmd$")
@@ -62,24 +63,19 @@ create_notes = function(fnames = NULL) {
                              mc.cores = cores,
                              mc.cleanup = TRUE)
   }
-  #saveRDS(out, "/tmp/tmp.rds")
-
   is_error = unlist(lapply(out, class))
   hashes = hashes[is_error != "try-error"]
   saveRDS(hashes, "jrnotes_cache/hashes.rds")
 
-  for(i in seq_along(fnames)) {
-    if(is_error[i] == "try-error") {
+  for (i in seq_along(fnames)) {
+    if (is_error[i] == "try-error") {
       err_message = glue(
-      "\n\n{fnames[i]} did not knit correctly.
+        "\n\n{fnames[i]} did not knit correctly.
        {out[[i]]}")
       stop(err_message, call. = FALSE)
     }
   }
-
-
   last_page = out[[length(out)]]
   out[[length(out)]] = paste(last_page, create_version(), collapse = "\n")
-
   out
 }

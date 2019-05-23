@@ -1,3 +1,4 @@
+# nolint start
 #' Set Standard options
 #'
 #' Set consistent options for notes
@@ -21,3 +22,4 @@ set_options = function(digits = 3,
 
 
 
+# nolint end

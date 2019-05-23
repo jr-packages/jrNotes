@@ -3,7 +3,9 @@
 #' Returns path to logo
 #' @export
 create_logo = function() {
-  fname = system.file("extdata", "logo.png", package = "jrNotes", mustWork = TRUE)
+  fname = system.file("extdata", "logo.png",
+                      package = "jrNotes",
+                      mustWork = TRUE)
   file.copy(fname, to = "logo.png", overwrite = TRUE)
 }
 
@@ -12,8 +14,8 @@ create_logo = function() {
 #' @rdname create_logo
 #' @export
 create_title_page = function(main = NULL, running = NULL) {
-  if(is.null(main))  main = config::get("front")
-  if(is.null(running)) running = config::get("running")
+  if (is.null(main))  main = config::get("front")
+  if (is.null(running)) running = config::get("running")
 
   create_logo()
   client = Sys.getenv("CLIENT")
@@ -32,7 +34,8 @@ create_title_page = function(main = NULL, running = NULL) {
 #' @export
 #' @rdname  create_logo
 create_jrStyle = function() {
-  fname = system.file("extdata", "jrStyle.sty", package = "jrNotes", mustWork = TRUE)
+  fname = system.file("extdata", "jrStyle.sty",
+                      package = "jrNotes", mustWork = TRUE)
   file.copy(fname, to = "jrStyle.sty", overwrite = TRUE)
 }
 
@@ -41,7 +44,7 @@ create_jrStyle = function() {
 create_version = function() {
   create_githook()
 
-  year = substr(Sys.Date(), 1, 4)
+  year = substr(Sys.Date(), 1, 4) #nolint
   if (fs::file_exists("config.yml")) {
     con = config::get()
     version = con$version

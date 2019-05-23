@@ -1,3 +1,7 @@
+# 0.4.3
+  * Add `get_jr_packages()` function
+  * Adding lintr
+
 # 0.4.2
   * Refactor make final
 
