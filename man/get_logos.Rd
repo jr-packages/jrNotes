@@ -2,17 +2,17 @@
 % Please edit documentation in R/create_githook.R, R/get_logo_path.R
 \name{create_githook}
 \alias{create_githook}
-\alias{create_logo}
+\alias{get_logos}
 \alias{create_title_page}
 \alias{create_jrStyle}
 \alias{create_version}
-\title{Latex style and title pages}
+\title{Create and get helper files}
 \usage{
 create_githook()
 
-create_logo()
+get_logos()
 
-create_title_page(main = NULL, running = NULL)
+create_title_page(main = NULL, running = NULL, rss = NULL)
 
 create_jrStyle()
 
@@ -22,7 +22,9 @@ create_version()
 \item{main}{Front page title}
 
 \item{running}{Running title}
+
+\item{rss}{RSS boolean}
 }
 \description{
-Returns path to logo
+Get logos, sty files and title pages
 }

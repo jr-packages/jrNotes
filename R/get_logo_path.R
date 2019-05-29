@@ -1,23 +1,34 @@
-#' Latex style and title pages
+#' Create and get helper files
 #'
-#' Returns path to logo
+#' Get logos, sty files and title pages
 #' @export
-create_logo = function() {
-  fname = system.file("extdata", "logo.png",
+get_logos = function() {
+  fname = system.file("extdata",
+                      c("robot.jpg", "logo.png", "rstudio_logo.png"),
                       package = "jrNotes",
                       mustWork = TRUE)
-  file.copy(fname, to = "logo.png", overwrite = TRUE)
+  file.copy(fname[1], to = "robot.jpg", overwrite = TRUE)
+  file.copy(fname[2], to = "logo.png", overwrite = TRUE)
+  file.copy(fname[3], to = "rstudio_logo.png", overwrite = TRUE)
 }
 
 #' @param main Front page title
 #' @param running Running title
-#' @rdname create_logo
+#' @param rss RSS boolean
+#' @rdname get_logos
 #' @export
-create_title_page = function(main = NULL, running = NULL) {
-  if (is.null(main))  main = config::get("front")
+create_title_page = function(main = NULL, running = NULL,  rss = NULL) {
+  if (is.null(main)) main = config::get("front")
   if (is.null(running)) running = config::get("running")
+  rss = isTRUE(rss)
 
-  create_logo()
+  if (rss) {
+    rss = "Accredited by the Royal Statistical Society."
+  } else {
+    rss = ""
+  }
+
+  get_logos()
   client = Sys.getenv("CLIENT")
     title_str = paste0("
 \\newsavebox{\\titleimage}
@@ -27,20 +38,28 @@ create_title_page = function(main = NULL, running = NULL) {
   ", main, " \\par \\vspace{4cm}
   \\usebox{\\titleimage}}
 \\author[jumpingrivers.com]{", client, "}
-\\publisher{jumpingrivers.com}")
+\\publisher{\\href{http://www.jumpingrivers.com}{jumpingrivers.com} \\newline ", rss, "}") #nolint
   cat(title_str, file = "titlepage.tex")
 }
 
 #' @export
-#' @rdname  create_logo
+#' @rdname  get_logos
 create_jrStyle = function() {
   fname = system.file("extdata", "jrStyle.sty",
                       package = "jrNotes", mustWork = TRUE)
   file.copy(fname, to = "jrStyle.sty", overwrite = TRUE)
 }
 
+create_advert = function() {
+  fname = system.file("extdata",
+                      "advert.tex",
+                      package = "jrNotes",
+                      mustWork = TRUE)
+  file.copy(fname, to = "advert.tex", overwrite = TRUE)
+}
+
 #' @export
-#' @rdname  create_logo
+#' @rdname  get_logos
 create_version = function() {
   create_githook()
 

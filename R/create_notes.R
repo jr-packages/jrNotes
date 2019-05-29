@@ -29,10 +29,12 @@ knit_rmd = function(fname, hashes) {
 #' Generate build script
 #'
 #' Scans for chaptersX.Rmd and appendix.Rmd and builds main.pdf
-#' @param fnames If \code{NULL} scans for chaptersX.Rmd and appendix.Rmd
+#' @param fnames If \code{NULL} scans for chaptersX.Rmd and appendix.Rmd.
+#' Otherwise, just uses the names passed.
+#' @param advert Should the advert be included. Default \code{TRUE}.
 #' @importFrom digest digest
 #' @export
-create_notes = function(fnames = NULL) {
+create_notes = function(fnames = NULL, advert = TRUE) {
 
   if (is.null(fnames)) {
     fnames = c(
@@ -49,6 +51,7 @@ create_notes = function(fnames = NULL) {
 
   create_title_page()
   create_jrStyle()
+  create_advert()
   set_knitr_options()
   set_options()
 
@@ -77,5 +80,11 @@ create_notes = function(fnames = NULL) {
   }
   last_page = out[[length(out)]]
   out[[length(out)]] = paste(last_page, create_version(), collapse = "\n")
+
+  ## Move chapters up one and add in the advert
+  if (isTRUE(advert)) {
+    out[seq_along(out) + 1] = out
+    out[[1]] = "\\include{advert}\n"
+  }
   out
 }

@@ -1,3 +1,6 @@
+# 0.4.4
+  * Adding advert.tex (thanks to @trianglegirl)
+
 # 0.4.3
   * Add `get_jr_packages()` function
   * Adding lintr

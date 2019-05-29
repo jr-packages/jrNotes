@@ -1,6 +1,6 @@
 #' @export
 #' @importFrom fs file_exists file_delete file_copy
-#' @rdname  create_logo
+#' @rdname get_logos
 create_githook = function() {
   if (file_exists("../.git/hooks/pre-push"))
     file_delete("../.git/hooks/pre-push")
