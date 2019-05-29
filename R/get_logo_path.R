@@ -20,8 +20,11 @@ get_logos = function() {
 create_title_page = function(main = NULL, running = NULL, rss = NULL) {
   if (is.null(main)) main = config::get("front")
   if (is.null(running)) running = config::get("running")
-  if (is.null(rss)) rss = config::get("rss")
-  rss = isTRUE(rss)
+  if (is.null(rss) && fs::file_exists("config.yml")) {
+    rss = config::get("rss")
+  } else {
+    rss = isTRUE(rss)
+  }
 
   if (rss) {
     rss = "Accredited by the Royal Statistical Society."
@@ -31,7 +34,7 @@ create_title_page = function(main = NULL, running = NULL, rss = NULL) {
 
   get_logos()
   client = Sys.getenv("CLIENT")
-    title_str = paste0("
+  title_str = paste0("
 \\newsavebox{\\titleimage}
 \\savebox{\\titleimage}{\\includegraphics[width=1.2\\textwidth]{logo.png}}
 \\title[", running, "]{%
