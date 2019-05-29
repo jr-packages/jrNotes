@@ -17,9 +17,10 @@ get_logos = function() {
 #' @param rss RSS boolean
 #' @rdname get_logos
 #' @export
-create_title_page = function(main = NULL, running = NULL,  rss = NULL) {
+create_title_page = function(main = NULL, running = NULL, rss = NULL) {
   if (is.null(main)) main = config::get("front")
   if (is.null(running)) running = config::get("running")
+  if (is.null(rss)) rss = config::get("rss")
   rss = isTRUE(rss)
 
   if (rss) {
