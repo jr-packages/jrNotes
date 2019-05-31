@@ -21,7 +21,7 @@ create_title_page = function(main = NULL, running = NULL, rss = NULL) {
   if (is.null(main)) main = config::get("front")
   if (is.null(running)) running = config::get("running")
   if (is.null(rss) && fs::file_exists("config.yml")) {
-    rss = config::get("rss")
+    rss = isTRUE(config::get("rss"))
   } else {
     rss = isTRUE(rss)
   }

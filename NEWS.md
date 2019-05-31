@@ -1,3 +1,6 @@
+# 0.4.5
+  * Adding rss label
+
 # 0.4.4
   * Adding advert.tex (thanks to @trianglegirl)
 
