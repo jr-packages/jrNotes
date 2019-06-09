@@ -1,3 +1,6 @@
+# 0.4.6
+  * Update Docker file
+
 # 0.4.5
   * Adding rss label
 
