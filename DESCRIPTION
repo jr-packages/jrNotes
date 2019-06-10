@@ -13,7 +13,7 @@ Imports: knitr (>= 1.22), tufte (>= 0.4), jrData, glue, fs, stringr, bookdown,
     namer (>= 0.1.4)
 Remotes: jr-packages/jrData, jr-packages/jrPresentation
 Suggests:
-    rmarkdown (>= 1.12), formatR, testthat, lintr, drat, hrbrthemes, gridExtra
+    rmarkdown (>= 1.12), formatR, testthat, lintr, drat
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Encoding: UTF-8
