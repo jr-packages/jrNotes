@@ -16,8 +16,8 @@ build_python_vignettes = function(){
   target = list.dirs()
   pkg_root = target[stringr::str_detect(basename(target), "jr(.*)")]
   target = target[stringr::str_detect(target, "vignettes")]
-  if(length(target) == 0){
-    fs::dir_create(pkg_root,"vignettes")
+  if (length(target) == 0){
+    fs::dir_create(pkg_root, "vignettes")
     target = fs::path(pkg_root, "vignettes")
   }
 
