@@ -1,7 +1,7 @@
 # XXX: This provides packages that are pre-build
 # XXX: In theory this could mean we omit a required pkg
 # XXX: from jrXXX and not be aware.
-FROM rocker/r-base
+FROM rocker/r-verse
 
 # Required for notes
 RUN apt-get update && apt-get install -y \
