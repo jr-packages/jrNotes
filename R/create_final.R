@@ -7,8 +7,13 @@ check_pdftk = function() {
   }
 }
 
-get_git_url = function() {
-  git_config = file("../.git/config")
+get_git_url = function(dir = ".") {
+  fname = glue("{dir}/.git/config")
+  if (!file.exists(fname)) {
+    git_url = get_git_url(glue("../{dir}"))
+    return(git_url)
+  }
+  git_config = file(fname)
   on.exit(close(git_config))
   l = readLines(git_config)
   l[grep(pattern = "\turl", l) ]
@@ -30,6 +35,14 @@ create_final_dir = function(note_name, pracs) {
   system(cmd)
 }
 
+#' @export
+#' @rdname create_final
+get_r_pkg_name = function() {
+  git_url = get_git_url()
+  pkg = stringr::str_match(git_url, "course_notes_?2?/(.*)/(.*)_notes\\.git$")
+  pkg[, length(pkg)]
+}
+
 #' Create copy of notes and practicals
 #'
 #' Renames main.pdf to notes_pkg.pdf. Also retrieves
@@ -41,11 +54,7 @@ create_final_dir = function(note_name, pracs) {
 #' @export
 create_final = function() {
   check_pdftk()
-  git_url = get_git_url()
-
-  pkg = stringr::str_match(git_url, "course_notes/(.*)/(.*)_notes.git")
-  pkg = pkg[, length(pkg)]
-
+  pkg = get_r_pkg_name()
   pkg_loc = system.file(package = pkg) #nolint
   pracs = fs::dir_ls(path = glue("{pkg_loc}/doc"),
                      regexp = ".*practical.*\\.pdf$")

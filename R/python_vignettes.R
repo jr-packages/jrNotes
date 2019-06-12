@@ -4,7 +4,7 @@
 #' @import stringr
 #' @importFrom purrr walk
 #' @export
-build_python_vignettes = function(){
+build_python_vignettes = function() {
   # find vignette sources
   f = fs::dir_ls("./vignette_src/")
   src = f[stringr::str_detect(f, "vignette_src/(.*)[0-9].Rmd$")]

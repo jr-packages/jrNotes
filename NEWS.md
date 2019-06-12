@@ -1,3 +1,6 @@
+# 0.4.8
+  * New function: get_r_pkg_name().
+
 # 0.4.6
   * Update Docker file
 
