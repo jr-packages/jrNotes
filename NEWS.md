@@ -1,3 +1,6 @@
+# 0.4.9
+  * Remove pdftk dependency. Use __qpdf__ instead
+
 # 0.4.8
   * New function: get_r_pkg_name().
 

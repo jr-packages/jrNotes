@@ -1,11 +1,11 @@
-check_pdftk = function() {
-  is_pdftk = suppressWarnings(system2("which", "pdftk",
-                                      stdout = TRUE, stderr = FALSE))
-  if (length(is_pdftk) == 0L) {
-    stop("Need pdftk to combine practicals - pdfhacks.com/pdftk/",
-         call. = FALSE)
-  }
-}
+# check_pdftk = function() {
+#   is_pdftk = suppressWarnings(system2("which", "pdftk",
+#                                       stdout = TRUE, stderr = FALSE))
+#   if (length(is_pdftk) == 0L) {
+#     stop("Need pdftk to combine practicals - pdfhacks.com/pdftk/",
+#          call. = FALSE)
+#   }
+# }
 
 get_git_url = function(dir = ".") {
   fname = glue("{dir}/.git/config")
@@ -19,6 +19,7 @@ get_git_url = function(dir = ".") {
   l[grep(pattern = "\turl", l) ]
 }
 
+#' @importFrom qpdf pdf_combine
 create_final_dir = function(note_name, pracs) {
 
   dir.create("final", showWarnings = FALSE)
@@ -27,12 +28,13 @@ create_final_dir = function(note_name, pracs) {
   fs::file_copy(sheet,
                 glue("final/attendance_{note_name}.pdf"),
                 overwrite = TRUE)
+  # add notes
   fs::file_copy("main.pdf",
                 glue("final/notes_{note_name}.pdf"),
                 overwrite = TRUE)
-
-  cmd = glue("pdftk {pracs} cat output final/practicals_{note_name}.pdf")
-  system(cmd)
+  # combine practicals into single file
+  qpdf::pdf_combine(pracs, glue("final/practicals_{note_name}.pdf"))
+  return(invisible(NULL))
 }
 
 #' @export
@@ -53,19 +55,19 @@ get_r_pkg_name = function() {
 #' @import glue
 #' @export
 create_final = function() {
-  check_pdftk()
+  ## check_pdftk() #nolint
   pkg = get_r_pkg_name()
   pkg_loc = system.file(package = pkg) #nolint
   pracs = fs::dir_ls(path = glue("{pkg_loc}/doc"),
                      regexp = ".*practical.*\\.pdf$")
-  pracs = glue_collapse(pracs, sep = " ")
+  #pracs = glue_collapse(pracs, sep = " ") #nolint
   create_final_dir(note_name = stringr::str_sub(pkg, 3), pracs = pracs)
 }
 
 #' @rdname create_final
 #' @export
 create_final_python = function() {
-  check_pdftk()
+  # check_pdftk() # nolint
   git_url = get_git_url()
 
   pkg = stringr::str_match(git_url, "course_notes/(.*)/jr(.*)_python_notes.git")
@@ -76,6 +78,6 @@ create_final_python = function() {
   dirs = dirs[grepl(pkg, dirs)]
   dirs = dirs[grepl("vignettes", dirs)]
   pracs = fs::dir_ls(path = dirs, regexp = ".*practical.*\\.pdf$")
-  pracs = glue_collapse(pracs, sep = " ")
+  # pracs = glue_collapse(pracs, sep = " ") #nolint
   create_final_dir(note_name = stringr::str_sub(pkg, 5), pracs = pracs)
 }
