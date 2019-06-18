@@ -81,7 +81,7 @@ create_notes = function(fnames = NULL, advert = TRUE) {
   last_page = out[[length(out)]]
   out[[length(out)]] = paste(last_page, create_version(), collapse = "\n")
 
-  ## Move chapters up one and add in the advert & quote
+  # Move chapters up one and add in the advert & quote
   if (file.exists("quote.tex")) {
     out[seq_along(out) + 1] = out
     out[[1]] = "\\include{quote}\n"
