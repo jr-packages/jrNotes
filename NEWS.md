@@ -1,3 +1,6 @@
+# 0.4.10
+  * Detect and add quote.tex
+
 # 0.4.9
   * Remove pdftk dependency. Use __qpdf__ instead
 
