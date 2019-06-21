@@ -40,8 +40,18 @@ create_final_dir = function(note_name, pracs) {
 #' @export
 #' @rdname create_final
 get_r_pkg_name = function() {
+  # New style - use the config file
+  if (fs::file_exists("config.yml")) {
+    con = config::get()
+    if (!is.null(con$packages)) {
+      pkgs = unlist(con$packages)
+      names(pkgs) = NULL
+      return(pkgs)
+    }
+  }
+  # Legacy - grep gitlab url
   git_url = get_git_url()
-  pkg = stringr::str_match(git_url, "course_notes_?2?/(.*)/(.*)_notes\\.git$")
+  pkg = stringr::str_match(git_url, "course_notes/(.*)/(.*)_notes\\.git$")
   pkg[, length(pkg)]
 }
 

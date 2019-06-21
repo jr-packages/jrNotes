@@ -1,3 +1,6 @@
+# 0.4.11
+  * Get package from config.yml
+
 # 0.4.10
   * Detect and add quote.tex
 
