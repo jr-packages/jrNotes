@@ -19,9 +19,23 @@ get_git_url = function(dir = ".") {
   l[grep(pattern = "\turl", l) ]
 }
 
+label_check = function() {
+if (!file.exists("main.log")) return()
+
+  main_log = readLines("main.log")
+  labels = str_detect(main_log,
+                      pattern = "^LaTeX Warning: Label .* multiply defined\\.$")
+
+  if (sum(labels) == 0) return()
+
+  stop("Multiply defined labels: \n",
+       paste(main_log[labels], collapse = "\n"),
+       call. = FALSE)
+}
+
 #' @importFrom qpdf pdf_combine
 create_final_dir = function(note_name, pracs) {
-
+  label_check()
   dir.create("final", showWarnings = FALSE)
   # add attendance sheet
   sheet = system.file("attendance/attendance.pdf", package = "jrNotes")

@@ -20,6 +20,8 @@ knit_rmd = function(fname, hashes) {
       fs::file_exists(md_fname)) { # Very conservative #nolint
     out = readRDS(md_fname)
   } else {
+    doc_name = stringr::str_remove(fname, "\\.Rmd$")
+    opts_knit$set(unnamed.chunk.label = doc_name)
     out = try(knitr::knit_child(fname, envir = globalenv()))
     if (class(out) != "try-error") saveRDS(out, md_fname) # Store .md
   }

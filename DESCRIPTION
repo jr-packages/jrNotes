@@ -1,8 +1,8 @@
 Package: jrNotes
 Type: Package
 Title: Jumping Rivers: Helper Package for Notes
-Version: 0.4.11
-Authors@R: person("Colin", "Gillespie", email="colin@jumpingrivers.com", role = c("aut", "cre"))
+Version: 0.4.12
+Authors@R: person("Jumping", "Rivers", email="info@jumpingrivers.com", role = c("aut", "cre"))
 Description: Default settings and helper functions for course notes.
 URL: https://www.jumpingrivers.com/
 License: GPL-3

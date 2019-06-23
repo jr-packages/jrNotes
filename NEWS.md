@@ -1,3 +1,6 @@
+# 0.4.12
+  * Detect for multiply defined labels and raise error in make final
+
 # 0.4.11
   * Get package from config.yml
 
