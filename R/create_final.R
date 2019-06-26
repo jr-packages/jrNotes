@@ -7,7 +7,7 @@ get_git_url = function(dir = ".") {
   git_config = file(fname)
   on.exit(close(git_config))
   l = readLines(git_config)
-  l[grep(pattern = "\turl", l) ]
+  l[grep(pattern = "\turl", l)]
 }
 
 # Don't allow duplicate labels
