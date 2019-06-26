@@ -19,7 +19,8 @@ RUN apt-get update && apt-get install -y \
     make apt-transport-https \
     ca-certificates \
     curl gnupg-agent \
-    software-properties-common
+    software-properties-common && \
+    pip install docker-compose
  
 ## Add docker
 RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg > /tmp/dkey; apt-key add /tmp/dkey && \
