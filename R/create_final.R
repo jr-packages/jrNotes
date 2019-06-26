@@ -1,12 +1,3 @@
-# check_pdftk = function() {
-#   is_pdftk = suppressWarnings(system2("which", "pdftk",
-#                                       stdout = TRUE, stderr = FALSE))
-#   if (length(is_pdftk) == 0L) {
-#     stop("Need pdftk to combine practicals - pdfhacks.com/pdftk/",
-#          call. = FALSE)
-#   }
-# }
-
 get_git_url = function(dir = ".") {
   fname = glue("{dir}/.git/config")
   if (!file.exists(fname)) {
@@ -19,8 +10,9 @@ get_git_url = function(dir = ".") {
   l[grep(pattern = "\turl", l) ]
 }
 
+# Don't allow duplicate labels
 label_check = function() {
-if (!file.exists("main.log")) return()
+  if (!file.exists("main.log")) return()
 
   main_log = readLines("main.log")
   labels = str_detect(main_log,
@@ -82,9 +74,13 @@ create_final = function() {
   ## check_pdftk() #nolint
   pkg = get_r_pkg_name()
   pkg_loc = system.file(package = pkg) #nolint
-  pracs = fs::dir_ls(path = glue("{pkg_loc}/doc"),
-                     regexp = ".*practical.*\\.pdf$")
-  #pracs = glue_collapse(pracs, sep = " ") #nolint
+
+  if (isFALSE(config::get()$vignettes)) {
+    pracs = NULL
+  } else {
+    pracs = dir_ls(path = glue("{pkg_loc}/doc"),
+                   regexp = ".*practical.*\\.pdf$")
+  }
   create_final_dir(note_name = stringr::str_sub(pkg, 3), pracs = pracs)
 }
 
