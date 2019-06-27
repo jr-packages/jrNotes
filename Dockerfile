@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install -y fonts-linuxlibertine curl \
     && mkdir rpackages && chmod a+r rpackages \
     # Packages stored in /rpackages for everyone
     && echo "R_LIBS=/rpackages/" >> /usr/local/lib/R/etc/Renviron.site \
+    # Need for littler
+    && echo ".libPaths('/rpackages/')" >> /usr/local/lib/R/etc/Rprofile.site && \
     && echo "options(repos = c(CRAN = 'https://cran.rstudio.com/', \
             jrpackages = 'https://jr-packages.github.io/drat/'))" >> /usr/local/lib/R/etc/Rprofile.site \
     # Install jrNotes
