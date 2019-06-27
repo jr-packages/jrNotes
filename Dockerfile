@@ -6,7 +6,7 @@ FROM rocker/verse
 # curl for tagging step
 RUN apt-get update && apt-get install -y fonts-linuxlibertine curl \
     ## Link to update.r for gitlab runner
-    && ln -s /usr/local/lib/R/site-library/littler/examples/update.r /usr/local/bin/update.R \
+    && ln -s /usr/local/lib/R/site-library/littler/examples/update.r /usr/local/bin/update.r \
     # Latex packages for notes
     && tlmgr install tufte-latex hardwrap xltxtra realscripts \
               titlesec textcase setspace xcolor fancyhdr ulem morefloats \
@@ -22,5 +22,4 @@ RUN apt-get update && apt-get install -y fonts-linuxlibertine curl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/downloaded_packages/
 
-RUN apt-get update && apt-get install -y curl
 
