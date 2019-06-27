@@ -5,30 +5,18 @@ FROM rocker/verse
 
 # Required for notes
 RUN apt-get update && apt-get install -y \
-    fonts-linuxlibertine
+    fonts-linuxlibertine && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/downloaded_packages/
 
 # Tex packages for notes
 RUN tlmgr install tufte-latex hardwrap xltxtra realscripts \
     titlesec textcase setspace xcolor fancyhdr ulem morefloats \
     microtype ms units
-    
-RUN apt-get update && apt-get install -y \
-    python-pip python-dev \
-    build-essential libffi-dev \
-    libssl-dev gcc libc-dev \
-    make apt-transport-https \
-    ca-certificates \
-    curl gnupg-agent \
-    software-properties-common && \
-    pip install docker-compose
- 
-## Add docker
-RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg > /tmp/dkey; apt-key add /tmp/dkey && \
-    add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
-   $(lsb_release -cs) \
-   stable" && \
-   apt-get update && \
-   apt-get -y install docker-ce
-# Base jrNotes package
-RUN R -e "remotes::install_github('jr-packages/jrNotes', dependencies = TRUE)"
+
+RUN mkdir rpackages \
+  && chmod a+r rpackages \
+  # Packages stored in /rpackages for everyone
+  && echo "R_LIBS=/rpackages/" >> /usr/local/lib/R/etc/Renviron.site \
+  && echo "options(repos = c(CRAN = "https://cran.rstudio.com/", 
+            jrpackages = "https://jr-packages.github.io/drat/"))" >> /usr/local/lib/R/etc/Rprofile.site \
+  &&  install2.r -l /rpackages/ --error jrNotes 
