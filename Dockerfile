@@ -2,8 +2,9 @@
 # XXX: In theory this could mean we omit a required pkg from jrXXX and not be aware.
 FROM rocker/verse
 
-# Font required for notes
-RUN apt-get update && apt-get install -y fonts-linuxlibertine \
+# Fonts required for notes
+# curl for tagging step
+RUN apt-get update && apt-get install -y fonts-linuxlibertine curl \
     ## Link to update.r for gitlab runner
     && ln -s /usr/local/lib/R/site-library/littler/examples/update.r /usr/local/bin/update.R \
     # Latex packages for notes
@@ -20,4 +21,6 @@ RUN apt-get update && apt-get install -y fonts-linuxlibertine \
     && install2.r -n -1 -d TRUE -l /rpackages/ --error jrNotes \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/downloaded_packages/
+
+RUN apt-get update && apt-get install -y curl
 
