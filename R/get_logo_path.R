@@ -65,8 +65,6 @@ create_advert = function() {
 #' @export
 #' @rdname  get_logos
 create_version = function() {
-  create_githook()
-
   year = substr(Sys.Date(), 1, 4) #nolint
   if (fs::file_exists("config.yml")) {
     con = config::get()

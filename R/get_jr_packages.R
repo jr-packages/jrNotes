@@ -25,5 +25,4 @@ get_jr_packages = function(path = ".") {
   if (length(list.files(path)) != 0) stop("Directory not empty.")
 
   vapply(git_repos, git_clone, path = path, FUN.VALUE = logical(1))
-
 }

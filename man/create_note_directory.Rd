@@ -4,8 +4,7 @@
 \alias{create_note_directory}
 \title{Create Notes}
 \usage{
-create_note_directory(name = "jRexample_notes", path = NULL,
-  push = FALSE)
+create_note_directory(name = NULL, path = NULL, push = FALSE)
 }
 \arguments{
 \item{name}{The title of the notes directory you want to create

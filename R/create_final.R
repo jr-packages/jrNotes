@@ -28,6 +28,8 @@ label_check = function() {
 #' @importFrom qpdf pdf_combine
 create_final_dir = function(note_name, pracs) {
   label_check()
+  lint_notes()
+
   dir.create("final", showWarnings = FALSE)
   # add attendance sheet
   sheet = system.file("attendance/attendance.pdf", package = "jrNotes")
