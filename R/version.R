@@ -8,7 +8,8 @@
 #' @export
 has_version_been_updated = function() {
   ## See what files have been changed
-  output = system2("git", args = c("show", "--stat", "--oneline"),
+  output = system2("git",
+                   args = c("show", "master..", "--stat", "--oneline"),
                    stdout = TRUE)
 
   ## Have any notes been changed
@@ -19,4 +20,5 @@ has_version_been_updated = function() {
   if (chapters_changed > 0 && config_changed == 0) {
     stop("Please update version number.", call. = FALSE)
   }
+  return(invisible(TRUE))
 }
