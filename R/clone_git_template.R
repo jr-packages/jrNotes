@@ -14,7 +14,7 @@
 #' The function will force you to comply.
 #' @param push A logical. TRUE to push and create the repo, FALSE to not. Default is FALSE.
 #' @export
-create_note_directory = function(name = NULL,
+clone_git_template = function(name = NULL,
                                  path = NULL,
                                  push = FALSE) {
   if (is.null(path)) {
@@ -46,9 +46,9 @@ create_note_directory = function(name = NULL,
   build_status = "Package build status: [![Build Status](https://api.travis-ci.org/jr-packages/jrXxxx.png?branch=master)](https://travis-ci.org/jr-packages/)" #nolint
   writeLines(c(title, build_status), "README.md")
 
-  system2("git", args = c("remote", "set-url", "origin",
-                          paste0("git@gitlab.com:jumpingrivers-notes/course_notes/",
-                                 name, ".git")))
+  git_repo = paste0("git@gitlab.com:jumpingrivers-notes/course_notes/",
+                    name, ".git")
+  system2("git", args = c("remote", "set-url", "origin", git_repo))
 
   if (push) {
     system2("git", args = c("push", "-u", "origin", "master"))
