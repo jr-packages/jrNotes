@@ -1,3 +1,6 @@
+# 0.4.13
+  * Check that version has been updated if notes/c*.Rmd have changed.
+
 # 0.4.12
   * Detect for multiply defined labels and raise error in make final
 

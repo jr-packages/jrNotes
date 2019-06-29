@@ -9,7 +9,7 @@
 has_version_been_updated = function() {
   ## See what files have been changed
   output = system2("git",
-                   args = c("show", "master..", "--stat", "--oneline"),
+                   args = c("show", "origin/master..", "--stat", "--oneline"),
                    stdout = TRUE)
 
   ## Have any notes been changed
