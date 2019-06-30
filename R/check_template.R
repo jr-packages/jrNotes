@@ -11,7 +11,7 @@ has_changed = function(fname1, fname2) {
 }
 
 get_project_name = function() {
-  proj_name = system("git remote -v | head -n1 | awk '{print $2}' | sed 's/.*\\///' | sed 's/\\.git//'",
+  proj_name = system("git remote -v | head -n1 | awk '{print $2}' | sed 's/.*\\///' | sed 's/\\.git//'", #nolint
                      intern = TRUE) #nolint
 
   gsub("_notes", "", proj_name)
@@ -56,7 +56,7 @@ check_template = function() {
                           template_repo_loc))
   message(template_repo_loc)
 
-  proj_name = get_project_name()
+  proj_name = get_project_name() #nolint
   # Ensure Rproj are given sensible names - not just notes.Rproj
   fnames = c(glue("notes/notes_{proj_name}.Rproj"),
              glue("slides/slides_{proj_name}.Rproj"),
