@@ -17,21 +17,25 @@ test_file = function(fname1, fname2) {
 #' main.Rmd.
 #'
 #' Typically this used by the gitlab-ci runner.
+#' @param template_repo_loc Path to gitlab template location. If \code{NULL}
+#' clones repo in \code{tempdir()}.
 #' @export
-check_template = function() {
-  tmp_dir = tempdir()
-  on.exit(unlink(tmp_dir))
-  repo_name = file.path(tmp_dir, "template")
-  system2("git", args = c("clone", "--depth", "1",
-                          "git@gitlab.com:jumpingrivers-notes/template.git", #nolint
-                          repo_name))
+check_template = function(template_repo_loc = NULL) {
+  if (is.null(template_repo_loc)) {
+    tmp_dir = tempdir()
+    on.exit(unlink(tmp_dir))
+    template_repo_loc = file.path(tmp_dir, "template")
+    system2("git", args = c("clone", "--depth", "1",
+                            "git@gitlab.com:jumpingrivers-notes/template.git", #nolint
+                            template_repo_loc))
+  }
 
   fnames = c("Makefile", ".gitignore",
              "notes/Makefile", "notes/main.Rmd",
              "slides/Makefile", "slide/main.Rmd")
-  template_fnames = file.path(repo_name, fnames)
+  template_fnames = file.path(template_repo_loc, fnames)
 
   for (i in seq_along(fnames)) {
-    test_file(fnames[i], template_fnames)
+    test_file(fnames[i], template_fnames[i])
   }
 }
