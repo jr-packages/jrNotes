@@ -7,12 +7,10 @@
 #' To force you to create a directory with a name other than the default,
 #' the default will break the function.
 #' Unless the proper notation for a jumping rivers notes directory is
-#' followed the function will have a paddy! i.e. must start with a "jR" and end in "_notes".
+#' followed the function will have a paddy! i.e. must start with a "jr" and end in "_notes".
 #' @param path The path where you want to place the notes. Default is NULL, which will create
-#' the notes directory inside your current working directory. When the path is specified,
-#' it must be a full path from the home directory, so must start with a "~".
-#' The function will force you to comply.
-#' @param push A logical. TRUE to push and create the repo, FALSE to not. Default is FALSE.
+#' the notes directory inside your current working directory.
+#' @param push Default \code{FALSE}. TRUE to push and create the repo.
 #' @export
 clone_git_template = function(name = NULL,
                                  path = NULL,
