@@ -1,3 +1,6 @@
+# 0.4.14
+  * Check files against cannocial template - check_template()
+
 # 0.4.13
   * Check that version has been updated if notes/c*.Rmd have changed.
 

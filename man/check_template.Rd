@@ -10,7 +10,7 @@ main.Rmd.
 
 Typically this used by the gitlab-ci runner.}
 \usage{
-check_template(template_repo_loc = NULL)
+check_template()
 }
 \description{
 Checks notes files are the same as template
