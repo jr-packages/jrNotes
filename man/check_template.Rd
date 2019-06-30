@@ -12,10 +12,6 @@ Typically this used by the gitlab-ci runner.}
 \usage{
 check_template(template_repo_loc = NULL)
 }
-\arguments{
-\item{template_repo_loc}{Path to gitlab template location. If \code{NULL}
-clones repo in \code{tempdir()}.}
-}
 \description{
 Checks notes files are the same as template
 

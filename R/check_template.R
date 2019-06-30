@@ -17,10 +17,13 @@ test_file = function(fname1, fname2) {
 #' main.Rmd.
 #'
 #' Typically this used by the gitlab-ci runner.
-#' @param template_repo_loc Path to gitlab template location. If \code{NULL}
-#' clones repo in \code{tempdir()}.
 #' @export
 check_template = function(template_repo_loc = NULL) {
+  if (Sys.getenv("CI_PROJECT_NAME") == "template") {
+    # Feedback loop if we test template on it's on master
+    return(invisible(NULL))
+  }
+
   if (is.null(template_repo_loc)) {
     tmp_dir = tempdir()
     on.exit(unlink(tmp_dir))
@@ -29,7 +32,9 @@ check_template = function(template_repo_loc = NULL) {
                             "git@gitlab.com:jumpingrivers-notes/template.git", #nolint
                             template_repo_loc))
   }
+  message(template_repo_loc)
 
+  list.files(template_repo_loc)
   fnames = c("Makefile", ".gitignore",
              "notes/Makefile", "notes/main.Rmd",
              "slides/Makefile", "slide/main.Rmd")

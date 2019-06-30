@@ -7,6 +7,11 @@
 #' This function is used in the .gitlab runner
 #' @export
 has_version_been_updated = function() {
+  if (Sys.getenv("CI_PROJECT_NAME") == "template") {
+    # Don't update version on template
+    return(invisible(TRUE))
+  }
+
   ## See what files have been changed
   output = system2("git",
                    args = c("show", "origin/master..", "--stat", "--oneline"),
