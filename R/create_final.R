@@ -28,7 +28,6 @@ label_check = function() {
 #' @importFrom qpdf pdf_combine
 create_final_dir = function(note_name, pracs) {
   label_check()
-  lint_notes()
 
   dir.create("final", showWarnings = FALSE)
   # add attendance sheet
@@ -44,6 +43,16 @@ create_final_dir = function(note_name, pracs) {
   qpdf::pdf_combine(pracs, glue("final/practicals_{note_name}.pdf"))
   return(invisible(NULL))
 }
+
+#' @export
+#' @rdname create_final
+get_python_pkg_name = function() {
+  con = config::get()
+  pkgs = unlist(con$packages)
+  names(pkgs) = NULL
+  pkgs = paste(pkgs, collapse = "\n")
+}
+
 
 #' @export
 #' @rdname create_final
@@ -90,11 +99,14 @@ create_final = function() {
 #' @export
 create_final_python = function() {
   # check_pdftk() # nolint
-  git_url = get_git_url()
 
-  pkg = stringr::str_match(git_url, "course_notes/(.*)/jr(.*)_python_notes.git")
-  pkg = paste0("jrpy", tolower(pkg[, length(pkg)]))
-
+  if (fs::file_exists("config.yml"))  {
+    pkg = get_python_pkg_name()
+  } else {
+    git_url = get_git_url()
+    pkg = stringr::str_match(git_url, "course_notes/(.*)/jr(.*)_python_notes.git") #nolint
+    pkg = paste0("jrpy", tolower(pkg[, length(pkg)]))
+  }
   ## locate vignettes in package
   dirs = list.dirs(full.names = TRUE)
   dirs = dirs[grepl(pkg, dirs)]

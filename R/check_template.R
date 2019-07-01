@@ -33,8 +33,22 @@ check_gitlab_runner = function(fname1, fname2) {
   }
 }
 
+get_r_template_fnames = function(template_repo_loc) {
+  file.path(template_repo_loc,
+            c("notes/notes.Rproj", "slides/slides.Rproj",
+              "Makefile", ".gitignore",
+              "notes/Makefile", "notes/main.Rmd",
+              "slides/Makefile"))
+}
 
-## TODO: Check gitlab-ci.yml #nolint
+get_python_template_fnames = function(template_repo_loc) {
+  file.path(template_repo_loc,
+            c("notes/notes.Rproj", "slides/slides.Rproj",
+              "Makefile", ".gitignore",
+              "notes/Makefile-python", "notes/main.Rmd",
+              "slides/Makefile-python"))
+}
+
 #' @title Checks notes files are the same as template
 #'
 #' Ensures that certain notes files are the same as the notes template.
@@ -42,8 +56,9 @@ check_gitlab_runner = function(fname1, fname2) {
 #' main.Rmd.
 #'
 #' Typically this used by the gitlab-ci runner.
+#' @param type Which template to use. Default \code{r}. Could also be \code{python}
 #' @export
-check_template = function() {
+check_template = function(type = "r") {
   if (Sys.getenv("CI_PROJECT_NAME") == "template") {
     # Feedback loop if we test template on it's on master
     return(invisible(NULL))
@@ -64,9 +79,15 @@ check_template = function() {
              "notes/Makefile", "notes/main.Rmd",
              "slides/Makefile")
 
-  template_fnames = file.path(template_repo_loc,
-                              c("notes/notes.Rproj", "slides/slides.Rproj",
-                                fnames[-c(1, 2)]))
+  if (type == "r") {
+    template_fnames = get_r_template_fnames(template_repo_loc)
+    check_gitlab_runner(".gitlab-ci.yml",
+                        file.path(template_repo_loc, ".gitlab-ci.yml"))
+  } else if (type == "python") {
+    template_fnames = get_python_template_fnames(template_repo_loc)
+    check_gitlab_runner(".gitlab-ci.yml",
+                        file.path(template_repo_loc, "python-gitlab-ci.yml"))
+  }
 
   # Compare files to template
   # Keep track of any differences
@@ -88,6 +109,6 @@ check_template = function() {
     stop("Don't add Rproj files to the base directory.",
          call. = FALSE)
   }
-  check_gitlab_runner(".gitlab-ci.yml",
-                      file.path(template_repo_loc, ".gitlab-ci.yml"))
+
+
 }

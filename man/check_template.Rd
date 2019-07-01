@@ -10,7 +10,10 @@ main.Rmd.
 
 Typically this used by the gitlab-ci runner.}
 \usage{
-check_template()
+check_template(type = "r")
+}
+\arguments{
+\item{type}{Which template to use. Default \code{r}. Could also be \code{python}}
 }
 \description{
 Checks notes files are the same as template

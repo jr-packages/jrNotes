@@ -18,6 +18,8 @@ clean = function() {
   bash_rm(r_gen)
   left_over = c("\\#*\\#")
   bash_rm(left_over)
+  python_gen = c("venv/", "requirements.txt")
+  bash_rm(python_gen)
 }
 
 #' @rdname clean
