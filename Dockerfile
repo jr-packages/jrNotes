@@ -1,6 +1,6 @@
 # XXX: This provides packages that are pre-build
 # XXX: In theory this could mean we omit a required pkg from jrXXX and not be aware.
-FROM rocker/verse
+FROM rocker/verse:3.5
 
 # Fonts required for notes
 # curl for tagging step
@@ -14,9 +14,10 @@ RUN apt-get update && apt-get install -y  \
     ## Link to update.r for gitlab runner
     && ln -s /usr/local/lib/R/site-library/littler/examples/update.r /usr/local/bin/update.r \
     ## Latex packages for notes
+    && tlmgr update --self \
     && tlmgr install tufte-latex hardwrap xltxtra realscripts \
               titlesec textcase setspace xcolor fancyhdr ulem morefloats \
-              microtype ms units \
+              microtype ms units xkeyval tools\
     #
     # R Package directories
     && mkdir rpackages && chmod a+r rpackages \
