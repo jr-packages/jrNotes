@@ -34,6 +34,8 @@ clone_git_template = function(name = NULL,
 
   repo_name = file.path(path, name)
   system2("git", args = c("clone",
+                          "--depth",
+                          "1",
                           "git@gitlab.com:jumpingrivers-notes/template.git", #nolint
                           repo_name))
   setwd(repo_name)

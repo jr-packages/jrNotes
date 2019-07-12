@@ -1,6 +1,5 @@
 bash_rm = function(args) {
   system2("rm", args = c("-fvr", args))
-
 }
 
 #' Functions for cleaning after notes and slides

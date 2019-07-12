@@ -1,7 +1,6 @@
 # Old notes don't have config. Quick helper function
 is_legacy = function() !fs::file_exists("config.yml")
 
-
 get_git_url = function(dir = ".") {
   fname = glue("{dir}/.git/config")
   if (!file.exists(fname)) {
@@ -14,24 +13,11 @@ get_git_url = function(dir = ".") {
   l[grep(pattern = "\turl", l)]
 }
 
-# Don't allow duplicate labels
-label_check = function() {
-  if (!file.exists("main.log")) return()
-
-  main_log = readLines("main.log")
-  labels = str_detect(main_log,
-                      pattern = "^LaTeX Warning: Label .* multiply defined\\.$")
-
-  if (sum(labels) == 0) return()
-
-  stop("Multiply defined labels: \n",
-       paste(main_log[labels], collapse = "\n"),
-       call. = FALSE)
-}
 
 #' @importFrom qpdf pdf_combine
 create_final_dir = function(note_name, pracs) {
-  label_check()
+  check_labels()
+  check_urls()
 
   dir.create("final", showWarnings = FALSE)
   # add attendance sheet
@@ -56,7 +42,6 @@ get_python_pkg_name = function() {
   names(pkgs) = NULL
   pkgs = paste(pkgs, collapse = "\n")
 }
-
 
 #' @export
 #' @rdname create_final
@@ -102,7 +87,6 @@ get_concat_course_name = function() {
 create_final = function() {
   ## check_pdftk() #nolint
   note_name = get_concat_course_name()
-
   if (!is_legacy() && isFALSE(config::get()$vignettes)) {
     pracs = NULL
   } else {
