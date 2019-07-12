@@ -1,3 +1,7 @@
+# Old notes don't have config. Quick helper function
+is_legacy = function() !fs::file_exists("config.yml")
+
+
 get_git_url = function(dir = ".") {
   fname = glue("{dir}/.git/config")
   if (!file.exists(fname)) {
@@ -66,10 +70,24 @@ get_r_pkg_name = function() {
       return(pkgs)
     }
   }
-  # Legacy - grep gitlab url
+  # XXX: Legacy - grep gitlab url
   git_url = get_git_url()
   pkg = stringr::str_match(git_url, "course_notes/(.*)/(.*)_notes\\.git$")
   pkg[, length(pkg)]
+}
+
+
+# Replace spaces with -
+get_concat_course_name = function() {
+  if (!is_legacy()) {
+    con = config::get()
+    title = con$running
+    title = gsub(" ", "-", title)
+  } else {
+    # XXX: Fall back for old notes
+    title = get_r_pkg_name()
+  }
+  return(title)
 }
 
 #' Create copy of notes and practicals
@@ -83,16 +101,21 @@ get_r_pkg_name = function() {
 #' @export
 create_final = function() {
   ## check_pdftk() #nolint
-  pkg = get_r_pkg_name()
-  pkg_loc = system.file(package = pkg) #nolint
+  note_name = get_concat_course_name()
 
-  if (isFALSE(config::get()$vignettes)) {
+  if (!is_legacy() && isFALSE(config::get()$vignettes)) {
     pracs = NULL
   } else {
+    pkg = get_r_pkg_name()
+    pkg_loc = system.file(package = pkg) #nolint
     pracs = dir_ls(path = glue("{pkg_loc}/doc"),
                    regexp = ".*practical.*\\.pdf$")
   }
-  create_final_dir(note_name = stringr::str_sub(pkg, 3), pracs = pracs)
+  if (is_legacy()) {
+    note_name = stringr::str_sub(get_r_pkg_name(), 3)
+  }
+
+  create_final_dir(note_name = note_name, pracs = pracs)
 }
 
 #' @rdname create_final

@@ -1,3 +1,6 @@
+# 0.4.15
+  * Update create_final to deal with edge cases
+  
 # 0.4.14
   * Check files against cannocial template - check_template()
 
