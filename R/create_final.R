@@ -13,12 +13,13 @@ get_git_url = function(dir = ".") {
   l[grep(pattern = "\turl", l)]
 }
 
-
 #' @importFrom qpdf pdf_combine
 create_final_dir = function(note_name, pracs) {
+  check_master()
   check_labels()
+  check_references()
+  check_pkgs()
   check_urls()
-
   dir.create("final", showWarnings = FALSE)
   # add attendance sheet
   sheet = system.file("attendance/attendance.pdf", package = "jrNotes")
@@ -47,7 +48,7 @@ get_python_pkg_name = function() {
 #' @rdname create_final
 get_r_pkg_name = function() {
   # New style - use the config file
-  if (fs::file_exists("config.yml")) {
+  if (!is_legacy()) {
     con = config::get()
     if (!is.null(con$packages)) {
       pkgs = unlist(con$packages)
@@ -98,7 +99,6 @@ create_final = function() {
   if (is_legacy()) {
     note_name = stringr::str_sub(get_r_pkg_name(), 3)
   }
-
   create_final_dir(note_name = note_name, pracs = pracs)
 }
 

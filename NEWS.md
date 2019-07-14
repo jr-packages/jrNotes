@@ -1,3 +1,6 @@
+# 0.4.16
+  * Adding checkers: master, duplicated refs, package versions
+
 # 0.4.15
   * Update create_final to deal with edge cases
   * Check for broken URLs
