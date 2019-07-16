@@ -1,3 +1,6 @@
+# 0.4.17
+  * Initial stab at spell checker
+
 # 0.4.16
   * Adding checkers: master, duplicated refs, package versions
 

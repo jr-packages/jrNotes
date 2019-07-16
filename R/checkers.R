@@ -84,7 +84,7 @@ check_urls = function() {
   message(yellow(symbol$circle_filled, "Checking URLS"))
   main_tex = readLines("main.tex")
 
-  urls = stringr::str_match_all(main_tex, "\\\\url\\{([\\w\\d\\.\\:/-]*)\\}") #nolint
+  urls = stringr::str_match_all(main_tex, "\\\\url\\{([^\\}]*)\\}") #nolint
   urls = unlist(urls)
   urls = urls[!stringr::str_detect(urls, "\\{")]
 
