@@ -3,6 +3,9 @@ check_master = function() {
     message(yellow("No internet connection - skipping URL check"))
     return(invisible(NULL))
   }
+  ## Needed for runner
+  system2("git", args = c("fetch", "origin"))
+
   message(yellow(symbol$circle_filled, "Comparing to master"))
   g = system2("git",
               args = c("rev-list --left-right --count origin/master...@"),
