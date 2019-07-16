@@ -98,6 +98,8 @@ check_urls = function() {
     if (status != 200) {
       msg = glue("  {symbol$cross} {url}  status: {status}")
       message(red(msg))
+    }
+    if (status == 404) {
       bad_urls = TRUE
     }
   }
@@ -135,7 +137,7 @@ check_references = function() {
 
   main_log = readLines("main.log")
   refs = stringr::str_detect(main_log,
-                    pattern = "undefined on input line")
+                             pattern = "undefined on input line")
 
   if (sum(refs) == 0) {
     message(yellow(symbol$tick, "Refs look good"))
