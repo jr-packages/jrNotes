@@ -3,6 +3,10 @@
 # XXX: The alternative is to use rocker/r-base and build everything by hand. 
 FROM rocker/verse:3.5
 
+## Hack to get github package installed
+## Once countdown is on CRAN, then update jrPres and remove this line
+RUN Rscript -e 'if (!require(countdown)) remotes::install_github("gadenbuie/countdown")'
+
 # Fonts required for notes
 # curl for tagging step
 # ffmpeg for animations in slides
@@ -36,7 +40,4 @@ RUN apt-get update && apt-get install -y  \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/downloaded_packages/
 
-## Hack to get github package installed
-## Once countdown is on CRAN, then update jrPres and remove this line
-RUN Rscript -e 'if (!require(countdown)) remotes::install_github("gadenbuie/countdown")'
  
