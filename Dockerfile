@@ -1,5 +1,6 @@
 # XXX: This provides packages that are pre-build
 # XXX: In theory this could mean we omit a required pkg from jrXXX and not be aware.
+# XXX: The alternative is to use rocker/r-base and build everything by hand. 
 FROM rocker/verse:3.5
 
 # Fonts required for notes
@@ -28,8 +29,10 @@ RUN apt-get update && apt-get install -y  \
     && echo "options(repos = c(CRAN = 'https://cran.rstudio.com/', \
             jrpackages = 'https://jr-packages.github.io/drat/'))" >> /usr/local/lib/R/etc/Rprofile.site \
     #
-    ## Install jrNotes
-    && install2.r -n -1 -d TRUE -l /rpackages/ --error jrNotes \
+    ## Install jrNotes jrPresentation
+    ## XXX: If jrPres is updated, this docker image is __not__ automatically updated
+    && install2.r -n -1 -d TRUE -l /rpackages/ --error jrNotes jrPresentation \
+    ## Clean-up; reduce docker size
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/downloaded_packages/
  
