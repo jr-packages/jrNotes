@@ -49,7 +49,8 @@ check_pkgs = function() {
   }
 
   pkgs_to_update = c(pkgs, "jrNotes", "jrPresentation",
-                     "knitr", "rmarkdown", "lintr", "tufte")
+                     "knitr", "rmarkdown", "lintr", "tufte",
+                     "ggplot2")
 
   av_p =  available.packages()[, c("Package", "Version")]
   av_p = tibble::as_tibble(av_p)
@@ -61,14 +62,14 @@ check_pkgs = function() {
 
   pkgs = dplyr::left_join(av_p, in_p, by = "Package")
 
-  to_update = package_version(pkgs$Version.x) > package_version(pkgs$Version.x)
+  to_update = package_version(pkgs$Version.x) > package_version(pkgs$Version.y)
   if (sum(to_update) == 0) {
     message(yellow(symbol$tick, "Packages look good"))
     return(invisible(NULL))
   }
   pkgs = pkgs[to_update, ]
-  for (i in seq_along(pkgs)) {
-    msg = glue("{symbol$cross} Update {pkgs$Package[i]}")
+  for (i in seq_len(nrow(pkgs))) {
+    msg = glue("{symbol$cross} Update {pkgs$Package[i]}: {pkgs$Version.x} > {pkgs$Version.y}")
     message(red(msg))
   }
   stop(red("Please update packages"), call. = FALSE)
