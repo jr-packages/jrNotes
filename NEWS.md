@@ -1,3 +1,6 @@
+# 0.4.18
+  * Update jrstyle for nicer newthought formatting
+
 # 0.4.17
   * Initial stab at spell checker
 

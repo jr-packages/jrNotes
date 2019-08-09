@@ -104,3 +104,12 @@
   \thispagestyle{empty}%
   \clearpage%
 }
+
+% Fix spacing on \newthought{}
+%https://tex.stackexchange.com/questions/18947/letterspacing-minion-pro-and-tufte-latex-problem-with-running-header
+\setmainfont{Linux Libertine O}% or Minion Pro or what have you
+
+% Set up the spacing using fontspec features
+\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+\renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
+
