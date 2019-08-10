@@ -1,3 +1,7 @@
+# 0.4.19
+  * Check for title case
+  * Add spell check
+
 # 0.4.18
   * Update jrstyle for nicer newthought formatting
 

@@ -16,6 +16,7 @@ get_git_url = function(dir = ".") {
 #' @importFrom qpdf pdf_combine
 create_final_dir = function(note_name, pracs) {
   check_master()
+  check_spelling()
   check_chapter_titles()
   check_section_titles()
   check_pkgs()

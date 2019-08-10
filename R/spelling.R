@@ -45,5 +45,22 @@ check_spelling = function() {
   if (file.exists("WORDLIST")) {
     words = c(words, readLines("WORDLIST", warn = FALSE))
   }
-  spelling::spell_check_files(fnames, lang = "en_GB", ignore = words)
+  message(yellow(symbol$circle_filled, "Spell check (experimental)"))
+
+
+  in_words = spelling::spell_check_files(fnames, lang = "en_GB", ignore = words)
+  if (nrow(in_words) == 0) {
+    message(yellow(symbol$tick, "Spell check passed"))
+    return(invisible(NULL))
+  }
+  msg = glue("{symbol$circle_filled} Any false warnings, please add the word to \\
+              inst/WORDLIST in jrNotes and bump the third digit of the version.")
+  message(yellow(msg))
+
+  for(i in 1:nrow(in_words)) {
+    msg = glue("\t {symbol$fancy_question_mark} {in_words[i, 1]}  {in_words[i, 2]}")
+    message(red(msg))
+  }
+
+  return(invisible(NULL))
 }
