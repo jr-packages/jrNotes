@@ -57,7 +57,7 @@ check_spelling = function() {
               inst/WORDLIST in jrNotes and bump the third digit of the version.")
   message(yellow(msg))
 
-  for(i in 1:nrow(in_words)) {
+  for (i in 1:nrow(in_words)) {
     msg = glue("\t {symbol$fancy_question_mark} {in_words[i, 1]}  {in_words[i, 2]}")
     message(red(msg))
   }
