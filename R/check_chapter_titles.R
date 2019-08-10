@@ -56,7 +56,7 @@ check_chapter_titles = function() {
 check_section_titles = function() {
 
   if (!file.exists("main.tex")) return()
-  message(yellow(symbol$circle_filled, "Checking section for title case"))
+  message(yellow(symbol$circle_filled, "Checking section for sentence case"))
 
   main_tex = readLines("main.tex")
   chapters = stringr::str_extract(main_tex, "^\\\\chapter\\{")
@@ -94,7 +94,7 @@ check_section_titles = function() {
       title = str_sub(title, start_loc + 1, end_loc - 1)
     }
 
-    title_case = tools::toTitleCase(title)
+    title_case = stringr::str_to_sentence(title)
     if (title_case != title) {
       msg = glue::glue("\t  {symbol$cross} Section: {title_case} vs {title}")
       message(red(msg))
@@ -105,7 +105,7 @@ check_section_titles = function() {
     }
   }
   if (isTRUE(error)) {
-    msg = glue("{symbol$fancy_question_mark} Please check headings. Note, some
+    msg = glue("{symbol$fancy_question_mark} Please check sections. Note, some
                of the warnings may be incorrect.")
     message(red(msg))
   } else {
