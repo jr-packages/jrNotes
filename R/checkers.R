@@ -61,17 +61,22 @@ check_pkgs = function() {
   in_p = in_p[in_p$Package %in% pkgs_to_update, ]
 
   pkgs = dplyr::left_join(av_p, in_p, by = "Package")
+  for (i in seq_len(nrow(pkgs))) {
+    if (package_version(pkgs$Version.x[i]) > package_version(pkgs$Version.y[i])) {
+      msg = glue("\t{symbol$cross} Update {pkgs$Package[i]}: {pkgs$Version.x[i]} > {pkgs$Version.y[i]}") #nolint
+      message(red(msg))
+    } else {
+      msg = glue("\t{symbol$tick} {pkgs$Package[i]} (v{pkgs$Version.x[i]}) is up to date")
+      message(yellow(msg))
+    }
+  }
+
 
   to_update = package_version(pkgs$Version.x) > package_version(pkgs$Version.y)
   if (sum(to_update) == 0) {
-    message(yellow(symbol$tick, "Packages look good"))
     return(invisible(NULL))
   }
-  pkgs = pkgs[to_update, ]
-  for (i in seq_len(nrow(pkgs))) {
-    msg = glue("{symbol$cross} Update {pkgs$Package[i]}: {pkgs$Version.x} > {pkgs$Version.y}")
-    message(red(msg))
-  }
+
   stop(red("Please update packages"), call. = FALSE)
 }
 
@@ -109,7 +114,6 @@ check_urls = function() {
   return(invisible(NULL))
 }
 
-
 # Don't allow duplicate labels
 check_labels = function() {
   if (!file.exists("main.log")) return()
@@ -128,9 +132,8 @@ check_labels = function() {
        call. = FALSE)
 }
 
-#Reference `fig:row-layout' on page 25 undefined on input line 1509
-
 # Don't undefined references
+# e.g. Reference `fig:row-layout' on page 25 undefined on input line 1509
 check_references = function() {
 
   if (!file.exists("main.log")) return()
@@ -148,12 +151,6 @@ check_references = function() {
        red(paste(main_log[refs], collapse = "\n")),
        call. = FALSE)
 }
-
-
-
-
-
-
 
 check_python = function() {
   if (is_legacy()) return(invisible(NULL))

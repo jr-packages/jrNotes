@@ -25,14 +25,14 @@ create_final_dir = function(note_name, pracs) {
   # add attendance sheet
   sheet = system.file("attendance/attendance.pdf", package = "jrNotes")
   fs::file_copy(sheet,
-                glue("final/attendance_{note_name}.pdf"),
+                glue("final/attendance_{note_name}_{Sys.Date()}.pdf"),
                 overwrite = TRUE)
   # add notes
   fs::file_copy("main.pdf",
-                glue("final/notes_{note_name}.pdf"),
+                glue("final/notes_{note_name}_{Sys.Date()}.pdf"),
                 overwrite = TRUE)
   # combine practicals into single file
-  qpdf::pdf_combine(pracs, glue("final/practicals_{note_name}.pdf"))
+  qpdf::pdf_combine(pracs, glue("final/practicals_{note_name}_{Sys.Date()}.pdf"))
   return(invisible(NULL))
 }
 
