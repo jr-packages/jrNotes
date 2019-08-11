@@ -71,12 +71,10 @@ check_pkgs = function() {
     }
   }
 
-
   to_update = package_version(pkgs$Version.x) > package_version(pkgs$Version.y)
-  if (sum(to_update) == 0) {
+  if (sum(to_update) == 0 || nchar(Sys.getenv("GITLAB_CI")) != 0) {
     return(invisible(NULL))
   }
-
   stop(red("Please update packages"), call. = FALSE)
 }
 
