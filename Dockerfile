@@ -1,30 +1,60 @@
 # XXX: This provides packages that are pre-build
 # XXX: In theory this could mean we omit a required pkg from jrXXX and not be aware.
 # XXX: The alternative is to use rocker/r-base and build everything by hand. 
-FROM rocker/verse:3.5
+# XXX: Not using rocker/verse - funny tinytex things that mess things up.
+FROM rocker/tidyverse:3.6
+
+RUN  apt-get update \
+     && apt-get install -y --no-install-recommends \
+     ## Nice Google fonts
+     fonts-roboto \
+     ## used by some base R plots
+     ghostscript \
+     ## used to build rJava and other packages
+     libbz2-dev \
+     libicu-dev \
+     liblzma-dev \
+     ## system dependency of hunspell (devtools)
+     libhunspell-dev \
+     ## system dependency of hadley/pkgdown
+     libmagick++-dev \
+     ## rdf, for redland / linked data
+     librdf0-dev \
+     ## for V8-based javascript wrappers
+     libv8-dev \
+     ## R CMD Check wants qpdf to check pdf sizes, or throws a Warning
+     qpdf \
+     ## For building PDF manuals
+     texinfo \
+     ## for git via ssh key
+     ssh \
+     ## just because
+     less \
+     vim \
+     ## parallelization
+     libzmq3-dev \
+     libopenmpi-dev \
+     ## Tex
+     texlive texlive-xetex texlive-generic-recommended \
+     ## Fonts
+     fonts-linuxlibertine \
+     # curl for tagging step
+     curl \
+     # python
+     python3-pip python3-venv libffi-dev \
+     # ffmpeg for animations in slides
+     ffmpeg \
+     && apt-get clean \
+     && rm -rf /var/lib/apt/lists/*
 
 ## Hack to get github package installed
 ## Once countdown is on CRAN, then update jrPres and remove this line
 RUN Rscript -e 'if (!require(countdown)) remotes::install_github("gadenbuie/countdown")'
 
-# Fonts required for notes
-# curl for tagging step
-# ffmpeg for animations in slides
-RUN apt-get update && apt-get install -y  \
-    fonts-linuxlibertine curl \ 
-    python3-pip python3-venv libffi-dev \
-    ffmpeg \
-    # virtual env
-    && pip3 install virtualenv \
-    ## Link to update.r for gitlab runner
-    && ln -s /usr/local/lib/R/site-library/littler/examples/update.r /usr/local/bin/update.r \
-    ## Latex packages for notes
-    && tlmgr update --self \
-    && tlmgr install tufte-latex hardwrap xltxtra realscripts \
-              titlesec textcase setspace xcolor fancyhdr ulem morefloats \
-              microtype ms units xkeyval tools\
-    #
-    # R Package directories
+RUN pip3 install virtualenv \
+    # ## Link to update.r for gitlab runner
+    &&  ln -s /usr/local/lib/R/site-library/littler/examples/update.r /usr/local/bin/update.r \
+    # # R Package directories
     && mkdir rpackages && chmod a+r rpackages \
     # Packages stored in /rpackages for everyone
     && echo "R_LIBS=/rpackages/" >> /usr/local/lib/R/etc/Renviron.site \
@@ -37,7 +67,5 @@ RUN apt-get update && apt-get install -y  \
     ## XXX: If jrPres is updated, this docker image is __not__ automatically updated
     && install2.r -n -1 -d TRUE -l /rpackages/ --error jrNotes jrPresentation \
     ## Clean-up; reduce docker size
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/downloaded_packages/
+    && rm -rf  /tmp/downloaded_packages/
 
- 
