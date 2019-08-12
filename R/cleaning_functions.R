@@ -29,7 +29,7 @@ cleaner = function() {
                          "advert.tex", "robot.jpg", "rstudio_logo.png",
                          "knitr.sty", "style.css", "libs/",
                          "feedback.Rmd", "feedback.html",
-                         "feedback_link.txt")
+                         "feedback_link.txt", "WORDLIST")
   jr_notes_generated = jr_notes_generated[file.exists(jr_notes_generated)]
   bash_rm(jr_notes_generated)
 

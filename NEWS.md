@@ -1,5 +1,6 @@
 # 0.4.20
   * Attendance sheet now created by the office
+  * Add watermark via config option
 
 # 0.4.19
   * Check for title case

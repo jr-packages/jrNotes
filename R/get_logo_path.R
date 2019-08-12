@@ -52,6 +52,19 @@ create_jrStyle = function() {
   fname = system.file("extdata", "jrStyle.sty",
                       package = "jrNotes", mustWork = TRUE)
   file.copy(fname, to = "jrStyle.sty", overwrite = TRUE)
+
+  if (fs::file_exists("config.yml")) {
+    con = config::get()
+    watermark = con$watermark
+    if (!is.null(watermark)) {
+      f = file("jrStyle.sty", "a")
+      on.exit(close(f))
+      cat("% Adding watermark\n", file = f)
+      cat("\\usepackage[printwatermark]{xwatermark}\n", file = f)
+      cat("\\newwatermark*[allpages,angle=45,scale=3,xpos=0,ypos=0]{",
+          watermark, "}\n\n", file = f, sep = "")
+    }
+  }
 }
 
 create_advert = function() {
