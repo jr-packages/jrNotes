@@ -61,6 +61,7 @@ check_pkgs = function() {
   in_p = in_p[in_p$Package %in% pkgs_to_update, ]
 
   pkgs = dplyr::left_join(av_p, in_p, by = "Package")
+  pkgs$Version.y[is.na(pkgs$Version.y)] = "0.0.0"
   for (i in seq_len(nrow(pkgs))) {
     if (package_version(pkgs$Version.x[i]) > package_version(pkgs$Version.y[i])) {
       msg = glue("\t{symbol$cross} Update {pkgs$Package[i]}: {pkgs$Version.x[i]} > {pkgs$Version.y[i]}") #nolint
