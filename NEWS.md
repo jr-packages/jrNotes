@@ -1,3 +1,6 @@
+# 0.4.20
+  * Attendance sheet now created by the office
+
 # 0.4.19
   * Check for title case
   * Add spell check

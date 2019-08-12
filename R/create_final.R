@@ -26,10 +26,10 @@ create_final_dir = function(note_name, pracs) {
   check_urls()
   dir.create("final", showWarnings = FALSE)
   # add attendance sheet
-  sheet = system.file("attendance/attendance.pdf", package = "jrNotes")
-  fs::file_copy(sheet,
-                glue("final/attendance_{note_name}_{Sys.Date()}.pdf"),
-                overwrite = TRUE)
+  # sheet = system.file("attendance/attendance.pdf", package = "jrNotes")
+  # fs::file_copy(sheet,
+  #               glue("final/attendance_{note_name}_{Sys.Date()}.pdf"),
+  #               overwrite = TRUE)
   # add notes
   fs::file_copy("main.pdf",
                 glue("final/notes_{note_name}_{Sys.Date()}.pdf"),
