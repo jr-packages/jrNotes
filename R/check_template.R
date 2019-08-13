@@ -17,6 +17,7 @@ get_project_name = function() {
   gsub("_notes", "", proj_name)
 }
 
+# Compare gitlab-ci files
 get_runner_hash = function(fname) {
   line_break = "#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#"
   lines = readLines(fname)
@@ -27,13 +28,53 @@ get_runner_hash = function(fname) {
   digest::digest(lines[start:end])
 }
 
+# Update gitlab runner
+update_gitlab_ci = function(fname, template_fname) {
+  line_break = "#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#"
+
+  ## Extract template CI part
+  lines = readLines(template_fname)
+
+  start = which(lines == line_break)[1]
+  end = which(lines == line_break)[2]
+  template_lines = lines[start:end]
+
+  ## Remove template part from current gitlab
+  lines = readLines(fname)
+  start = which(lines == line_break)[1]
+  end = which(lines == line_break)[2]
+  template_lines = c(template_lines, lines[end + 1])
+
+  lines = lines[-(start:length(lines))] #nolint
+  lines = c(lines, template_lines)
+  f = file(fname, "w")
+  on.exit(close(f))
+  cat(lines, file = f, sep = "\n")
+}
+
+
 check_gitlab_runner = function(fname1, fname2) {
-  msg = yellow(glue("{symbol$circle_filled} Checking gitlab-ci.yml"))
+  msg = yellow(glue("  {symbol$circle_filled} Checking gitlab-ci.yml"))
   message(msg)
-  if (get_runner_hash(fname1) !=  get_runner_hash(fname2)) {
-    msg = red(glue("{symbol$cross} gitlab-ci.yml has changed."))
+  if (!file.exists(fname2)) {
+    msg = blue(glue("  {symbol$info} gitlab-ci is missing."))
     message(msg)
-    return(FALSE)
+    fs::file_copy(fname1, fname2)
+    msg = green(glue("  {symbol$tick} Updating gitlab-ci."))
+    message(msg)
+  }
+
+  if (get_runner_hash(fname1) != get_runner_hash(fname2)) {
+    if (is_gitlab()) {
+      msg = red(glue("  {symbol$cross} gitlab-ci.yml has changed."))
+      message(msg)
+      return(FALSE)
+    }
+    msg = blue(glue("  {symbol$info} gitlab-ci.yml has changed."))
+    message(msg)
+    update_gitlab_ci(fname1, fname2)
+    msg = green(glue("  {symbol$tick} gitlab-ci.yml has been updated."))
+    message(msg)
   }
   return(TRUE)
 }
@@ -68,8 +109,9 @@ check_template = function(type = "r") {
     # Feedback loop if we test template on it's on master
     return(invisible(NULL))
   }
+  message(yellow(symbol$circle_filled, "Checking template files"))
 
-  message(yellow(symbol$circle_filled, "Cloning template repo"))
+  message("  ", yellow(symbol$circle_filled, "Cloning template repo"))
   tmp_dir = tempdir()
   on.exit(unlink(tmp_dir))
   template_repo_loc = file.path(tmp_dir, "template")
@@ -79,7 +121,6 @@ check_template = function(type = "r") {
                           "git@gitlab.com:jumpingrivers-notes/template.git", #nolint
                           template_repo_loc))
 
-  message(yellow(symbol$circle_filled, "Checking template files"))
   proj_name = get_project_name() #nolint
   # Ensure Rproj are given sensible names - not just notes.Rproj
   fnames = c(glue("notes/notes_{proj_name}.Rproj"),
@@ -91,27 +132,42 @@ check_template = function(type = "r") {
   if (type == "r") {
     template_fnames = get_r_template_fnames(template_repo_loc)
     runner_check = check_gitlab_runner(".gitlab-ci.yml",
-                        file.path(template_repo_loc, ".gitlab-ci.yml"))
+                      file.path(template_repo_loc, ".gitlab-ci.yml"))
   } else if (type == "python") {
     template_fnames = get_python_template_fnames(template_repo_loc)
     runner_check = check_gitlab_runner(".gitlab-ci.yml",
-                        file.path(template_repo_loc, "python-gitlab-ci.yml"))
+                    file.path(template_repo_loc, "python-gitlab-ci.yml"))
   }
 
   # Compare files to template
   # Keep track of any differences
   changed = logical(length(fnames))
   for (i in seq_along(fnames)) {
-    changed[i] = has_changed(fnames[i], template_fnames[i])
-    msg = yellow(glue("{symbol$circle_filled} Checking {fnames[i]}"))
+    msg = yellow(glue("  {symbol$circle_filled} Checking {fnames[i]}"))
     message(msg)
 
-        if (isTRUE(changed[i])) {
-      msg = glue("{symbol$cross} File {fnames[i]} does not match")
-      message(red(msg))
+    if (!file.exists(fnames[i]) && !is_gitlab()) {
+      msg = blue(glue("  {symbol$info} {fnames[i]} is missing"))
+      message(msg)
+      fs::file_copy(template_fnames[i], fnames[i])
+      msg = green(glue("  {symbol$tick} Updating {fnames[i]}"))
+      message(msg)
+    }
+    changed[i] = has_changed(fnames[i], template_fnames[i])
+
+    if (isTRUE(changed[i])) {
+      msg = glue("  {symbol$info} File {fnames[i]} does not match")
+      message(blue(msg))
+      if (!is_gitlab()) {
+        msg = green(glue("  {symbol$tick} Updating {fnames[i]}"))
+        message(msg)
+        fs::file_copy(template_fnames[i], fnames[i], overwrite = TRUE)
+      }
+
     }
   }
-  if (any(changed) || isFALSE(runner_check)) {
+  if ( (any(changed) || isFALSE(runner_check)) &&
+      nchar(Sys.getenv("GITLAB_CI")) != 0) {
     stop(red("Files differs from template repo.
          Either revert your changes or update the template.
          If you think you want to update the template, make a merge

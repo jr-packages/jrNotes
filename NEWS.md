@@ -1,3 +1,6 @@
+# 0.4.21
+  * Automatically update config files
+
 # 0.4.20
   * Attendance sheet now created by the office
   * Add watermark via config option
