@@ -11,9 +11,7 @@ RUN  apt-get update \
      ## used by some base R plots
      ghostscript \
      ## used to build rJava and other packages
-     libbz2-dev \
-     libicu-dev \
-     liblzma-dev \
+     libbz2-dev libicu-dev liblzma-dev \
      ## system dependency of hunspell (devtools)
      libhunspell-dev \
      ## system dependency of hadley/pkgdown
@@ -29,11 +27,11 @@ RUN  apt-get update \
      ## for git via ssh key
      ssh \
      ## just because
-     less \
-     vim \
+     less vim \
      ## parallelization
-     libzmq3-dev \
-     libopenmpi-dev \
+     libzmq3-dev libopenmpi-dev \
+     ## spatial
+     libudunits2-dev libgdal-dev \
      ## Tex
      texlive texlive-xetex texlive-generic-recommended \
      ## Fonts
