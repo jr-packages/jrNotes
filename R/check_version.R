@@ -7,10 +7,22 @@
 #' This function is used in the .gitlab runner
 #' @export
 check_version = function() {
+  # Don't update version on template
   if (Sys.getenv("CI_PROJECT_NAME") == "template") {
-    # Don't update version on template
     return(invisible(TRUE))
   }
+
+  message(yellow(symbol$circle_filled, "Checking version in config.yml"))
+  # Don't update on non-release
+  r = readLines("../.gitlab-ci.yml")
+  release = r[stringr::str_detect(r, "RELEASE:")]
+  if (stringr::str_detect(release, '"FALSE"')) {
+    message(yellow(symbol$info, "RELEASE is FALSE in .gitlab-ci.yml"))
+    message(yellow(symbol$info, "Skipping version number check"))
+    return(invisible(TRUE))
+  }
+
+
   message(yellow(symbol$circle_filled, "Checking version in config.yml"))
   ## See what files have been changed
   output = system2("git",

@@ -105,8 +105,9 @@ check_section_titles = function() {
     }
   }
   if (isTRUE(error)) {
-    msg = glue("{symbol$fancy_question_mark} Please check sections. Note, some \\
-               of the warnings may be incorrect. If so, ask Colin to add an exception")
+    msg = glue::glue("{symbol$fancy_question_mark} Please check sections. \\
+                Note: some of the warnings may be incorrect. \\
+                If so, ask Colin to add an exception.")
     message(red(msg))
   } else {
     message(yellow(symbol$tick, "Section titles look good"))

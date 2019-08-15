@@ -16,14 +16,18 @@ get_git_url = function(dir = ".") {
 #' @importFrom qpdf pdf_combine
 create_final_dir = function(note_name, pracs) {
   check_master()
+  check_pkgs()
+  #
   check_spelling()
   check_chapter_titles()
   check_section_titles()
-  check_pkgs()
-  check_version()
+
+  # Latex checks
   check_labels()
   check_references()
   check_urls()
+  # Check version number
+  check_version()
   dir.create("final", showWarnings = FALSE)
   # add notes
   fs::file_copy("main.pdf",
