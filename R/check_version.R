@@ -22,8 +22,6 @@ check_version = function() {
     return(invisible(TRUE))
   }
 
-
-  message(yellow(symbol$circle_filled, "Checking version in config.yml"))
   ## See what files have been changed
   output = system2("git",
                    args = c("show", "origin/master..", "--stat", "--oneline"),
