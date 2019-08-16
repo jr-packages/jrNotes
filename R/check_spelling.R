@@ -31,11 +31,11 @@ check_spelling = function() {
               inst/WORDLIST in jrNotes and bump the third digit of the version. \\
               A file (WORDLIST) has been created in this directory. Just edit \\
               and append to inst/WORDLIST.")
-  message(yellow(msg))
+  message(blue(msg))
 
   for (i in 1:nrow(in_words)) {
-    msg = glue("\t {symbol$fancy_question_mark} {in_words[i, 1]}  {in_words[i, 2]}")
-    message(red(msg))
+    msg = glue("\t {symbol$info} {in_words[i, 1]}  {in_words[i, 2]}")
+    message(blue(msg))
   }
   make_wordlist(in_words)
   return(invisible(in_words))

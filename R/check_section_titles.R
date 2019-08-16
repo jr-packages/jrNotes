@@ -98,7 +98,7 @@ check_section_titles = function() {
     }
     if (title_case != title) {
       msg = glue::glue("    {symbol$info} Section: {title_case} vs {title}")
-      message(red(msg))
+      message(blue(msg))
       error = TRUE
     } else {
       msg = glue::glue("    {symbol$tick} Section: {title_case}")
@@ -109,7 +109,7 @@ check_section_titles = function() {
     msg = glue::glue("{symbol$fancy_question_mark} Please check sections. \\
                 Note: some of the warnings may be incorrect. \\
                 If so, ask Colin to add an exception.")
-    message(red(msg))
+    message(blue(msg))
   } else {
     message(yellow(symbol$tick, "Section titles look good"))
   }

@@ -53,27 +53,27 @@ update_gitlab_ci = function(fname, template_fname) {
 }
 
 
-check_gitlab_runner = function(fname1, fname2) {
+check_gitlab_runner = function(fname, template) {
   msg = yellow(glue("  {symbol$circle_filled} Checking gitlab-ci.yml"))
   message(msg)
-  if (!file.exists(fname2)) {
-    msg = blue(glue("  {symbol$info} gitlab-ci is missing."))
+  if (!file.exists(fname)) {
+    msg = blue(glue("  {symbol$info} gitlab-ci is missing"))
     message(msg)
-    fs::file_copy(fname1, fname2)
-    msg = green(glue("  {symbol$tick} Updating gitlab-ci."))
+    fs::file_copy(template, fname)
+    msg = green(glue("  {symbol$tick} Updating gitlab-ci"))
     message(msg)
   }
 
-  if (get_runner_hash(fname1) != get_runner_hash(fname2)) {
+  if (get_runner_hash(fname) != get_runner_hash(template)) {
     if (is_gitlab()) {
-      msg = red(glue("  {symbol$cross} gitlab-ci.yml has changed."))
+      msg = red(glue("  {symbol$cross} gitlab-ci.yml has changed"))
       message(msg)
       return(FALSE)
     }
-    msg = blue(glue("  {symbol$info} gitlab-ci.yml has changed."))
+    msg = blue(glue("  {symbol$info} gitlab-ci.yml has changed"))
     message(msg)
-    update_gitlab_ci(fname1, fname2)
-    msg = green(glue("  {symbol$tick} gitlab-ci.yml has been updated."))
+    update_gitlab_ci(fname, template)
+    msg = green(glue("  {symbol$tick} gitlab-ci.yml has been updated"))
     message(msg)
   }
   return(TRUE)
