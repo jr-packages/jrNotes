@@ -91,7 +91,7 @@ check_section_titles = function() {
       title = str_sub(title, start_loc + 1, end_loc - 1)
     }
     ## Remove \labels
-    title = stringr::str_replace(title, "\\\\label\\{.*\\}", "")
+    title = stringr::str_replace(title, "\\\\label\\{.*\\}", "") #nolint
     title_case = stringr::str_to_sentence(title)
     if (title_case != title) {
       title_case = standard_exceptions(title)
