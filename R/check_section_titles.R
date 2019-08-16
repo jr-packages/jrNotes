@@ -81,6 +81,12 @@ check_section_titles = function() {
     end_loc = end_bracket[end_loc[length(end_loc)]]
     title = str_sub(main_tex[i], start_loc + 1, end_loc - 1)
 
+    ## Temporary fix for bug caused by Chapters being split over multiple lines
+    if (length(title) == 0){
+      msg = glue::glue("\t{symbol$info} Section: Skipping check- no closing bracket.")
+      message(blue(msg))
+    } else{
+
     ## Take account of textorpdfstring brackets
     if (str_detect(title, "texorpdfstring")) {
       start_bracket = str_locate_all(title, "\\{")[[1]][, 1]
@@ -104,6 +110,7 @@ check_section_titles = function() {
       msg = glue::glue("    {symbol$tick} Section: {title_case}")
       message(yellow(msg))
     }
+  }
   }
   if (isTRUE(error)) {
     msg = glue::glue("{symbol$fancy_question_mark} Please check sections. \\
