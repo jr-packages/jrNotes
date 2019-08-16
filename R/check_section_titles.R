@@ -1,7 +1,7 @@
 
 standard_exceptions = function(title) {
-  from = c("r", "shiny", "dt", "rstudio")
-  to = c("R", "Shiny", "DT", "RStudio")
+  from = c("r", "shiny", "dt", "rstudio", "anova", "uk", "usa")
+  to = c("R", "Shiny", "DT", "RStudio", "ANOVA", "UK", "USA")
   title_case = stringr::str_to_sentence(title)
 
   for (i in seq_along(from)) {
@@ -90,7 +90,8 @@ check_section_titles = function() {
       end_loc = end_bracket[end_loc[length(end_loc)]]
       title = str_sub(title, start_loc + 1, end_loc - 1)
     }
-
+    ## Remove \labels
+    title = stringr::str_replace(title, "\\\\label\\{.*\\}", "")
     title_case = stringr::str_to_sentence(title)
     if (title_case != title) {
       title_case = standard_exceptions(title)

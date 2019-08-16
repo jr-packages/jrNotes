@@ -1,3 +1,7 @@
+# 0.4.23
+  * More tweaks to section detection
+  * Update spell check
+
 # 0.4.22
   * Reorder checks: move check package near the top
   * Don't enforce version changes on RELEASE: FALSE
