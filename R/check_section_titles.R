@@ -82,7 +82,7 @@ check_section_titles = function() {
     title = str_sub(main_tex[i], start_loc + 1, end_loc - 1)
 
     ## Temporary fix for bug caused by Chapters being split over multiple lines
-    if (length(title) == 0){
+    if (any(length(title) == 0, is.na(title))){
       msg = glue::glue("\t{symbol$info} Section: Skipping check- no closing bracket.")
       message(blue(msg))
     } else{
