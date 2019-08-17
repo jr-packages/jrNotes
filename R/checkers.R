@@ -79,39 +79,6 @@ check_pkgs = function() {
   stop(red("Please update packages"), call. = FALSE)
 }
 
-#' @importFrom httr GET
-#' @import crayon cli
-check_urls = function() {
-
-  if (!file.exists("main.tex")) stop("main.tex not found", call. = FALSE)
-  # Hack to detect internet connection on laptops
-  if (httr::GET("www.google.com")$status != 200) {
-    message(yellow("No internet connection - skipping URL check"))
-    return(invisible(NULL))
-  }
-  message(yellow(symbol$circle_filled, "Checking URLS"))
-  main_tex = readLines("main.tex")
-
-  urls = stringr::str_match_all(main_tex, "\\\\url\\{([^\\}]*)\\}") #nolint
-  urls = unlist(urls)
-  urls = urls[!stringr::str_detect(urls, "\\{")]
-
-  bad_urls = FALSE
-  for (url in urls) {
-    message("  ", yellow(symbol$circle_filled, "Checking ", url))
-    status = GET(url)$status
-    if (status != 200) {
-      msg = glue("  {symbol$cross} {url}  status: {status}")
-      message(red(msg))
-    }
-    if (status == 404) {
-      bad_urls = TRUE
-    }
-  }
-  if (bad_urls) stop(red("Fix broken URLS"), call. = FALSE)
-  message(yellow(symbol$tick, "URLs look good"))
-  return(invisible(NULL))
-}
 
 # Don't allow duplicate labels
 check_labels = function() {
@@ -124,11 +91,13 @@ check_labels = function() {
 
   if (sum(labels) == 0) {
     message(yellow(symbol$tick, "Labels look good"))
-    return(invisible(NULL))
+  } else {
+    message(red("Multiply defined labels: \n"),
+            paste(main_log[labels], collapse = "\n"),
+            call. = FALSE)
+    .jrnotes$error = TRUE
   }
-  stop(red("Multiply defined labels: \n"),
-       paste(main_log[labels], collapse = "\n"),
-       call. = FALSE)
+  return(invisible(NULL))
 }
 
 # Don't undefined references
@@ -144,11 +113,13 @@ check_references = function() {
 
   if (sum(refs) == 0) {
     message(yellow(symbol$tick, "Refs look good"))
-    return(invisible(NULL))
+  } else {
+    message("\n", red(glue("{symbol$cross} Underfined refs")), "\n",
+            red(paste(main_log[refs], collapse = "\n")),
+            call. = FALSE)
+    .jrnotes$error = TRUE
   }
-  stop("\n", red(glue("{symbol$cross} Underfined refs")), "\n",
-       red(paste(main_log[refs], collapse = "\n")),
-       call. = FALSE)
+  return(invisible(NULL))
 }
 
 check_python = function() {
@@ -162,5 +133,4 @@ check_python = function() {
 
   }
   message(yellow(symbol$tick, "Python version looks good"))
-
 }

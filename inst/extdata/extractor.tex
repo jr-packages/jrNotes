@@ -1,0 +1,50 @@
+%xelatex '\input instrumenter \input main'
+
+\RequirePackage{xparse}
+
+\ExplSyntaxOn
+
+\iow_new:N \l_csgillespie_iow
+
+% #1: sectioning command name as a single token
+% #2: character tokens representing the command name, without the backslash
+\cs_new_protected:Npn \csgillespie_instrument_sec_cmd:Nn #1#2
+  {
+    % Save the original sectioning command
+    \cs_gset_eq:cN { g_csgillespie_#2_orig: } #1
+
+    \RenewDocumentCommand #1 { s O{##3} m }
+      {
+        \iow_now:Nn \l_csgillespie_iow { #2 | ##2 | ##3 }
+
+        %\IfBooleanTF {##1}
+        %  { \use:c { g_csgillespie_#2_orig: } * {##3} }
+        %  { \use:c { g_csgillespie_#2_orig: } [##2] {##3} }
+      }
+  }
+
+\cs_generate_variant:Nn \csgillespie_instrument_sec_cmd:Nn { c }
+
+% #1: character tokens representing the command name, without the backslash
+\cs_new_protected:Npn \csgillespie_instrument_sec_cmd_ifexists:n #1
+  {
+    \cs_if_exist:cT {#1}
+      { \csgillespie_instrument_sec_cmd:cn {#1} {#1} }
+  }
+
+\AtBeginDocument
+  {
+    \iow_open:Nn \l_csgillespie_iow { extr
+    actor.csv }
+    \clist_map_inline:nn
+      {
+        part, chapter, section, subsection, subsubsection, paragraph,
+        subparagraph, url, marginnote, sidenote, caption
+      }
+      { \csgillespie_instrument_sec_cmd_ifexists:n {#1} }
+  }
+
+\AtEndDocument { \iow_close:N \l_csgillespie_iow }
+
+\ExplSyntaxOff
+\endinput

@@ -17,17 +17,22 @@ get_git_url = function(dir = ".") {
 create_final_dir = function(note_name, pracs) {
   check_master()
   check_pkgs()
-  #
+  # #
   check_spelling()
+  tokenise()
   check_chapter_titles()
   check_section_titles()
-
-  # Latex checks
+  #
+  # # Latex checks
   check_labels()
   check_references()
   check_urls()
   # Check version number
   check_version()
+
+  if (isTRUE(.jrnotes$error)) {
+    stop("Please fix errors", call. = FALSE)
+  }
   dir.create("final", showWarnings = FALSE)
   # add notes
   fs::file_copy("main.pdf",

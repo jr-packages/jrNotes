@@ -1,7 +1,9 @@
 
 standard_exceptions = function(title) {
-  from = c("r", "shiny", "dt", "rstudio", "anova", "uk", "usa")
-  to = c("R", "Shiny", "DT", "RStudio", "ANOVA", "UK", "USA")
+  from = c("r", "shiny", "dt", "rstudio", "anova", "uk", "usa",
+           "html", "yaml")
+  to = c("R", "Shiny", "DT", "RStudio", "ANOVA", "UK", "USA",
+         "HTML", "YAML")
   title_case = stringr::str_to_sentence(title)
 
   for (i in seq_along(from)) {
@@ -36,13 +38,13 @@ standard_exceptions = function(title) {
     if (title == new_title) return(title)
   }
 
-  if (str_detect(string = title, "\\\\texttt\\{.*\\}")) { # nolint
-    locs = str_locate(string = title, "\\\\texttt\\{.*\\}")[1, ] # nolint
+  if (str_detect(string = title, "\\\\texttt \\{.*\\}")) { # nolint
+    locs = str_locate(string = title, "\\\\texttt \\{.*\\}")[1, ] # nolint
     str_sub(title_case, locs[1], locs[2]) = str_sub(title, locs[1], locs[2])
     return(title_case)
   }
-  if (str_detect(string = title, "\\\\textbf\\{.*\\}")) { # nolint
-    locs = str_locate(string = title, "\\\\textbf\\{.*\\}")[1, ] # nolint
+  if (str_detect(string = title, "\\\\textbf \\{.*\\}")) { # nolint
+    locs = str_locate(string = title, "\\\\textbf \\{.*\\}")[1, ] # nolint
     str_sub(title_case, locs[1], locs[2]) = str_sub(title, locs[1], locs[2])
     return(title_case)
   }
@@ -52,70 +54,48 @@ standard_exceptions = function(title) {
 
 check_section_titles = function() {
 
-  if (!file.exists("main.tex")) return()
   message(yellow(symbol$circle_filled, "Checking section for sentence case"))
+  if (!file.exists("extractor.csv")) return()
 
-  main_tex = readLines("main.tex")
-  chapters = stringr::str_extract(main_tex, "^\\\\chapter\\{")
-  chapter_locs = c(which(!is.na(chapters)), Inf)
+  tokens = read_tokens()
+  section_nums = which(tokens$X1 == "section" | tokens$X1 == "subsection")
 
-  ## First extract sections
-  sections = stringr::str_extract(main_tex, "^\\\\section\\{")
-  sections_locs =  which(!is.na(sections))
-  main_tex = main_tex[which(!is.na(sections))]
+  sections = tokens %>%
+    dplyr::filter(X1 == "section" | tokens$X1 == "subsection") %>%
+    dplyr::mutate(texorpdf = str_detect(X3, "\\\\texorpdf")) %>%
+    dplyr::mutate(text = X3) %>%
+    dplyr::mutate(text = if_else(texorpdf,
+                                 str_match(X3, "^\\\\texorpdfstring \\{(.*)\\}\\{.*\\}$")[,2],
+                                 text)) %>%
+    dplyr::mutate(text = str_trim(text))
+
+  section_text = sections %>%
+    dplyr::select(text) %>%
+    dplyr::pull()
 
   error = FALSE
   next_chapter = 1
-  for (i in seq_along(main_tex)) {
-    if (sections_locs[i] > chapter_locs[next_chapter]) {
-      msg = glue::glue("  {symbol$circle_filled} Chapter: {next_chapter}")
-      message(yellow(msg))
-      next_chapter = next_chapter + 1
-    }
-    ## Extract location of first { #nolintr
-    ## Then match it to corresponding } #nolintr
-    start_bracket = str_locate_all(main_tex[i], "\\{")[[1]][, 1]
-    end_bracket = str_locate_all(main_tex[i], "\\}")[[1]][, 1]
-    start_loc = start_bracket[1]
-    end_loc = which(start_bracket < end_bracket[1])
-    end_loc = end_bracket[end_loc[length(end_loc)]]
-    title = str_sub(main_tex[i], start_loc + 1, end_loc - 1)
-
-    ## Temporary fix for bug caused by Chapters being split over multiple lines
-    if (any(length(title) == 0, is.na(title))){
-      msg = glue::glue("\t{symbol$info} Section: Skipping check- no closing bracket.")
-      message(blue(msg))
-    } else{
-
-    ## Take account of textorpdfstring brackets
-    if (str_detect(title, "texorpdfstring")) {
-      start_bracket = str_locate_all(title, "\\{")[[1]][, 1]
-      end_bracket = str_locate_all(title, "\\}")[[1]][, 1]
-      start_loc = start_bracket[1]
-      end_loc = which(start_bracket < end_bracket[1])
-      end_loc = end_bracket[end_loc[length(end_loc)]]
-      title = str_sub(title, start_loc + 1, end_loc - 1)
-    }
-    ## Remove \labels
-    title = stringr::str_replace(title, "\\\\label\\{.*\\}", "") #nolint
+  for (i in seq_along(section_text)) {
+    title = section_text[i]
     title_case = stringr::str_to_sentence(title)
     if (title_case != title) {
       title_case = standard_exceptions(title)
     }
     if (title_case != title) {
-      msg = glue::glue("    {symbol$info} Section: {title_case} vs {title}")
+      msg = glue::glue("  {symbol$info} {sections[i, 1]}: {title_case} vs {title}")
       message(blue(msg))
       error = TRUE
     } else {
-      msg = glue::glue("    {symbol$tick} Section: {title_case}")
+      msg = glue::glue("  {symbol$tick} {sections[i, 1]}: {title_case}")
       message(yellow(msg))
     }
   }
-  }
   if (isTRUE(error)) {
-    msg = glue::glue("{symbol$fancy_question_mark} Please check sections. \\
+    msg = glue::glue("{symbol$info} Please check sections. \\
                 Note: some of the warnings may be incorrect. \\
-                If so, ask Colin to add an exception.")
+                If so, ask Colin to add an exception.
+
+                If a word is wrapped in \\texttt it isn't checked.")
     message(blue(msg))
   } else {
     message(yellow(symbol$tick, "Section titles look good"))

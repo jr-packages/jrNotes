@@ -10,7 +10,7 @@ clean = function() {
   latex_gen = c("*.aux", "*.dvi", "*.log", "*.toc",
                 "*.bak", "*~", "*.blg", "*.bbl", "*.lot",
                 "*.lof", "*.nav", "*.snm", "*.out", "*.pyc",
-                "*.vrb", "*.fdb_latexmk", "*.fls")
+                "*.vrb", "*.fdb_latexmk", "*.fls", "*.xwm")
   bash_rm(latex_gen)
   r_gen = c("Rplots.pdf", "*.RData", "main.pdf", "*_files", "*_cache",
             "final/", "main.tex", "*.html", "_figure/")
@@ -29,8 +29,9 @@ cleaner = function() {
                          "advert.tex", "robot.jpg", "rstudio_logo.png",
                          "knitr.sty", "style.css", "libs/",
                          "feedback.Rmd", "feedback.html",
-                         "feedback_link.txt", "WORDLIST")
+                         "feedback_link.txt", "WORDLIST",
+                         "extractor-tmp.tex", "extractor.csv",
+                         "extractor.pdf", "extractor.tex")
   jr_notes_generated = jr_notes_generated[file.exists(jr_notes_generated)]
   bash_rm(jr_notes_generated)
-
 }

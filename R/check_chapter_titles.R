@@ -4,56 +4,44 @@
 #\\chapter{Introduction}\\label{introduction}}
 # nolint end
 
+#' @importFrom dplyr mutate if_else pull select
 check_chapter_titles = function() {
 
-  if (!file.exists("main.tex")) return()
+  if (!file.exists("extractor.csv")) return()
   message(yellow(symbol$circle_filled, "Checking chapters for title case"))
-
-  main_tex = readLines("main.tex")
+  tokens = read_tokens()
+  chapters = tokens %>%
+    dplyr::filter(X1 == "chapter") %>%
+    dplyr::mutate(texorpdf = str_detect(X3, "\\\\texorpdf")) %>%
+    dplyr::mutate(text = X3) %>%
+    dplyr::mutate(text = if_else(texorpdf,
+                                 str_match(X3, "^\\\\texorpdfstring \\{(.*)\\}\\{.*\\}$")[,2],
+                                 text)) %>%
+    dplyr::mutate(text = str_trim(text)) %>%
+    dplyr::select(text) %>%
+    dplyr::pull()
 
   ## First extract chapters
-  chapters = stringr::str_extract(main_tex, "^\\\\chapter\\{")
-  main_tex = main_tex[which(!is.na(chapters))]
+  #chapters = stringr::str_extract(main_tex, "^\\\\chapter\\{")
+  #main_tex = main_tex[which(!is.na(chapters))]
   error = FALSE
-  for (i in seq_along(main_tex)) {
-    ## Extract location of first { # nolint
-    ## Then match it to corresponding } # nolint
-    start_bracket = str_locate_all(main_tex[i], "\\{")[[1]][, 1]
-    end_bracket = str_locate_all(main_tex[i], "\\}")[[1]][, 1]
-    start_loc = start_bracket[1]
-    end_loc = which(start_bracket < end_bracket[1])
-    end_loc = end_bracket[end_loc[length(end_loc)]]
-    title = str_sub(main_tex[i], start_loc + 1, end_loc - 1)
-
-    ## Temporary fix for bug caused by Chapters being split over multiple lines
-    if (any(length(title) == 0, is.na(title))){
-      msg = glue::glue("\t{symbol$info} Chapter {i}: Skipping check- no closing bracket.")
-      message(blue(msg))
-    } else{
-
-    ## Take account of textorpdfstring brackets
-    if (str_detect(title, "texorpdfstring")) {
-      start_bracket = str_locate_all(title, "\\{")[[1]][, 1]
-      end_bracket = str_locate_all(title, "\\}")[[1]][, 1]
-      start_loc = start_bracket[1]
-      end_loc = which(start_bracket < end_bracket[1])
-      end_loc = end_bracket[end_loc[length(end_loc)]]
-      title = str_sub(title, start_loc + 1, end_loc - 1)
-    }
-
+  for (i in seq_along(chapters)) {
+    title = chapters[i]
     title_case = tools::toTitleCase(title)
     if (title_case != title) {
-      msg = glue::glue("\t{symbol$cross} Chapter {i}: {title_case} vs {title}")
+      msg = glue::glue("  {symbol$cross} Chapter {i}: {title_case} vs {title}")
       message(red(msg))
       error = TRUE
     } else {
-      msg = glue::glue("\t{symbol$tick} Chapter {i}: {title_case}")
+      msg = glue::glue("  {symbol$tick} Chapter {i}: {title_case}")
       message(yellow(msg))
     }
-  }
+
   }
   if (isTRUE(error)) {
-    stop(red("Please correct chapter titles"), call. = FALSE)
+    msg = glue::glue("{symbol$cross} Please correct chapter titles")
+    message(red(msg))
+    .jrnotes$error = TRUE
   } else {
     message(yellow(symbol$tick, "Titles look good"))
   }
