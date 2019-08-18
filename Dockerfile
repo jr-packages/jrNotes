@@ -6,8 +6,6 @@ FROM rocker/tidyverse:3.6
 
 RUN  apt-get update \
      && apt-get install -y --no-install-recommends \
-     ## Nice Google fonts
-     fonts-roboto \
      ## used by some base R plots
      ghostscript \
      ## used to build rJava and other packages
@@ -33,9 +31,9 @@ RUN  apt-get update \
      ## spatial
      libudunits2-dev libgdal-dev \
      ## Tex
-     texlive texlive-xetex texlive-generic-recommended \
+     texlive texlive-xetex texlive-generic-recommended  \
      ## Fonts
-     fonts-linuxlibertine \
+     fonts-linuxlibertine fonts-roboto texlive-fonts-extra \
      # curl for tagging step
      curl \
      # python
