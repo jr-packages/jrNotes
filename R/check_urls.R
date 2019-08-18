@@ -1,4 +1,4 @@
-
+globalVariables(c("X1", "X2", "X3"))
 #' @importFrom httr GET
 #' @import crayon cli
 check_urls = function() {
@@ -9,7 +9,13 @@ check_urls = function() {
   }
   message(yellow(symbol$circle_filled, "Checking URLS"))
   tokens = read_tokens()
-  urls = dplyr::filter(tokens, X1 == "url")$X3
+  urls = dplyr::filter(tokens, X1 == "url")$X3 #nolint
+
+  # Old fashioned URL grep
+  urls = c(urls, system2("grep",  c('-Eo "(http|https)://[a-zA-Z0-9./?=_-]*"',
+                     'main.tex'), stdout = TRUE)) #nolint
+  urls = unique(urls)
+
 
   bad_urls = FALSE
   for (url in urls) {

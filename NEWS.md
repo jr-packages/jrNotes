@@ -1,3 +1,6 @@
+# 0.5.0
+  * Extract latex tags using xparse from latex
+
 # 0.4.23
   * More tweaks to section detection
   * Update spell check

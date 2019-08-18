@@ -12,18 +12,15 @@ check_chapter_titles = function() {
   tokens = read_tokens()
   chapters = tokens %>%
     dplyr::filter(X1 == "chapter") %>%
-    dplyr::mutate(texorpdf = str_detect(X3, "\\\\texorpdf")) %>%
+    dplyr::mutate(texorpdf = str_detect(X3, "\\\\texorpdf")) %>% #nolint
     dplyr::mutate(text = X3) %>%
     dplyr::mutate(text = if_else(texorpdf,
-                                 str_match(X3, "^\\\\texorpdfstring \\{(.*)\\}\\{.*\\}$")[,2],
+                                 str_match(X3, "^\\\\texorpdfstring \\{(.*)\\}\\{.*\\}$")[, 2],
                                  text)) %>%
     dplyr::mutate(text = str_trim(text)) %>%
     dplyr::select(text) %>%
     dplyr::pull()
 
-  ## First extract chapters
-  #chapters = stringr::str_extract(main_tex, "^\\\\chapter\\{")
-  #main_tex = main_tex[which(!is.na(chapters))]
   error = FALSE
   for (i in seq_along(chapters)) {
     title = chapters[i]

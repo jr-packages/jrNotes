@@ -11,6 +11,8 @@ tokenise = function() {
   message(yellow(symbol$tick, "Tokens created"))
 }
 
+globalVariables("text")
+#' @importFrom utils read.delim
 read_tokens = function() {
   tokens = read.delim("extractor.csv", sep = "|",
                       header = FALSE,
