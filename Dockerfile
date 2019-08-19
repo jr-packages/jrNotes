@@ -1,12 +1,24 @@
-# XXX: This provides packages that are pre-build
-# XXX: In theory this could mean we omit a required pkg from jrXXX and not be aware.
-# XXX: The alternative is to use rocker/r-base and build everything by hand. 
-# XXX: Not using rocker/verse - funny tinytex things that mess things up.
-FROM rocker/tidyverse:3.6
+FROM rocker/r-ubuntu:18.04
 
-RUN  apt-get update \
-     && apt-get install -y --no-install-recommends \
-     ## used by some base R plots
+# docker run --rm -ti jrpackages/jrnotes /bin/bash
+
+RUN apt-get update -qq && apt-get -y --no-install-recommends install \
+  libxml2-dev \
+  libcairo2-dev \
+  libsqlite3-dev \
+  libmariadbd-dev \
+  libmariadb-client-lgpl-dev \
+  libpq-dev \
+  libssh2-1-dev \
+  unixodbc-dev \
+  libsasl2-dev \
+  libcurl4-openssl-dev
+
+RUN apt-get update -qq && apt-get -y install \
+   libmysqlclient-dev
+   
+RUN apt-get update -qq && apt-get -y --no-install-recommends install \
+   ## used by some base R plots
      ghostscript \
      ## used to build rJava and other packages
      libbz2-dev libicu-dev liblzma-dev \
@@ -40,12 +52,10 @@ RUN  apt-get update \
      python3-pip python3-venv libffi-dev \
      # ffmpeg for animations in slides
      ffmpeg \
+     # ssl for R packages
+     libssl-dev \
      && apt-get clean \
      && rm -rf /var/lib/apt/lists/*
-
-## Hack to get github package installed
-## Once countdown is on CRAN, then update jrPres and remove this line
-RUN Rscript -e 'if (!require(countdown)) remotes::install_github("gadenbuie/countdown")'
 
 RUN pip3 install virtualenv \
     # ## Link to update.r for gitlab runner
@@ -57,8 +67,19 @@ RUN pip3 install virtualenv \
     # Need for littler
     #&& echo ".libPaths('/rpackages/')" >> /usr/local/lib/R/etc/Rprofile.site \
     && echo "options(repos = c(CRAN = 'https://cran.rstudio.com/', \
-            jrpackages = 'https://jr-packages.github.io/drat/'))" >> /usr/local/lib/R/etc/Rprofile.site
-  
+            jrpackages = 'https://jr-packages.github.io/drat/'))" >> /usr/lib/R/etc/Rprofile.site
+
+
+RUN install2.r --error -n -1 \
+    dplyr \
+    remotes 
+
+
+## Hack to get github package installed
+## Once countdown is on CRAN, then update jrPres and remove this line
+RUN Rscript -e 'if (!require(countdown)) remotes::install_github("gadenbuie/countdown")'
+
+
 ## Install jrNotes jrPresentation
 ## XXX: If jrPres is updated, this docker image is __not__ automatically updated
 RUN  install2.r -n -1 -d TRUE --error jrNotes jrPresentation \
