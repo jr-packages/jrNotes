@@ -51,17 +51,17 @@ RUN pip3 install virtualenv \
     # ## Link to update.r for gitlab runner
     &&  ln -s /usr/local/lib/R/site-library/littler/examples/update.r /usr/local/bin/update.r \
     # # R Package directories
-    && mkdir rpackages && chmod a+r rpackages \
+    #&& mkdir rpackages && chmod a+r rpackages \
     # Packages stored in /rpackages for everyone
-    && echo "R_LIBS=/rpackages/" >> /usr/local/lib/R/etc/Renviron.site \
+    #&& echo "R_LIBS=/rpackages/" >> /usr/local/lib/R/etc/Renviron.site \
     # Need for littler
-    && echo ".libPaths('/rpackages/')" >> /usr/local/lib/R/etc/Rprofile.site \
+    #&& echo ".libPaths('/rpackages/')" >> /usr/local/lib/R/etc/Rprofile.site \
     && echo "options(repos = c(CRAN = 'https://cran.rstudio.com/', \
             jrpackages = 'https://jr-packages.github.io/drat/'))" >> /usr/local/lib/R/etc/Rprofile.site
   
 ## Install jrNotes jrPresentation
 ## XXX: If jrPres is updated, this docker image is __not__ automatically updated
-RUN  install2.r -n -1 -d TRUE -l /rpackages/ --error jrNotes jrPresentation \
+RUN  install2.r -n -1 -d TRUE --error jrNotes jrPresentation \
     ## && update.r -l /usr/local/lib/R/site-library -n -1 \
     ## Clean-up; reduce docker size
     && rm -rf  /tmp/downloaded_packages/
