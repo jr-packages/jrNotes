@@ -12,13 +12,9 @@ RUN apt-get update -qq && apt-get -y --no-install-recommends install \
   libssh2-1-dev \
   unixodbc-dev \
   libsasl2-dev \
-  libcurl4-openssl-dev
-
-RUN apt-get update -qq && apt-get -y install \
-   libmysqlclient-dev
-   
-RUN apt-get update -qq && apt-get -y --no-install-recommends install \
-   ## used by some base R plots
+  libcurl4-openssl-dev \
+  libmysqlclient-dev \
+     ## used by some base R plots
      ghostscript \
      ## used to build rJava and other packages
      libbz2-dev libicu-dev liblzma-dev \
@@ -43,11 +39,11 @@ RUN apt-get update -qq && apt-get -y --no-install-recommends install \
      ## spatial
      libudunits2-dev libgdal-dev \
      ## Tex
-     texlive texlive-xetex texlive-generic-recommended latexmk \
+     texlive texlive-xetex texlive-generic-recommended latexmk pandoc \
      ## Fonts
      fonts-linuxlibertine fonts-roboto texlive-fonts-extra \
-     # curl for tagging step
-     curl \
+     # curl & git for tagging step
+     curl git \
      # python
      python3-pip python3-venv libffi-dev \
      # ffmpeg for animations in slides
@@ -59,20 +55,12 @@ RUN apt-get update -qq && apt-get -y --no-install-recommends install \
 
 RUN pip3 install virtualenv \
     # ## Link to update.r for gitlab runner
-    &&  ln -s /usr/local/lib/R/site-library/littler/examples/update.r /usr/local/bin/update.r \
-    # # R Package directories
-    #&& mkdir rpackages && chmod a+r rpackages \
-    # Packages stored in /rpackages for everyone
-    #&& echo "R_LIBS=/rpackages/" >> /usr/local/lib/R/etc/Renviron.site \
+    &&  ln -s /usr/lib/R/site-library/littler/examples/update.r /usr/local/bin/update.r \
     # Need for littler
-    #&& echo ".libPaths('/rpackages/')" >> /usr/local/lib/R/etc/Rprofile.site \
     && echo "options(repos = c(CRAN = 'https://cran.rstudio.com/', \
             jrpackages = 'https://jr-packages.github.io/drat/'))" >> /usr/lib/R/etc/Rprofile.site
 
-
-RUN install2.r --error -n -1 \
-    dplyr \
-    remotes 
+RUN install2.r --error -n -1 remotes 
 
 
 ## Hack to get github package installed
