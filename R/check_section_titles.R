@@ -25,7 +25,6 @@ standard_exceptions = function(title, title_case) {
            "html", "yaml", "csv", "python")
   to = c("R", "Shiny", "DT", "RStudio", "ANOVA", "UK", "USA",
          "HTML", "YAML", "CSV", "Python")
-  #parsed_title = title
   for (i in seq_along(from)) {
     # One word
     (title_case = str_replace(title_case,
@@ -50,7 +49,6 @@ standard_exceptions = function(title, title_case) {
                               paste0(" ", from[i], "\\?"),
                               paste0(" ", to[i], "\\?")))
   }
-  #title_case = parsed_title
   latex_environments(title, title_case)
 }
 
