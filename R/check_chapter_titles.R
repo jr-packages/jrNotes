@@ -25,6 +25,11 @@ check_chapter_titles = function() {
   for (i in seq_along(chapters)) {
     title = chapters[i]
     title_case = tools::toTitleCase(title)
+
+    if (title_case != title) {
+      title_case = standard_exceptions(title, title_case)
+    }
+
     if (title_case != title) {
       msg = glue::glue("  {symbol$cross} Chapter {i}: {title_case} vs {title}")
       message(red(msg))

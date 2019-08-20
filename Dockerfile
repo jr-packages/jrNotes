@@ -1,11 +1,7 @@
 FROM jumpingrivers/base-image
 # docker run --rm -ti jrpackages/jrnotes /bin/bash
 
-RUN pip3 install virtualenv \
-    # Link to update.r for gitlab runner
-    &&  ln -s /usr/lib/R/site-library/littler/examples/update.r /usr/local/bin/update.r \
-    # Need for littler
-    && echo "options(repos = c(CRAN = 'https://cran.rstudio.com/', \
+RUN echo "options(repos = c(CRAN = 'https://cran.rstudio.com/', \
             jrpackages = 'https://jr-packages.github.io/drat/'))" >> /usr/lib/R/etc/Rprofile.site
 
 ## Hack to get github package installed

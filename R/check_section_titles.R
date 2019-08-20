@@ -1,39 +1,6 @@
 globalVariables(c("text", "texorpdf"))
 
-#' @importFrom dplyr row_number
-standard_exceptions = function(title) {
-  from = c("r", "shiny", "dt", "rstudio", "anova", "uk", "usa",
-           "html", "yaml")
-  to = c("R", "Shiny", "DT", "RStudio", "ANOVA", "UK", "USA",
-         "HTML", "YAML")
-  title_case = stringr::str_to_sentence(title)
-
-  for (i in seq_along(from)) {
-    # One word
-    (title_case = str_replace(title_case,
-                             paste0("^", str_to_title(from[i]), "$"),
-                             to[i]))
-
-
-    # Space either side
-    (title_case = str_replace(title_case,
-                             paste0(" ", from[i], " "),
-                             paste0(" ", to[i], " ")))
-    # End of heading
-    (title_case = str_replace(title_case,
-                             paste0(" ", from[i], "$"),
-                             paste0(" ", to[i])))
-
-    #Start of heading
-    (title_case = str_replace(title_case,
-                             paste0("^", str_to_title(from[i]), " "),
-                             paste0(to[i], " ")))
-    # Question marks
-    (title_case = str_replace(title_case,
-                             paste0(" ", from[i], "\\?"),
-                             paste0(" ", to[i], "\\?")))
-  }
-
+latex_environments = function(title, title_case) {
   if (str_detect(string = title, "\\\\texttt \\{.*\\}")) { # nolint
     locs = str_locate(string = title, "\\\\texttt \\{.*\\}")[1, ] # nolint
     str_sub(title_case, locs[1], locs[2]) = str_sub(title, locs[1], locs[2])
@@ -47,7 +14,44 @@ standard_exceptions = function(title) {
     locs = str_locate(title[1], ": [A-Z]")[1, ] # nolint
     str_sub(title_case, locs[1], locs[2]) = str_sub(title, locs[1], locs[2])
   }
-  return(title_case)
+  if (title == title_case) return(title)
+  else return(title_case)
+}
+
+
+#' @importFrom dplyr row_number
+standard_exceptions = function(title, title_case) {
+  from = c("r", "shiny", "dt", "rstudio", "anova", "uk", "usa",
+           "html", "yaml", "csv", "python")
+  to = c("R", "Shiny", "DT", "RStudio", "ANOVA", "UK", "USA",
+         "HTML", "YAML", "CSV", "Python")
+  #parsed_title = title
+  for (i in seq_along(from)) {
+    # One word
+    (title_case = str_replace(title_case,
+                              paste0("^", str_to_title(from[i]), "$"),
+                              to[i]))
+
+    # Space either side
+    (title_case = str_replace(title_case,
+                              paste0(" ", from[i], " "),
+                              paste0(" ", to[i], " ")))
+    # End of heading
+    (title_case = str_replace(title_case,
+                              paste0(" ", from[i], "$"),
+                              paste0(" ", to[i])))
+
+    #Start of heading
+    (title_case = str_replace(title_case,
+                              paste0("^", str_to_title(from[i]), " "),
+                              paste0(to[i], " ")))
+    # Question marks
+    (title_case = str_replace(title_case,
+                              paste0(" ", from[i], "\\?"),
+                              paste0(" ", to[i], "\\?")))
+  }
+  #title_case = parsed_title
+  latex_environments(title, title_case)
 }
 
 check_section_titles = function() {
@@ -80,7 +84,7 @@ check_section_titles = function() {
       title = sections$text[i]
       title_case = stringr::str_to_sentence(title)
       if (title_case != title) {
-        title_case = standard_exceptions(title)
+        title_case = standard_exceptions(title, title_case)
       }
       if (title_case != title) {
         msg = glue::glue("  {symbol$info} {sections[i, 1]}: {title_case} vs {title}")
