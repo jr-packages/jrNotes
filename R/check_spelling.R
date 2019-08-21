@@ -34,7 +34,7 @@ check_spelling = function() {
   message(blue(msg))
 
   for (i in 1:nrow(in_words)) {
-    msg = glue("\t {symbol$info} {in_words[i, 1]}  {in_words[i, 2]}")
+    msg = glue("  {symbol$info} {in_words[i, 1]}  {in_words[i, 2]}")
     message(blue(msg))
   }
   make_wordlist(in_words)
