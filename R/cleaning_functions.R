@@ -13,7 +13,8 @@ clean = function() {
                 "*.vrb", "*.fdb_latexmk", "*.fls", "*.xwm")
   bash_rm(latex_gen)
   r_gen = c("Rplots.pdf", "*.RData", "main.pdf", "*_files", "*_cache",
-            "final/", "main.tex", "*.html", "_figure/")
+            "final/", "main.tex", "*.html", "_figure/",
+            "_*\\.knit\\.md", "_*\\.utf8\\.md", "_book")
   bash_rm(r_gen)
   left_over = c("\\#*\\#")
   bash_rm(left_over)

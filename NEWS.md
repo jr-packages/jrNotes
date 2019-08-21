@@ -1,3 +1,7 @@
+# Dev
+  * Update cleaners for HTML books
+  * Improve title checking
+
 # 0.5.0
   * Extract latex tags using xparse from latex
 
