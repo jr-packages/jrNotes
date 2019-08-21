@@ -22,9 +22,9 @@ latex_environments = function(title, title_case) {
 #' @importFrom dplyr row_number
 standard_exceptions = function(title, title_case) {
   from = c("r", "shiny", "dt", "rstudio", "anova", "uk", "usa",
-           "html", "yaml", "csv", "python")
+           "html", "yaml", "csv", "python", "loocv")
   to = c("R", "Shiny", "DT", "RStudio", "ANOVA", "UK", "USA",
-         "HTML", "YAML", "CSV", "Python")
+         "HTML", "YAML", "CSV", "Python", "LOOCV")
   for (i in seq_along(from)) {
     # One word
     (title_case = str_replace(title_case,
