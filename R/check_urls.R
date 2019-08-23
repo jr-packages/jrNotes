@@ -12,8 +12,11 @@ check_urls = function() {
   urls = dplyr::filter(tokens, X1 == "url")$X3 #nolint
 
   # Old fashioned URL grep
-  urls = c(urls, system2("grep",  c('-Eo "(http|https)://[a-zA-Z0-9./?=_-]*"',
-                     'main.tex'), stdout = TRUE)) #nolint
+  # No URLs gives a warning
+  grepped_url = suppressWarnings(system2("grep",
+                                         c('-Eo "(http|https)://[a-zA-Z0-9./?=_-]*"', 'main.tex'),
+                                         stdout = TRUE))
+  urls = c(urls,  grepped_url)
   urls = unique(urls)
 
 
