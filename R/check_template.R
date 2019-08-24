@@ -109,8 +109,15 @@ check_template = function(type = "r") {
     # Feedback loop if we test template on it's on master
     return(invisible(NULL))
   }
+  type = get_repo_language()
+
   message(yellow(symbol$circle_filled, "Checking template files"))
 
+  if (".gitlab-ci.yml" %in% list.files("../", all.files = TRUE)) {
+    dir = "../"
+  } else {
+    dir = "./"
+  }
   message("  ", yellow(symbol$circle_filled, "Cloning template repo"))
   tmp_dir = tempdir()
   on.exit(unlink(tmp_dir))
@@ -128,14 +135,15 @@ check_template = function(type = "r") {
              "Makefile", ".gitignore",
              "notes/Makefile", "notes/main.Rmd",
              "slides/Makefile")
+  fnames = file.path(dir, fnames)
 
   if (type == "r") {
     template_fnames = get_r_template_fnames(template_repo_loc)
-    runner_check = check_gitlab_runner(".gitlab-ci.yml",
+    runner_check = check_gitlab_runner(file.path(dir, ".gitlab-ci.yml"),
                       file.path(template_repo_loc, ".gitlab-ci.yml"))
   } else if (type == "python") {
     template_fnames = get_python_template_fnames(template_repo_loc)
-    runner_check = check_gitlab_runner(".gitlab-ci.yml",
+    runner_check = check_gitlab_runner(file.path(dir, ".gitlab-ci.yml"),
                     file.path(template_repo_loc, "python-gitlab-ci.yml"))
   }
 
@@ -163,7 +171,6 @@ check_template = function(type = "r") {
         message(msg)
         fs::file_copy(template_fnames[i], fnames[i], overwrite = TRUE)
       }
-
     }
   }
   if ( (any(changed) || isFALSE(runner_check)) &&
@@ -174,9 +181,10 @@ check_template = function(type = "r") {
          request and ask for feedback."), call. = FALSE)
   }
 
-  if (length(list.files(pattern = "*\\.Rproj")) > 0L) {
+  if (length(list.files(pattern = "*\\.Rproj", path = dir)) > 0L) {
     msg = glue("{symbol$cross} Don't add Rproj files to the base directory.")
     stop(red(msg), call. = FALSE)
   }
   message(yellow(symbol$tick, "Template files look good"))
+  return(invisible(NULL))
 }

@@ -1,14 +1,29 @@
 check_code_style = function() {
-  message(yellow(symbol$circle_filled, "Checking lint"))
+  language = get_repo_language()
+  if (language == "python") return (invisible(NULL))
+
+    message(yellow(symbol$circle_filled, "Checking lint...check_code_style()"))
   if (isFALSE(config::get("lintr"))) {
     return(invisible(NULL))
   }
   fnames = list.files(pattern = "^c.*Rmd$")
+  bad_lints = FALSE
   for (i in seq_along(fnames)) {
     message("  ", yellow(symbol$circle_filled, "Checking ", fnames[i]))
-    lintr::lint(fnames[i])
+    l = lintr::lint(fnames[i])
+    if (length(l) > 0) {
+      message(red(symbol$cross, fnames[i]))
+      print(l)
+      bad_lints = TRUE
+    }
   }
 
+  if (bad_lints) {
+    message(red(symbol$cross, "Fix styling"))
+    .jrnotes$error = TRUE
+  } else {
+    message(yellow(symbol$tick, "Styling looks good"))
+  }
 }
 #' Lintr functions
 #'

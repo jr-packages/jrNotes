@@ -13,9 +13,11 @@ get_git_url = function(dir = ".") {
   l[grep(pattern = "\turl", l)]
 }
 
+#' @importFrom praise praise
 #' @importFrom qpdf pdf_combine
 create_final_dir = function(note_name, pracs) {
   check_master()
+  check_template()
   check_pkgs()
   # #
   check_spelling()
@@ -28,12 +30,14 @@ create_final_dir = function(note_name, pracs) {
   check_references()
   check_urls()
   # Check lint
-  #check_code_style()
+  check_code_style() # nolint
   # Check version number
   check_version()
 
   if (isTRUE(.jrnotes$error)) {
     stop("Please fix errors", call. = FALSE)
+  } else {
+    message(green(symbol$star, praise::praise()))
   }
   dir.create("final", showWarnings = FALSE)
   # add notes
@@ -72,7 +76,6 @@ get_r_pkg_name = function() {
   pkg[, length(pkg)]
 }
 
-
 # Replace spaces with -
 get_concat_course_name = function() {
   if (!is_legacy()) {
@@ -96,7 +99,6 @@ get_concat_course_name = function() {
 #' @import glue
 #' @export
 create_final = function() {
-  ## check_pdftk() #nolint
   note_name = get_concat_course_name()
   if (!is_legacy() && isFALSE(config::get()$vignettes)) {
     pracs = NULL

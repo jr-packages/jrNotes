@@ -7,14 +7,14 @@ check_urls = function() {
     message(yellow("No internet connection - skipping URL check"))
     return(invisible(NULL))
   }
-  message(yellow(symbol$circle_filled, "Checking URLS"))
+  message(yellow(symbol$circle_filled, "Checking URLS...check_urls()"))
   tokens = read_tokens()
   urls = dplyr::filter(tokens, X1 == "url")$X3 #nolint
 
   # Old fashioned URL grep
   # No URLs gives a warning
   grepped_url = suppressWarnings(system2("grep",
-                                         c('-Eo "(http|https)://[a-zA-Z0-9./?=_-]*"', 'main.tex'),
+                                         c('-Eo "(http|https)://[a-zA-Z0-9./?=_-]*"', 'main.tex'), #nolint
                                          stdout = TRUE))
   urls = c(urls,  grepped_url)
   urls = unique(urls)
@@ -38,7 +38,7 @@ check_urls = function() {
 
   }
   if (bad_urls) {
-    message(red("Fix broken URLS"), call. = FALSE)
+    message(red("Fix broken URLS"))
     .jrnotes$error = TRUE
   } else {
     message(yellow(symbol$tick, "URLs look good"))

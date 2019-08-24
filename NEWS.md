@@ -1,6 +1,9 @@
 # Dev
   * Update cleaners for HTML books
   * Improve title checking
+  * Move check_template to create_final
+  * Move check_lint to create_final
+  * Try to detect lanaguage
 
 # 0.5.0
   * Extract latex tags using xparse from latex

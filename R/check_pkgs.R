@@ -5,11 +5,11 @@
 #' @importFrom tibble as_tibble
 check_pkgs = function() {
   if (httr::GET("www.google.com")$status != 200) {
-    message(yellow("No internet connection - skipping PKG check"))
+    message(blue("No internet connection - skipping PKG check"))
     return(invisible(NULL))
   }
   message(yellow(symbol$circle_filled, "Checking package versions"))
-
+  message(getwd())
   r = getOption("repos")
   jr_pkgs = "https://jr-packages.github.io/drat/"
   if (!(jr_pkgs %in% r)) {
@@ -17,8 +17,8 @@ check_pkgs = function() {
     options(repos = r)
   }
   if (!is_legacy()) {
-    con = config::get()
-    if (!isTRUE(con$python3)) {
+    language = get_repo_language()
+    if (language == "r") {
       pkgs = get_r_pkg_name()
     } else {
       pkgs = "reticulate"
