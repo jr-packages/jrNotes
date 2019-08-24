@@ -37,7 +37,8 @@ create_final_dir = function(note_name, pracs) {
   if (isTRUE(.jrnotes$error)) {
     stop("Please fix errors", call. = FALSE)
   } else {
-    message(green(symbol$star, praise::praise()))
+    message(green(symbol$star, symbol$star, praise::praise(),
+                  symbol$star, symbol$star))
   }
   dir.create("final", showWarnings = FALSE)
   # add notes
