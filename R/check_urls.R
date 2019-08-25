@@ -19,23 +19,27 @@ check_urls = function() {
   urls = c(urls,  grepped_url)
   urls = unique(urls)
 
-
   bad_urls = FALSE
   for (url in urls) {
     message("  ", yellow(symbol$circle_filled, "Checking ", url))
-    status = GET(url)$status
-    if (status != 200) {
-      msg = glue("  {symbol$cross} {url}  status: {status}")
-      message(red(msg))
-    }
-    if (status == 404) {
-      bad_urls = TRUE
+    ping = try(httr::GET(url), silent = TRUE)
+
+    if (class(ping) == "try-error") {
+      msg = glue("  {symbol$info} {url}: {ping}")
+      message(blue(msg))
+    } else {
+      if (ping$status != 200) {
+        msg = glue("  {symbol$cross} {url}  status: {ping$status}")
+        message(red(msg))
+      }
+      if (ping$status == 404) {
+        bad_urls = TRUE
+      }
     }
     if (str_detect(url, "index\\.html")) {
       msg = glue("  {symbol$info} {url}  You can probably delete index.html")
       message(blue(msg))
     }
-
   }
   if (bad_urls) {
     message(red("Fix broken URLS"))

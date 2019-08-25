@@ -9,7 +9,6 @@ check_pkgs = function() {
     return(invisible(NULL))
   }
   message(yellow(symbol$circle_filled, "Checking package versions"))
-  message(getwd())
   r = getOption("repos")
   jr_pkgs = "https://jr-packages.github.io/drat/"
   if (!(jr_pkgs %in% r)) {
