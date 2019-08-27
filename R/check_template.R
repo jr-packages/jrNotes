@@ -83,7 +83,7 @@ get_r_template_fnames = function(template_repo_loc) {
   file.path(template_repo_loc,
             c("notes/notes.Rproj", "slides/slides.Rproj",
               "Makefile", ".gitignore",
-              "notes/Makefile", "notes/main.Rmd",
+              "notes/Makefile", "notes/main.Rmd", "notes/references.bib",
               "slides/Makefile"))
 }
 
@@ -91,7 +91,7 @@ get_python_template_fnames = function(template_repo_loc) {
   file.path(template_repo_loc,
             c("notes/notes.Rproj", "slides/slides.Rproj",
               "Makefile-python", ".gitignore",
-              "notes/Makefile-python", "notes/main.Rmd",
+              "notes/Makefile-python", "notes/main.Rmd", "notes/references.bib",
               "slides/Makefile-python"))
 }
 
@@ -101,10 +101,10 @@ get_python_template_fnames = function(template_repo_loc) {
 #' These cannonical files are identical for all notes, e.g. Makefiles,
 #' main.Rmd.
 #'
-#' Typically this used by the gitlab-ci runner.
-#' @param type Which template to use. Default \code{r}. Could also be \code{python}
+#' Typically this used by the gitlab-ci runner. The programming
+#' language is inferred via \code{get_repo_language}.
 #' @export
-check_template = function(type = "r") {
+check_template = function() {
   if (Sys.getenv("CI_PROJECT_NAME") == "template") {
     # Feedback loop if we test template on it's on master
     return(invisible(NULL))

@@ -24,10 +24,10 @@ create_final_dir = function(note_name, pracs) {
   tokenise()
   check_chapter_titles()
   check_section_titles()
-  #
+
   # # Latex checks
-  check_labels()
-  check_references()
+  check_latex()
+  # Check urls
   check_urls()
   # Check lint
   check_code_style() # nolint
