@@ -133,7 +133,7 @@ check_template = function(type = "r") {
   fnames = c(glue("notes/notes_{proj_name}.Rproj"),
              glue("slides/slides_{proj_name}.Rproj"),
              "Makefile", ".gitignore",
-             "notes/Makefile", "notes/main.Rmd",
+             "notes/Makefile", "notes/main.Rmd", "notes/references.bib",
              "slides/Makefile")
   fnames = file.path(dir, fnames)
 
