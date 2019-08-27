@@ -22,9 +22,11 @@ latex_environments = function(title, title_case) {
 #' @importFrom dplyr row_number
 standard_exceptions = function(title, title_case) {
   from = c("r", "shiny", "dt", "rstudio", "anova", "uk", "usa",
-           "html", "yaml", "csv", "python", "loocv", "oop")
+           "html", "yaml", "csv", "python", "loocv", "oop", "esri",
+           "geojson", "crs")
   to = c("R", "Shiny", "DT", "RStudio", "ANOVA", "UK", "USA",
-         "HTML", "YAML", "CSV", "Python", "LOOCV", "OOP")
+         "HTML", "YAML", "CSV", "Python", "LOOCV", "OOP", "ESRI",
+         "GeoJSON", "CRS")
   for (i in seq_along(from)) {
     # One word
     (title_case = str_replace(title_case,
@@ -54,7 +56,8 @@ standard_exceptions = function(title, title_case) {
 
 check_section_titles = function() {
 
-  message(yellow(symbol$circle_filled, "Checking section for sentence case"))
+  message(yellow(symbol$circle_filled,
+                 "Checking section for sentence case...check_section_titles()"))
   if (!file.exists("extractor.csv")) return()
 
   tokens = read_tokens()

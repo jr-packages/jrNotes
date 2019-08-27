@@ -8,7 +8,8 @@
 check_chapter_titles = function() {
 
   if (!file.exists("extractor.csv")) return()
-  message(yellow(symbol$circle_filled, "Checking chapters for title case"))
+  message(yellow(symbol$circle_filled,
+                 "Checking chapters for title case...check_chapter_titles()"))
   tokens = read_tokens()
   chapters = tokens %>%
     dplyr::filter(X1 == "chapter") %>%

@@ -8,12 +8,10 @@ Ensures that certain notes files are the same as the notes template.
 These cannonical files are identical for all notes, e.g. Makefiles,
 main.Rmd.
 
-Typically this used by the gitlab-ci runner.}
+Typically this used by the gitlab-ci runner. The programming
+language is inferred via \code{get_repo_language}.}
 \usage{
-check_template(type = "r")
-}
-\arguments{
-\item{type}{Which template to use. Default \code{r}. Could also be \code{python}}
+check_template()
 }
 \description{
 Checks notes files are the same as template
@@ -22,5 +20,6 @@ Ensures that certain notes files are the same as the notes template.
 These cannonical files are identical for all notes, e.g. Makefiles,
 main.Rmd.
 
-Typically this used by the gitlab-ci runner.
+Typically this used by the gitlab-ci runner. The programming
+language is inferred via \code{get_repo_language}.
 }

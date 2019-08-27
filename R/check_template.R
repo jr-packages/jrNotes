@@ -83,7 +83,7 @@ get_r_template_fnames = function(template_repo_loc) {
   file.path(template_repo_loc,
             c("notes/notes.Rproj", "slides/slides.Rproj",
               "Makefile", ".gitignore",
-              "notes/Makefile", "notes/main.Rmd", "notes/references.bib",
+              "notes/Makefile", "notes/main.Rmd",
               "slides/Makefile"))
 }
 
@@ -91,7 +91,7 @@ get_python_template_fnames = function(template_repo_loc) {
   file.path(template_repo_loc,
             c("notes/notes.Rproj", "slides/slides.Rproj",
               "Makefile-python", ".gitignore",
-              "notes/Makefile-python", "notes/main.Rmd", "notes/references.bib",
+              "notes/Makefile-python", "notes/main.Rmd",
               "slides/Makefile-python"))
 }
 
@@ -133,7 +133,7 @@ check_template = function() {
   fnames = c(glue("notes/notes_{proj_name}.Rproj"),
              glue("slides/slides_{proj_name}.Rproj"),
              "Makefile", ".gitignore",
-             "notes/Makefile", "notes/main.Rmd", "notes/references.bib",
+             "notes/Makefile", "notes/main.Rmd",
              "slides/Makefile")
   fnames = file.path(dir, fnames)
 
@@ -173,6 +173,16 @@ check_template = function() {
       }
     }
   }
+
+  refs_path = file.path(dir, "notes/references.bib")
+  if (!file.exists(refs_path)) {
+    msg = blue(glue("  {symbol$info} notes/references.bib is missing"))
+    message(msg)
+    fs::file_copy(file.path(template_repo_loc, "notes/references.bib"), refs_path)
+    msg = green(glue("  {symbol$tick} Updating references.bib"))
+    message(msg)
+  }
+
   if ( (any(changed) || isFALSE(runner_check)) &&
       nchar(Sys.getenv("GITLAB_CI")) != 0) {
     stop(red("Files differs from template repo.
