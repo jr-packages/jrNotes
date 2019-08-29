@@ -24,7 +24,7 @@ create_final_dir = function(note_name, pracs) {
   tokenise()
   check_chapter_titles()
   check_section_titles()
-
+  check_fullstops()
   # # Latex checks
   check_latex()
   # Check urls

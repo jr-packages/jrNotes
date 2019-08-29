@@ -16,6 +16,16 @@ check_code_style = function() {
       print(l)
       bad_lints = TRUE
     }
+    ## Check that library calls are correctly quoted
+    ## library("XXX") not library(XXX) #nolint
+    r = readLines(fnames[i])
+    libraries = r[stringr::str_detect(r, "^library\\(.*\\)$")]
+    is_quoted = stringr::str_detect(libraries, '"', negate = FALSE)
+    if (any(!is_quoted)) {
+      msg = paste0(symbol$cross, " Quote package names: ", libraries[!is_quoted], collapse = "\n")
+      message(red(msg))
+      bad_lints = TRUE
+    }
   }
 
   if (bad_lints) {
