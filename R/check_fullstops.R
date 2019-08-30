@@ -7,10 +7,10 @@ check_fullstops = function() {
   tokens = tibble::as_tibble(tokens)
   issues = tokens %>%
     dplyr::filter(X1 %in% c("marginnote", "sidenote", "caption")) %>%
-    dplyr::filter(str_detect(X2, "\\\\begin \\{flush", negate = TRUE)) %>% #nolint
-    dplyr::select(X1, X2) %>%
-    dplyr::filter(str_count(X2, " ") > 3) %>%
-    dplyr::filter(str_ends(X2, "[\\?|\\.|!|/]", negate = TRUE))
+    dplyr::filter(str_detect(X3, "\\\\begin \\{flush", negate = TRUE)) %>% #nolint
+    dplyr::select(X1, X3) %>%
+    dplyr::filter(str_count(X3, " ") > 3) %>%
+    dplyr::filter(str_ends(X3, "[\\?|\\.|!|/]", negate = TRUE))
 
   if (nrow(issues) == 0) {
     message(yellow(symbol$tick,
