@@ -290,3 +290,17 @@ skorch
 softmax
 softplus
 torchvision
+eZ
+getClass
+getGeneric
+getGenerics
+getMethod
+getSlots
+nclass
+obj
+OO
+OOP
+setClass
+setGeneric
+setMethod
+validObject
