@@ -8,7 +8,7 @@ check_pkgs = function() {
     message(blue("No internet connection - skipping PKG check"))
     return(invisible(NULL))
   }
-  message(yellow(symbol$circle_filled, "Checking package versions"))
+  message(yellow(symbol$circle_filled, "Checking package versions...check_pkgs()"))
   r = getOption("repos")
   jr_pkgs = "https://jr-packages.github.io/drat/"
   if (!(jr_pkgs %in% r)) {

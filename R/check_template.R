@@ -111,7 +111,7 @@ check_template = function() {
   }
   type = get_repo_language()
 
-  message(yellow(symbol$circle_filled, "Checking template files"))
+  message(yellow(symbol$circle_filled, "Checking template files...check_template()"))
 
   if (".gitlab-ci.yml" %in% list.files("../", all.files = TRUE)) {
     dir = "../"

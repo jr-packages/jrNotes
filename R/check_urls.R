@@ -14,7 +14,7 @@ check_urls = function() {
   # Old fashioned URL grep
   # No URLs gives a warning
   grepped_url = suppressWarnings(system2("grep",
-                                         c('-Eo "(http|https)://[a-zA-Z0-9./?=_-]*"', 'main.tex'), #nolint
+                                         c('-Eo "(http|https)://[a-zA-Z0-9./?=_-]*"', "main.tex"), #nolint
                                          stdout = TRUE))
   urls = c(urls,  grepped_url)
   urls = unique(urls)

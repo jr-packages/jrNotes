@@ -12,7 +12,7 @@ check_version = function() {
     return(invisible(TRUE))
   }
 
-  message(yellow(symbol$circle_filled, "Checking version in config.yml"))
+  message(yellow(symbol$circle_filled, "Checking version in config.yml...check_version()"))
   # Don't update on non-release
   r = readLines("../.gitlab-ci.yml")
   release = r[stringr::str_detect(r, "RELEASE:")]

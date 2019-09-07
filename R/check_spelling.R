@@ -19,7 +19,7 @@ make_wordlist = function(spelling_results) {
 check_spelling = function() {
   fnames = list.files(pattern = "^c.*\\.Rmd$")
   words =  get_words()
-  message(yellow(symbol$circle_filled, "Spell check (experimental)"))
+  message(yellow(symbol$circle_filled, "Spell check (experimental)...check_spelling()"))
 
 
   in_words = spelling::spell_check_files(fnames, lang = "en_GB", ignore = words)
