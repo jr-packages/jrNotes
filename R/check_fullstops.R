@@ -8,7 +8,7 @@ check_fullstops = function() {
 
   issues = tokens %>%
     mutate(chap_num = cumsum(X1 == "chapter")) %>%
-    dplyr::filter(X1 %in% c("marginnote", "sidenote", "caption")) %>%
+    dplyr::filter(X1 %in% c("marginnote", "sidenote", "caption", "footnote")) %>%
     dplyr::filter(str_detect(X3, "\\\\begin \\{flush", negate = TRUE)) %>% #nolint
     dplyr::select(X1, X3, chap_num) %>%
     dplyr::filter(str_count(X3, " ") > 1) %>%
