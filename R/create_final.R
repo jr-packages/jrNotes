@@ -33,6 +33,7 @@ create_final_dir = function(note_name, pracs) {
   check_code_style() # nolint
   # Check version number
   check_version()
+  check_unstaged()
 
   if (isTRUE(.jrnotes$error)) {
     stop("Please fix errors", call. = FALSE)

@@ -23,10 +23,10 @@ latex_environments = function(title, title_case) {
 standard_exceptions = function(title, title_case) {
   from = c("r", "shiny", "dt", "rstudio", "anova", "uk", "usa",
            "html", "yaml", "csv", "python", "loocv", "oop", "esri",
-           "geojson", "crs", "s3", "s4")
+           "geojson", "crs", "s3", "s4", "monte", "carlo", "ec2", "s3", "ram", "hdd", "ssd", "cpu")
   to = c("R", "Shiny", "DT", "RStudio", "ANOVA", "UK", "USA",
          "HTML", "YAML", "CSV", "Python", "LOOCV", "OOP", "ESRI",
-         "GeoJSON", "CRS", "S3", "S4")
+         "GeoJSON", "CRS", "S3", "S4", "Monte", "Carlo", "EC2", "S3", "RAM", "HDD", "SSD", "CPU")
   for (i in seq_along(from)) {
     # One word
     (title_case = str_replace(title_case,
@@ -42,7 +42,7 @@ standard_exceptions = function(title, title_case) {
                               paste0(" ", from[i], "$"),
                               paste0(" ", to[i])))
 
-    #Start of heading
+    # Start of heading
     (title_case = str_replace(title_case,
                               paste0("^", str_to_title(from[i]), " "),
                               paste0(to[i], " ")))
@@ -51,7 +51,7 @@ standard_exceptions = function(title, title_case) {
                               paste0(" ", from[i], "\\?"),
                               paste0(" ", to[i], "\\?")))
 
-    # Question marks
+    # Ap marks
     (title_case = str_replace(title_case,
                               paste0(" ", from[i], "'"),
                               paste0(" ", to[i], "'")))
