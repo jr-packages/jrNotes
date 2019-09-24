@@ -41,6 +41,6 @@ set_knitr_options = function(tidy = FALSE,
     if (!is.null(con$knitr)) {
       do.call(knitr::opts_chunk$set, con$knitr)
     }
-2  }
+  }
   check_python()
 }

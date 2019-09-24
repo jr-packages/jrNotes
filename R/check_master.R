@@ -20,4 +20,3 @@ check_master = function() {
   message(yellow(symbol$tick, "Update to date with master"))
   return(invisible(NULL))
 }
-
