@@ -12,7 +12,7 @@
 set_nice_par = function(mar = c(3, 3, 2, 1),
          mgp = c(2, 0.4, 0),
          tck = -.01,
-         cex.axis = 0.9,
+         cex.axis = 0.9, #nolint
          las = 1,
          mfrow = c(1, 1),
          ...) {

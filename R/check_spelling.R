@@ -33,7 +33,7 @@ check_spelling = function() {
               and append to inst/WORDLIST.")
   message(blue(msg))
 
-  for (i in 1:nrow(in_words)) {
+  for (i in seq_len(in_words)) {
     msg = glue("  {symbol$info} {in_words[i, 1]}  {in_words[i, 2]}")
     message(blue(msg))
   }

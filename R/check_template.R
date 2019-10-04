@@ -128,7 +128,7 @@ check_template = function() {
                           "git@gitlab.com:jumpingrivers-notes/template.git", #nolint
                           template_repo_loc))
 
-  proj_name = get_project_name() #nolint
+  proj_name = get_project_name()
   # Ensure Rproj are given sensible names - not just notes.Rproj
   fnames = c(glue("notes/notes_{proj_name}.Rproj"),
              glue("slides/slides_{proj_name}.Rproj"),
@@ -183,7 +183,7 @@ check_template = function() {
     message(msg)
   }
 
-  if ( (any(changed) || isFALSE(runner_check)) &&
+  if ((any(changed) || isFALSE(runner_check)) &&
       nchar(Sys.getenv("GITLAB_CI")) != 0) {
     stop(red("Files differs from template repo.
          Either revert your changes or update the template.

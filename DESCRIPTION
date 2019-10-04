@@ -1,7 +1,7 @@
 Type: Package
 Package: jrNotes
 Title: Jumping Rivers: Helper Package for Notes
-Version: 0.5.0.0018
+Version: 0.5.0.0019
 Authors@R: 
     person(given = "Jumping",
            family = "Rivers",
@@ -27,6 +27,7 @@ Imports:
     jrData,
     jrPresentation (>= 0.1.18),
     knitr (>= 1.22),
+    lintr (>= 2.0.0),
     namer (>= 0.1.4),
     praise,
     purrr,
@@ -39,7 +40,6 @@ Imports:
 Suggests:
     drat,
     formatR,
-    lintr,
     rmarkdown (>= 1.12),
     testthat
 VignetteBuilder: 

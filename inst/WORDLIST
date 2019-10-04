@@ -326,3 +326,9 @@ sp
 tilda
 WGS
 newpage
+LazyLoad
+LF
+libPaths
+Makevars
+mypkg
+Rcpp

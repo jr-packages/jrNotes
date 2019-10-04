@@ -48,7 +48,7 @@ create_title_page = function(main = NULL, running = NULL, rss = NULL) {
 
 #' @export
 #' @rdname  get_logos
-create_jrStyle = function() {
+create_jrStyle = function() { #nolint
   fname = system.file("extdata", "jrStyle.sty",
                       package = "jrNotes", mustWork = TRUE)
   file.copy(fname, to = "jrStyle.sty", overwrite = TRUE)

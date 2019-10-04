@@ -19,9 +19,9 @@ set_knitr_options = function(tidy = FALSE,
                              comment = "#>",
                              collapse = TRUE,
                              cache = TRUE,
-                             fig.align = "center",
-                             fig.width = 4,
-                             fig.height = 4,
+                             fig.align = "center", #nolint
+                             fig.width = 4, #nolint
+                             fig.height = 4, #nolint
                              ...
 ) {
   knitr::opts_chunk$set(

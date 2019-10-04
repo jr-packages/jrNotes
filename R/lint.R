@@ -1,6 +1,6 @@
 check_code_style = function() {
   language = get_repo_language()
-  if (language == "python") return (invisible(NULL))
+  if (language == "python") return(invisible(NULL))
 
     message(yellow(symbol$circle_filled, "Checking lint...check_code_style()"))
   if (isFALSE(config::get("lintr"))) {
