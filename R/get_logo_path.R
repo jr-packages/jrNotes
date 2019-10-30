@@ -86,12 +86,21 @@ create_version = function() {
     version = readLines("VERSION")
   }
 
+  pkg_name = con$packages[[1]]
+  if (get_repo_language() == "r") {
+    pkg_ver = packageVersion(pkg_name)
+  } else {
+    pkg_ver = ""
+  }
+
   version_dots = strsplit(version, split = "\\.")[[1]]
   if (length(version_dots) != 3) {
     stop("Version should take the form of X.Y.Z", call. = FALSE)
   }
-  version_str = glue("\\begin{table}[!b]
-     Version <version>\\hfill \\textcopyright Jumping Rivers Ltd <year>
-     \\end{table}", .open = "<", .close = ">")
+  version_str = glue::glue("\\begin{table*}[!b]
+     Version <version> \\qquad (\\textbf{<pkg_name>} v<pkg_ver>) \\hfill
+     \\textcopyright Jumping Rivers Ltd <year>
+     \\end{table*}",
+                     .open = "<", .close = ">")
   version_str
 }
