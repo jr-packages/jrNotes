@@ -2,6 +2,8 @@ globalVariables(c("X1", "X2", "X3"))
 #' @importFrom httr GET
 #' @import crayon cli
 check_urls = function() {
+  if (!required_texlive(2017)) return(invisible(NULL))
+
   # Hack to detect internet connection on laptops
   if (httr::GET("www.google.com")$status != 200) {
     message(yellow("No internet connection - skipping URL check"))

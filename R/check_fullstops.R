@@ -2,6 +2,7 @@ globalVariables("chap_num")
 check_fullstops = function() {
   message(yellow(symbol$circle_filled,
                  "Checking for full stops...check_fullstops()"))
+  if (!required_texlive(2017)) return(invisible(NULL))
   if (!file.exists("extractor.csv")) return()
   tokens = read_tokens() %>%
     tibble::as_tibble()

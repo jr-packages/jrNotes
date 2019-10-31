@@ -63,6 +63,7 @@ standard_exceptions = function(title, title_case) {
 }
 
 check_section_titles = function() {
+  if (!required_texlive(2017)) return(invisible(NULL))
 
   message(yellow(symbol$circle_filled,
                  "Checking section for sentence case...check_section_titles()"))

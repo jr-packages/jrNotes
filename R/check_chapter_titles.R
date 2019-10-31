@@ -6,6 +6,7 @@
 
 #' @importFrom dplyr mutate if_else pull select
 check_chapter_titles = function() {
+  if (!required_texlive(2017)) return(invisible(NULL))
 
   if (!file.exists("extractor.csv")) return()
   message(yellow(symbol$circle_filled,
