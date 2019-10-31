@@ -42,6 +42,8 @@ create_final_dir = function(note_name, pracs) {
                   symbol$star, symbol$star))
   }
   dir.create("final", showWarnings = FALSE)
+  # Remove old notes/practicals
+  file.remove(list.files("final", full.names = TRUE))
   # add notes
   fs::file_copy("main.pdf",
                 glue("final/notes_{note_name}_{Sys.Date()}.pdf"),

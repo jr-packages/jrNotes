@@ -23,10 +23,12 @@ latex_environments = function(title, title_case) {
 standard_exceptions = function(title, title_case) {
   from = c("r", "shiny", "dt", "rstudio", "anova", "uk", "usa",
            "html", "yaml", "csv", "python", "loocv", "oop", "esri",
-           "geojson", "crs", "s3", "s4", "monte", "carlo", "ec2", "s3", "ram", "hdd", "ssd", "cpu")
+           "geojson", "crs", "s3", "s4", "monte", "carlo", "ec2", "s3", "ram",
+           "hdd", "ssd", "cpu", "starbucks", "james", "bond", "q-q")
   to = c("R", "Shiny", "DT", "RStudio", "ANOVA", "UK", "USA",
          "HTML", "YAML", "CSV", "Python", "LOOCV", "OOP", "ESRI",
-         "GeoJSON", "CRS", "S3", "S4", "Monte", "Carlo", "EC2", "S3", "RAM", "HDD", "SSD", "CPU")
+         "GeoJSON", "CRS", "S3", "S4", "Monte", "Carlo", "EC2", "S3", "RAM",
+         "HDD", "SSD", "CPU", "Starbucks", "James", "Bond", "Q-Q")
   for (i in seq_along(from)) {
     # One word
     (title_case = str_replace(title_case,
@@ -66,17 +68,25 @@ check_section_titles = function() {
                  "Checking section for sentence case...check_section_titles()"))
   if (!file.exists("extractor.csv")) return()
 
-  tokens = read_tokens()
+  tokens = jrNotes:::read_tokens()
 
   tokens = tibble::as_tibble(tokens)
   sections = tokens %>%
     dplyr::filter(X1 %in% c("chapter", "section", "subsection")) %>%
     dplyr::mutate(id = row_number(),
-                  texorpdf = str_detect(X3, "\\\\texorpdf")) %>% #nolint
+                  texorpdf = str_detect(X3, "\\\\texorpdf"),
+                  label = str_detect(X3, "\\\\label"),
+                  footnote = str_detect(X3, "\\\\footnote")) %>% #nolint
     dplyr::mutate(text = X3) %>%
     dplyr::mutate(text = if_else(texorpdf,
                                  str_match(X3, "^\\\\texorpdfstring \\{(.*)\\}\\{.*\\}$")[, 2],
                                  text)) %>%
+    dplyr::mutate(text = if_else(label,
+                                 str_match(text, "(.*)\\W\\label .*")[, 2],
+                                 text)) %>%
+     dplyr::mutate(text = if_else(footnote,
+                                  str_match(text, "(.*)\\\\footnote.*")[, 2],
+                                  text)) %>%
     dplyr::mutate(text = str_trim(text))
   i = 1
 
