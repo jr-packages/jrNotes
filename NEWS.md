@@ -9,6 +9,7 @@
   * Add the course package version to the final page
   * Remove old files in final/ when make final
   * Check for correct texlive version
+  * Check for empty notes/practical files
 
 # 0.5.0
   * Extract latex tags using xparse from latex

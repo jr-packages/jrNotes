@@ -75,6 +75,7 @@ create_advert = function() {
   file.copy(fname, to = "advert.tex", overwrite = TRUE)
 }
 
+#' @importFrom utils packageVersion
 #' @export
 #' @rdname  get_logos
 create_version = function() {

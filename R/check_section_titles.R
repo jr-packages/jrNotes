@@ -1,4 +1,4 @@
-globalVariables(c("text", "texorpdf"))
+globalVariables(c("text", "texorpdf", "label", "footnote"))
 
 latex_environments = function(title, title_case) {
   if (str_detect(string = title, "\\\\texttt \\{.*\\}")) { # nolint
@@ -69,8 +69,7 @@ check_section_titles = function() {
                  "Checking section for sentence case...check_section_titles()"))
   if (!file.exists("extractor.csv")) return()
 
-  tokens = jrNotes:::read_tokens()
-
+  tokens = read_tokens()
   tokens = tibble::as_tibble(tokens)
   sections = tokens %>%
     dplyr::filter(X1 %in% c("chapter", "section", "subsection")) %>%

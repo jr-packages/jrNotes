@@ -37,19 +37,31 @@ create_final_dir = function(note_name, pracs) {
 
   if (isTRUE(.jrnotes$error)) {
     stop("Please fix errors", call. = FALSE)
-  } else {
-    message(green(symbol$star, symbol$star, praise::praise(),
-                  symbol$star, symbol$star))
   }
   dir.create("final", showWarnings = FALSE)
   # Remove old notes/practicals
   file.remove(list.files("final", full.names = TRUE))
   # add notes
-  fs::file_copy("main.pdf",
-                glue("final/notes_{note_name}_{Sys.Date()}.pdf"),
-                overwrite = TRUE)
+  notes_loc = glue("final/notes_{note_name}_{Sys.Date()}.pdf")
+  fs::file_copy("main.pdf", notes_loc, overwrite = TRUE)
+  msg = glue_col("{yellow}{symbol$tick} Created {notes_loc}")
+  message(msg)
+
+  if (fs::file_size(notes_loc) < 50) {
+    msg = glue_col("{yellow}{symbol$tick} The notes look suspiciously small!")
+  }
+
   # combine practicals into single file
-  qpdf::pdf_combine(pracs, glue("final/practicals_{note_name}_{Sys.Date()}.pdf"))
+  prac_loc = glue("final/practicals_{note_name}_{Sys.Date()}.pdf")
+  qpdf::pdf_combine(pracs, prac_loc)
+  msg = glue_col("{yellow}{symbol$tick} Created {prac_loc}")
+  message(msg)
+  if (fs::file_size(prac_loc) < 50) {
+    msg = glue_col("{blue}{symbol$tick} The practicals look suspiciously small!")
+  }
+
+  message(green(symbol$star, symbol$star, praise::praise(),
+                symbol$star, symbol$star))
   return(invisible(NULL))
 }
 
