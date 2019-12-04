@@ -2,6 +2,7 @@ check_latex = function() {
   check_citations()
   check_labels()
   check_references()
+  check_tufte()
 }
 
 check_citations = function() {
