@@ -17,7 +17,8 @@ before_install:
 
 before_script:
   - wget https://raw.githubusercontent.com/jr-packages/drat/master/test_deploy.sh
-  - bash test_deploy.sh "$TRAVIS_PULL_REQUEST" "$TRAVIS_BRANCH"
+  - export TRAVIS_PULL_REQUEST TRAVIS_BRANCH
+  - bash test_deploy.sh
   - rm test_deploy.sh
 
 after_script:
