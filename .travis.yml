@@ -1,9 +1,5 @@
 language: r
 cache: packages
-env:
-  global:
-    TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST
-    TRAVIS_BRANCH=$TRAVIS_BRANCH
 
 notifications:
   email:
@@ -21,9 +17,6 @@ before_install:
 
 before_script:
   - wget https://raw.githubusercontent.com/jr-packages/drat/master/test_deploy.sh
-  - echo $TRAVIS_BRANCH
-  - echo $TRAVIS_PULL_REQUEST
-  - bash test_deploy.sh
   - if [ ${TRAVIS_PULL_REQUEST} = "false" ] && [ $TRAVIS_BRANCH = "master" ]; then bash test_deploy.sh; fi
   - rm test_deploy.sh
 
