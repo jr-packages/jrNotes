@@ -1,16 +1,24 @@
 # Dev
+
+# 0.5.1
+## Cleaners
+
   * Update cleaners for HTML books
-  * Improve title checking
-  * Move check_template to create_final
-  * Move check_lint to create_final
-  * Try to detect programming lanaguage
-  * Ensure library calls use quotes
-  * Check margin notes & captions finish with a full stop
-  * Add the course package version to the final page
   * Remove old files in final/ when make final
+
+## Checks
+  * Improve title checking
+  * Move check_template & check_lint to create_final
+  * Check margin notes & captions finish with a full stop
+  * Ensure library calls use quotes
   * Check for correct texlive version
   * Check for empty notes/practical files
   * Check for markdown versions of tufte
+
+## Misc
+  * Try to detect programming lanaguage
+  * Add the course package version to the final page
+  * Update travis.yml
 
 # 0.5.0
   * Extract latex tags using xparse from latex

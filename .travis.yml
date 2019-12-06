@@ -1,15 +1,17 @@
 language: r
 cache: packages
 
+env:
+  global:
+    - ALLOWED_NOTES=1
+    - NO_IMPORTS=6
+
 notifications:
   email:
     recipients:
      - alerts@jumpingrivers.support
     on_success: change
     on_failure: change
-
-r_packages:
-  - drat
 
 before_install:
   - tlmgr install fancyvrb units
@@ -20,10 +22,8 @@ before_script:
   - if [ ${TRAVIS_PULL_REQUEST} = "false" ] && [ $TRAVIS_BRANCH = "master" ]; then bash test_deploy.sh; fi
   - rm test_deploy.sh
 
-after_script:
-  - Rscript -e 'lintr::lint_package()'
-  - Rscript -e 'if(length(lintr::lint_package()) > 0) stop("Fix lint")'
-
+script:
+  - Rscript -e "source('https://raw.githubusercontent.com/jr-packages/drat/master/script.R')"
 
 after_success:
   - wget https://raw.githubusercontent.com/jr-packages/drat/master/deploy.sh
