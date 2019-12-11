@@ -5,20 +5,19 @@ check_tufte = function() {
   msgs = c()
   for (fname in fnames) {
     out = readLines(fname)
-    is_in = stringr::str_detect(out, pattern = "(margin_note|newthought\\()")
+    is_in = stringr::str_detect(out, pattern = "(margin_note|newthought\\(|\\^\\[)")
     if (sum(is_in) > 0) {
       line_numbers = which(is_in)
-      msgs = c(msgs, glue_col("{red} {symbol$cross} {fname}, Line {line_numbers}: {out[is_in]}"))
+      msgs = c(msgs, glue_col("{red}  {symbol$cross} {fname}, Line {line_numbers}: {out[is_in]}"))
+      .jrnotes$error = TRUE
     }
   }
   if (length(msgs) == 0L) {
     message(yellow(symbol$tick, "Tufte latex looks good"))
-    return(invisible(NULL))
   }
 
   for (msg in msgs) {
     message(msg)
   }
-  stop("Change markdown to latex, e.g. margin_note to \\marginnote", call. = FALSE)
-
+  return(invisible(NULL))
 }

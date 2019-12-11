@@ -105,6 +105,16 @@ get_concat_course_name = function() {
   return(title)
 }
 
+check_pkg_vignettes = function(pkg, pkg_loc) {
+  if (fs::dir_exists(file.path(pkg_loc, "doc"))) return(invisible(NULL))
+  msg = glue::glue("{symbol$cross} The package {pkg} doesn't seem to have vignettes.
+                   Try building and installing the package from source. Or
+                   use install.packages and install from the repo.
+                   Note: Standard build and install doesn't create vignettes.")
+  message(red(msg))
+  stop(call. = FALSE)
+}
+
 #' Create copy of notes and practicals
 #'
 #' Renames main.pdf to notes_pkg.pdf. Also retrieves
@@ -121,6 +131,7 @@ create_final = function() {
   } else {
     pkg = get_r_pkg_name()
     pkg_loc = system.file(package = pkg) #nolint
+    check_pkg_vignettes(pkg, pkg_loc)
     pracs = dir_ls(path = glue("{pkg_loc}/doc"),
                    regexp = ".*practical.*\\.pdf$")
   }
