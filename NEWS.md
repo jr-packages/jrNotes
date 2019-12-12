@@ -1,5 +1,9 @@
 # Dev
 
+# 0.5.2
+
+  * Add course dependencies graph to final page.
+
 # 0.5.1
 ## Cleaners
 
