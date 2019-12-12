@@ -4,12 +4,13 @@
 #' @export
 get_logos = function() {
   fname = system.file("extdata",
-                      c("robot.jpg", "logo.png", "rstudio_logo.png"),
+                      c("robot.jpg", "logo.png", "rstudio_logo.png", "dependencies.png"),
                       package = "jrNotes",
                       mustWork = TRUE)
   file.copy(fname[1], to = "robot.jpg", overwrite = TRUE)
   file.copy(fname[2], to = "logo.png", overwrite = TRUE)
   file.copy(fname[3], to = "rstudio_logo.png", overwrite = TRUE)
+  file.copy(fname[4], to = "dependencies.png", overwrite = TRUE)
 }
 
 #' @param main Front page title
@@ -73,6 +74,14 @@ create_advert = function() {
                       package = "jrNotes",
                       mustWork = TRUE)
   file.copy(fname, to = "advert.tex", overwrite = TRUE)
+}
+
+create_course_dep = function() {
+  fname = system.file("extdata",
+                      "course-dependencies.tex",
+                      package = "jrNotes",
+                      mustWork = TRUE)
+  file.copy(fname, to = "course-dependencies.tex", overwrite = TRUE)
 }
 
 #' @importFrom utils packageVersion

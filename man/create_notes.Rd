@@ -4,13 +4,15 @@
 \alias{create_notes}
 \title{Generate build script}
 \usage{
-create_notes(fnames = NULL, advert = TRUE)
+create_notes(fnames = NULL, advert = TRUE, course_dep = TRUE)
 }
 \arguments{
 \item{fnames}{If \code{NULL} scans for chaptersX.Rmd and appendix.Rmd.
 Otherwise, just uses the names passed.}
 
 \item{advert}{Should the advert be included. Default \code{TRUE}.}
+
+\item{course_dep}{Should the course dependencies be included. Default \code{TRUE}.}
 }
 \description{
 Scans for chaptersX.Rmd and appendix.Rmd and builds main.pdf

@@ -34,9 +34,10 @@ knit_rmd = function(fname, hashes) {
 #' @param fnames If \code{NULL} scans for chaptersX.Rmd and appendix.Rmd.
 #' Otherwise, just uses the names passed.
 #' @param advert Should the advert be included. Default \code{TRUE}.
+#' @param course_dep Should the course dependencies be included. Default \code{TRUE}.
 #' @importFrom digest digest
 #' @export
-create_notes = function(fnames = NULL, advert = TRUE) {
+create_notes = function(fnames = NULL, advert = TRUE, course_dep = TRUE) {
 
   if (is.null(fnames)) {
     fnames = c(
@@ -92,5 +93,7 @@ create_notes = function(fnames = NULL, advert = TRUE) {
     out[seq_along(out) + 1] = out
     out[[1]] = "\\include{advert}\n"
   }
+  if (isTRUE(course_dep))
+    out[[length(out) + 1]] = "\\include{course-dependencies}\n"
   out
 }
