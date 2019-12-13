@@ -26,7 +26,7 @@ check_pkgs = function() {
 
   pkgs_to_update = c(pkgs, "jrNotes", "jrPresentation",
                      "knitr", "rmarkdown", "lintr", "tufte",
-                     "ggplot2")
+                     "ggplot2", "dplyr")
 
   av_p =  available.packages()[, c("Package", "Version")]
   av_p = tibble::as_tibble(av_p)
@@ -52,5 +52,10 @@ check_pkgs = function() {
   if (sum(to_update) == 0 || nchar(Sys.getenv("GITLAB_CI")) != 0) {
     return(invisible(NULL))
   }
-  stop(red("Please update packages"), call. = FALSE)
+  m = red("Would you like me to update your packages for you? (y/N)")
+  message("Installing packages")
+  install.packages(pkgs$Package[to_update])
+  clean()
+
+  stop(red("Packages have been updated. Please run make final again"), call. = FALSE)
 }
