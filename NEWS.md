@@ -1,5 +1,6 @@
 # Dev
   * Update missing packages and clean
+  * Adding ggplot2 to suggests - required for some notes
 
 # 0.5.1
 ## Cleaners
