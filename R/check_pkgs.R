@@ -3,6 +3,7 @@
 #' @importFrom utils available.packages installed.packages
 #' @importFrom dplyr left_join
 #' @importFrom tibble as_tibble
+#' @importFrom utils install.packages
 check_pkgs = function() {
   if (httr::GET("www.google.com")$status != 200) {
     message(blue("No internet connection - skipping PKG check"))
