@@ -31,8 +31,8 @@ check_r_style = function() {
 check_python_style = function() {
   message(yellow(symbol$circle_filled, "Checking lint...check_code_style()"))
   if (!fs::file_exists("flake8.ini")) {
-    message("Missing ", "flake8_config_Rmd.ini" ," file - creating a default")
-    flake8_ini_sys = system.file("","flake8_config_Rmd.ini", package = "jrNotes", mustWork = TRUE)
+    message("Missing flake8_config.ini file - creating a default")
+    flake8_ini_sys = system.file("", "flake8_config_Rmd.ini", package = "jrNotes", mustWork = TRUE)
     file.copy(flake8_ini_sys, to = "flake8_config.ini", overwrite = TRUE)
   }
   message(yellow(symbol$circle_filled, "Checking lint...check_code_style()"))
