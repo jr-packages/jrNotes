@@ -37,7 +37,7 @@ knit_rmd = function(fname, hashes) {
 #' @param course_dep Should the course dependencies be included. Default \code{TRUE}.
 #' @importFrom digest digest
 #' @export
-create_notes = function(fnames = NULL, advert = TRUE, course_dep = TRUE) {
+create_notes = function(fnames = NULL) {
 
   if (is.null(fnames)) {
     fnames = c(
@@ -89,11 +89,13 @@ create_notes = function(fnames = NULL, advert = TRUE, course_dep = TRUE) {
     out[seq_along(out) + 1] = out
     out[[1]] = "\\include{quote}\n"
   }
-  if (isTRUE(advert)) {
+  if (Sys.getenv("advert") != "") {
     out[seq_along(out) + 1] = out
-    out[[1]] = "\\include{advert}\n"
+    out[[1]] = glue("\\include{{{Sys.getenv('advert')}}}\n")
   }
-  if (isTRUE(course_dep))
-    out[[length(out) + 1]] = "\\include{course-dependencies}\n"
+  if (Sys.getenv("courses") != "") {
+    out[[length(out) + 1]] = "\\include{{{Sys.getenv('courses')}}}\n"
   out
+  }
+
 }
