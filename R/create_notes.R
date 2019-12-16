@@ -81,10 +81,6 @@ create_notes = function(fnames = NULL) {
     }
   }
 
-  # Add version to last page
-  last_page = out[[length(out)]]
-  out[[length(out)]] = paste(last_page, create_version(), collapse = "\n")
-
   # Move chapters up one and add in the advert & quote
   if (file.exists("quote.tex")) {
     out[seq_along(out) + 1] = out
@@ -96,9 +92,12 @@ create_notes = function(fnames = NULL) {
     out[[1]] = glue("\\include{{{config::get('advert')}}}\n")
   }
   if (!is.null(config::get("courses"))) {
-    out[[length(out) + 1]] = glue("\\include{{{config::get('courses')}}}\n")
+    out[[length(out) + 1]] = glue("\\input{{{config::get('courses')}}}\n")
   }
 
+  # Add version to last page
+  last_page = out[[length(out)]]
+  out[[length(out)]] = paste(last_page, create_version(), collapse = "\n")
 
   out
 
