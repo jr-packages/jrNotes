@@ -29,6 +29,7 @@ create_final_dir = function(note_name, pracs) {
   check_latex()
   # Check urls
   check_urls()
+  check_adverts()
   # Check lint
   check_code_style() # nolint
   # Check version number
