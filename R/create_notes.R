@@ -33,8 +33,6 @@ knit_rmd = function(fname, hashes) {
 #' Scans for chaptersX.Rmd and appendix.Rmd and builds main.pdf
 #' @param fnames If \code{NULL} scans for chaptersX.Rmd and appendix.Rmd.
 #' Otherwise, just uses the names passed.
-#' @param advert Should the advert be included. Default \code{TRUE}.
-#' @param course_dep Should the course dependencies be included. Default \code{TRUE}.
 #' @importFrom digest digest
 #' @export
 create_notes = function(fnames = NULL) {
@@ -55,6 +53,7 @@ create_notes = function(fnames = NULL) {
   create_title_page()
   create_jrStyle()
   create_advert()
+  create_course_dep()
   set_knitr_options()
   set_options()
 
@@ -81,6 +80,8 @@ create_notes = function(fnames = NULL) {
       stop(err_message, call. = FALSE)
     }
   }
+
+  # Add version to last page
   last_page = out[[length(out)]]
   out[[length(out)]] = paste(last_page, create_version(), collapse = "\n")
 
@@ -89,13 +90,16 @@ create_notes = function(fnames = NULL) {
     out[seq_along(out) + 1] = out
     out[[1]] = "\\include{quote}\n"
   }
-  if (Sys.getenv("advert") != "") {
+
+  if (!is.null(config::get("advert"))) {
     out[seq_along(out) + 1] = out
-    out[[1]] = glue("\\include{{{Sys.getenv('advert')}}}\n")
+    out[[1]] = glue("\\include{{{config::get('advert')}}}\n")
   }
-  if (Sys.getenv("courses") != "") {
-    out[[length(out) + 1]] = "\\include{{{Sys.getenv('courses')}}}\n"
+  if (!is.null(config::get("courses"))) {
+    out[[length(out) + 1]] = glue("\\include{{{config::get('courses')}}}\n")
+  }
+
+
   out
-  }
 
 }
