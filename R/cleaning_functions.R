@@ -32,7 +32,8 @@ cleaner = function() {
                          "feedback.Rmd", "feedback.html",
                          "feedback_link.txt", "WORDLIST",
                          "extractor-tmp.tex", "extractor.csv",
-                         "extractor.pdf", "extractor.tex")
+                         "extractor.pdf", "extractor.tex",
+                         "course-dependencies.tex", "dependencies.png")
   jr_notes_generated = jr_notes_generated[file.exists(jr_notes_generated)]
   bash_rm(jr_notes_generated)
 }

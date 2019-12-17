@@ -9,7 +9,7 @@ check_pkgs = function() {
     message(blue("No internet connection - skipping PKG check"))
     return(invisible(NULL))
   }
-  message(yellow(symbol$circle_filled, "Checking package versions...check_pkgs()"))
+  message(yellow(circle_filled, "Checking package versions...check_pkgs()"))
   r = getOption("repos")
   jr_pkgs = "https://jr-packages.github.io/drat/"
   if (!(jr_pkgs %in% r)) {
@@ -41,10 +41,10 @@ check_pkgs = function() {
   pkgs$Version.y[is.na(pkgs$Version.y)] = "0.0.0"
   for (i in seq_len(nrow(pkgs))) {
     if (package_version(pkgs$Version.x[i]) > package_version(pkgs$Version.y[i])) {
-      msg = glue("  {symbol$cross} Update {pkgs$Package[i]}: {pkgs$Version.x[i]} > {pkgs$Version.y[i]}") #nolint
+      msg = glue("  {cross} Update {pkgs$Package[i]}: {pkgs$Version.x[i]} > {pkgs$Version.y[i]}") #nolint
       message(red(msg))
     } else {
-      msg = glue("  {symbol$tick} {pkgs$Package[i]} (v{pkgs$Version.x[i]}) is up to date")
+      msg = glue("  {tick} {pkgs$Package[i]} (v{pkgs$Version.x[i]}) is up to date")
       message(yellow(msg))
     }
   }
@@ -53,8 +53,8 @@ check_pkgs = function() {
   if (sum(to_update) == 0 || nchar(Sys.getenv("GITLAB_CI")) != 0) {
     return(invisible(NULL))
   }
-  m = red("Would you like me to update your packages for you? (y/N)")
-  message("Installing packages")
+  m = glue("{info} Automatically updating packages")
+  message(red(m))
   install.packages(pkgs$Package[to_update])
   clean()
 
