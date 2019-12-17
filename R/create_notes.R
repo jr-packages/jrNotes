@@ -33,10 +33,9 @@ knit_rmd = function(fname, hashes) {
 #' Scans for chaptersX.Rmd and appendix.Rmd and builds main.pdf
 #' @param fnames If \code{NULL} scans for chaptersX.Rmd and appendix.Rmd.
 #' Otherwise, just uses the names passed.
-#' @param advert Should the advert be included. Default \code{TRUE}.
 #' @importFrom digest digest
 #' @export
-create_notes = function(fnames = NULL, advert = TRUE) {
+create_notes = function(fnames = NULL) {
 
   if (is.null(fnames)) {
     fnames = c(
@@ -54,6 +53,7 @@ create_notes = function(fnames = NULL, advert = TRUE) {
   create_title_page()
   create_jrStyle()
   create_advert()
+  create_course_dep()
   set_knitr_options()
   set_options()
 
@@ -80,17 +80,25 @@ create_notes = function(fnames = NULL, advert = TRUE) {
       stop(err_message, call. = FALSE)
     }
   }
-  last_page = out[[length(out)]]
-  out[[length(out)]] = paste(last_page, create_version(), collapse = "\n")
 
   # Move chapters up one and add in the advert & quote
   if (file.exists("quote.tex")) {
     out[seq_along(out) + 1] = out
     out[[1]] = "\\include{quote}\n"
   }
-  if (isTRUE(advert)) {
+
+  if (!is.null(config::get("advert"))) {
     out[seq_along(out) + 1] = out
-    out[[1]] = "\\include{advert}\n"
+    out[[1]] = glue("\\include{{{config::get('advert')}}}\n")
   }
+  if (!is.null(config::get("courses"))) {
+    out[[length(out) + 1]] = glue("\\input{{{config::get('courses')}}}\n")
+  }
+
+  # Add version to last page
+  last_page = out[[length(out)]]
+  out[[length(out)]] = paste(last_page, create_version(), collapse = "\n")
+
   out
+
 }

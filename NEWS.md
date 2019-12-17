@@ -1,5 +1,11 @@
+# 0.5.2
+
+  * Add course dependencies graph to final page.
+
 # Dev
+
   * Adding ggplot2 to suggests - required for some notes
+
 # 0.5.1
 ## Cleaners
 
