@@ -380,3 +380,15 @@ textbackslash
 tidytext
 wordcloud
 NumPy
+aov
+chisq
+coef
+contr
+lm
+prcomp
+princomp
+qqline
+qqnorm
+wilcox
+wilcoxsign
+yintercept
