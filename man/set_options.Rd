@@ -4,8 +4,12 @@
 \alias{set_options}
 \title{Set Standard options}
 \usage{
-set_options(digits = 3, dplyr.print_min = 4, dplyr.print_max = 4,
-  htmltools.dir.version = FALSE)
+set_options(
+  digits = 3,
+  dplyr.print_min = 4,
+  dplyr.print_max = 4,
+  htmltools.dir.version = FALSE
+)
 }
 \arguments{
 \item{digits}{3}

@@ -4,8 +4,15 @@
 \alias{set_nice_par}
 \title{Set nice par}
 \usage{
-set_nice_par(mar = c(3, 3, 2, 1), mgp = c(2, 0.4, 0), tck = -0.01,
-  cex.axis = 0.9, las = 1, mfrow = c(1, 1), ...)
+set_nice_par(
+  mar = c(3, 3, 2, 1),
+  mgp = c(2, 0.4, 0),
+  tck = -0.01,
+  cex.axis = 0.9,
+  las = 1,
+  mfrow = c(1, 1),
+  ...
+)
 }
 \arguments{
 \item{mar}{c(3,3,2,1)}
