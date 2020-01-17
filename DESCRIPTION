@@ -1,7 +1,7 @@
 Type: Package
 Package: jrNotes
 Title: Jumping Rivers: Helper Package for Notes
-Version: 0.5.2.9004
+Version: 0.5.2.9005
 Authors@R: 
     person(given = "Jumping",
            family = "Rivers",
@@ -47,4 +47,4 @@ VignetteBuilder:
 Remotes: 
     jr-packages/jrPresentation
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
