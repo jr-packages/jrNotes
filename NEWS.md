@@ -1,11 +1,9 @@
-# 0.5.2
-
-  * Add course dependencies graph to final page.
-
 # Dev
   * Update missing packages and clean
-  * Adding ggplot2 to suggests - required for some notes
+  * Bug: Detect fullstops
 
+# 0.5.2
+  * Add course dependencies graph to final page.
   * Adding ggplot2 to suggests - required for some notes
 
 # 0.5.1

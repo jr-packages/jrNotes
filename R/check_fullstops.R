@@ -13,7 +13,7 @@ check_fullstops = function() {
     dplyr::filter(str_detect(X3, "\\\\begin \\{flush", negate = TRUE)) %>% #nolint
     dplyr::select(X1, X3, chap_num) %>%
     dplyr::filter(str_count(X3, " ") > 1) %>%
-    dplyr::filter(str_ends(X3, "[\\?|\\.|!|/]", negate = TRUE))
+    dplyr::filter(str_ends(X3, "(\\?|\\.|!|/|\\.\\})", negate = TRUE))
 
   if (nrow(issues) == 0) {
     message(yellow(symbol$tick, "Captions and friends look good look good"))
