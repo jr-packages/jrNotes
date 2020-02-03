@@ -33,7 +33,7 @@ check_python_style = function() {
   if (!fs::file_exists("flake8.ini")) {
     message("Missing flake8_config.ini file - creating a default")
     flake8_ini_sys = system.file("", "flake8_config_Rmd.ini", package = "jrNotes", mustWork = TRUE)
-    file.copy(flake8_ini_sys, to = "flake8_config.ini", overwrite = TRUE)
+    file.copy(flake8_ini_sys, to = "flake8_config_Rmd.ini", overwrite = TRUE)
   }
   message(yellow(symbol$circle_filled, "Checking lint...check_code_style()"))
   fnames = list.files(pattern = "^c.*Rmd$")
@@ -41,11 +41,9 @@ check_python_style = function() {
   for (i in seq_along(fnames)) {
     message("  ", yellow(symbol$circle_filled, "Checking ", fnames[i]))
     jrpytests = reticulate::import("jrpytests")
-    reticulate::jrpytests$runflake8rmdpychunks(filename = fnames[i])
-
+    jrpytests$runflake8rmdpychunks(filename = fnames[i])
   }
   return(bad_lints)
-
 }
 
 check_code_style = function() {

@@ -1,6 +1,7 @@
 globalVariables(c("X1", "X2", "X3"))
 #' @importFrom httr GET
-#' @import crayon cli
+#' @importFrom crayon yellow red green blue
+#' @importFrom cli symbol
 check_urls = function() {
   if (!required_texlive(2017)) return(invisible(NULL))
 
