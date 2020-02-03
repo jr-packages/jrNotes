@@ -145,7 +145,6 @@ create_final = function() {
 #' @rdname create_final
 #' @export
 create_final_python = function() {
-  # check_pdftk() # nolint
 
   if (fs::file_exists("config.yml"))  {
     pkg = get_python_pkg_name()

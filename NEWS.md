@@ -1,14 +1,14 @@
-# Dev
+# 0.5.3
+  * Update missing packages and clean
   * Bug: Detect fullstops
+  * Adding flake8 for Python
 
 # 0.5.2
-
   * Add course dependencies graph to final page.
   * Adding ggplot2 to suggests - required for some notes
 
 # 0.5.1
 ## Cleaners
-
   * Update cleaners for HTML books
   * Remove old files in final/ when make final
 

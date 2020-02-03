@@ -3,12 +3,13 @@
 #' @importFrom utils available.packages installed.packages
 #' @importFrom dplyr left_join
 #' @importFrom tibble as_tibble
+#' @importFrom utils install.packages
 check_pkgs = function() {
   if (httr::GET("www.google.com")$status != 200) {
     message(blue("No internet connection - skipping PKG check"))
     return(invisible(NULL))
   }
-  message(yellow(symbol$circle_filled, "Checking package versions...check_pkgs()"))
+  message(yellow(circle_filled, "Checking package versions...check_pkgs()"))
   r = getOption("repos")
   jr_pkgs = "https://jr-packages.github.io/drat/"
   if (!(jr_pkgs %in% r)) {
@@ -26,7 +27,7 @@ check_pkgs = function() {
 
   pkgs_to_update = c(pkgs, "jrNotes", "jrPresentation",
                      "knitr", "rmarkdown", "lintr", "tufte",
-                     "ggplot2")
+                     "ggplot2", "dplyr")
 
   av_p =  available.packages()[, c("Package", "Version")]
   av_p = tibble::as_tibble(av_p)
@@ -40,10 +41,10 @@ check_pkgs = function() {
   pkgs$Version.y[is.na(pkgs$Version.y)] = "0.0.0"
   for (i in seq_len(nrow(pkgs))) {
     if (package_version(pkgs$Version.x[i]) > package_version(pkgs$Version.y[i])) {
-      msg = glue("  {symbol$cross} Update {pkgs$Package[i]}: {pkgs$Version.x[i]} > {pkgs$Version.y[i]}") #nolint
+      msg = glue("  {cross} Update {pkgs$Package[i]}: {pkgs$Version.x[i]} > {pkgs$Version.y[i]}") #nolint
       message(red(msg))
     } else {
-      msg = glue("  {symbol$tick} {pkgs$Package[i]} (v{pkgs$Version.x[i]}) is up to date")
+      msg = glue("  {tick} {pkgs$Package[i]} (v{pkgs$Version.x[i]}) is up to date")
       message(yellow(msg))
     }
   }
@@ -52,5 +53,10 @@ check_pkgs = function() {
   if (sum(to_update) == 0 || nchar(Sys.getenv("GITLAB_CI")) != 0) {
     return(invisible(NULL))
   }
-  stop(red("Please update packages"), call. = FALSE)
+  m = glue("{info} Automatically updating packages")
+  message(red(m))
+  install.packages(pkgs$Package[to_update])
+  clean()
+
+  stop(red("Packages have been updated. Please run make final again"), call. = FALSE)
 }
