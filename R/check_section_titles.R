@@ -10,7 +10,7 @@ latex_environments = function(title, title_case) {
     str_sub(title_case, locs[1], locs[2]) = str_sub(title, locs[1], locs[2])
   }
 
-  if(str_detect(string = title, ": [A-Z]")) { # nolint
+  if (str_detect(string = title, ": [A-Z]")) { # nolint
     locs = str_locate(title[1], ": [A-Z]")[1, ] # nolint
     str_sub(title_case, locs[1], locs[2]) = str_sub(title, locs[1], locs[2])
   }
@@ -24,11 +24,12 @@ standard_exceptions = function(title, title_case) {
   from = c("r", "shiny", "dt", "rstudio", "anova", "uk", "usa",
            "html", "yaml", "csv", "python", "loocv", "oop", "esri",
            "geojson", "crs", "s3", "s4", "monte", "carlo", "ec2", "s3", "ram",
-           "hdd", "ssd", "cpu", "starbucks", "james", "bond", "q-q")
+           "hdd", "ssd", "cpu", "starbucks", "james", "bond", "q-q",
+           "ci", "travis")
   to = c("R", "Shiny", "DT", "RStudio", "ANOVA", "UK", "USA",
          "HTML", "YAML", "CSV", "Python", "LOOCV", "OOP", "ESRI",
          "GeoJSON", "CRS", "S3", "S4", "Monte", "Carlo", "EC2", "S3", "RAM",
-         "HDD", "SSD", "CPU", "Starbucks", "James", "Bond", "Q-Q")
+         "HDD", "SSD", "CPU", "Starbucks", "James", "Bond", "Q-Q", "CI", "Travis")
   for (i in seq_along(from)) {
     # One word
     (title_case = str_replace(title_case,

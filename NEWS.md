@@ -1,3 +1,6 @@
+# Dev
+  * Add CI and Travis to section headings
+  
 # 0.5.3
   * Update missing packages and clean
   * Bug: Detect fullstops
