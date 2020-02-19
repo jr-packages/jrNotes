@@ -1,4 +1,7 @@
-# Detect the repo's language
+#' Detect the repo's language
+#'
+#' Get the language for the R repo
+#' @export
 #' @importFrom gert git_config
 get_repo_language = function() {
   config = gert::git_config()

@@ -1,5 +1,6 @@
 # Dev
   * Add CI and Travis to section headings
+  * Export get_repo_language for jrPresentation
   
 # 0.5.3
   * Update missing packages and clean
