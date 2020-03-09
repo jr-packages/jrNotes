@@ -1,6 +1,7 @@
-# Dev
+# 0.5.4
   * Add CI and Travis to section headings
   * Export get_repo_language for jrPresentation
+  * Add inline to jrStyle for inline images
   
 # 0.5.3
   * Update missing packages and clean
