@@ -1,7 +1,7 @@
 Type: Package
 Package: jrNotes
 Title: Jumping Rivers: Helper Package for Notes
-Version: 0.5.4.9002
+Version: 0.5.4.9003
 Authors@R: 
     person(given = "Jumping",
            family = "Rivers",
@@ -14,6 +14,7 @@ URL: https://www.jumpingrivers.com/
 Depends:
     R (>= 3.5.0)
 Imports: 
+    bookdown,
     cli,
     config,
     crayon,
