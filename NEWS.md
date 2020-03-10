@@ -1,3 +1,9 @@
+# Dev
+  * Add Git/git to section exceptions
+  * Sort inst/WORDLIST
+  * Remove bookdown, jrPresentation from imports
+  * Change cli to clisymbols in imports
+
 # 0.5.4
   * Add CI and Travis to section headings
   * Export get_repo_language for jrPresentation

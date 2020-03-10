@@ -1,7 +1,7 @@
 Type: Package
 Package: jrNotes
 Title: Jumping Rivers: Helper Package for Notes
-Version: 0.5.4
+Version: 0.5.4.9001
 Authors@R: 
     person(given = "Jumping",
            family = "Rivers",
@@ -14,8 +14,7 @@ URL: https://www.jumpingrivers.com/
 Depends:
     R (>= 3.5.0)
 Imports: 
-    bookdown,
-    cli,
+    clisymbols,
     config,
     crayon,
     digest,
@@ -24,7 +23,6 @@ Imports:
     gert,
     glue,
     httr,
-    jrPresentation (>= 0.1.18),
     knitr (>= 1.22),
     lintr (>= 2.0.0),
     namer (>= 0.1.4),
@@ -35,7 +33,7 @@ Imports:
     spelling,
     stringr,
     tibble,
-    tufte (>= 0.4)
+    tufte (>= 0.5)
 Suggests:
     drat,
     formatR,
@@ -44,7 +42,5 @@ Suggests:
     testthat
 VignetteBuilder: 
     knitr
-Remotes: 
-    jr-packages/jrPresentation
 Encoding: UTF-8
 RoxygenNote: 7.0.2
