@@ -1,15 +1,15 @@
 check_r_style = function() {
-  message(yellow(symbol$circle_filled, "Checking lint...check_code_style()"))
+  message(yellow(circle_filled, "Checking lint...check_code_style()"))
   if (isFALSE(config::get("lintr"))) {
     return(invisible(NULL))
   }
   fnames = list.files(pattern = "^c.*Rmd$")
   bad_lints = FALSE
   for (i in seq_along(fnames)) {
-    message("  ", yellow(symbol$circle_filled, "Checking ", fnames[i]))
+    message("  ", yellow(circle_filled, "Checking ", fnames[i]))
     l = lintr::lint(fnames[i])
     if (length(l) > 0) {
-      message(red(symbol$cross, fnames[i]))
+      message(red(cross, fnames[i]))
       print(l)
       bad_lints = TRUE
     }
@@ -19,7 +19,7 @@ check_r_style = function() {
     libraries = r[stringr::str_detect(r, "^library\\(.*\\)$")]
     is_quoted = stringr::str_detect(libraries, '"', negate = FALSE)
     if (any(!is_quoted)) {
-      msg = paste0(symbol$cross, " Quote package names: ", libraries[!is_quoted], collapse = "\n")
+      msg = paste0(cross, " Quote package names: ", libraries[!is_quoted], collapse = "\n")
       message(red(msg))
       bad_lints = TRUE
     }
@@ -29,17 +29,17 @@ check_r_style = function() {
 
 
 check_python_style = function() {
-  message(yellow(symbol$circle_filled, "Checking lint...check_code_style()"))
+  message(yellow(circle_filled, "Checking lint...check_code_style()"))
   if (!fs::file_exists("flake8.ini")) {
     message("Missing flake8_config.ini file - creating a default")
     flake8_ini_sys = system.file("", "flake8_config_Rmd.ini", package = "jrNotes", mustWork = TRUE)
     file.copy(flake8_ini_sys, to = "flake8_config_Rmd.ini", overwrite = TRUE)
   }
-  message(yellow(symbol$circle_filled, "Checking lint...check_code_style()"))
+  message(yellow(circle_filled, "Checking lint...check_code_style()"))
   fnames = list.files(pattern = "^c.*Rmd$")
   bad_lints = FALSE
   for (i in seq_along(fnames)) {
-    message("  ", yellow(symbol$circle_filled, "Checking ", fnames[i]))
+    message("  ", yellow(circle_filled, "Checking ", fnames[i]))
     jrpytests = reticulate::import("jrpytests")
     jrpytests$runflake8rmdpychunks(filename = fnames[i])
   }
@@ -55,10 +55,10 @@ check_code_style = function() {
   }
 
   if (bad_lints) {
-    message(red(symbol$cross, "Fix styling"))
+    message(red(cross, "Fix styling"))
     .jrnotes$error = TRUE
   } else {
-    message(yellow(symbol$tick, "Styling looks good"))
+    message(yellow(tick, "Styling looks good"))
   }
 }
 #' Lintr functions

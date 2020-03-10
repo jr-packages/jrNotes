@@ -9,7 +9,7 @@ check_chapter_titles = function() {
   if (!required_texlive(2017)) return(invisible(NULL))
 
   if (!file.exists("extractor.csv")) return()
-  message(yellow(symbol$circle_filled,
+  message(yellow(circle_filled,
                  "Checking chapters for title case...check_chapter_titles()"))
   tokens = read_tokens()
   chapters = tokens %>%
@@ -33,21 +33,21 @@ check_chapter_titles = function() {
     }
 
     if (title_case != title) {
-      msg = glue::glue("  {symbol$cross} Chapter {i}: {title_case} vs {title}")
+      msg = glue::glue("  {cross} Chapter {i}: {title_case} vs {title}")
       message(red(msg))
       error = TRUE
     } else {
-      msg = glue::glue("  {symbol$tick} Chapter {i}: {title_case}")
+      msg = glue::glue("  {tick} Chapter {i}: {title_case}")
       message(yellow(msg))
     }
 
   }
   if (isTRUE(error)) {
-    msg = glue::glue("{symbol$cross} Please correct chapter titles")
+    msg = glue::glue("{cross} Please correct chapter titles")
     message(red(msg))
     .jrnotes$error = TRUE
   } else {
-    message(yellow(symbol$tick, "Titles look good"))
+    message(yellow(tick, "Titles look good"))
   }
   return(invisible(NULL))
 }

@@ -1,7 +1,6 @@
 globalVariables(c("X1", "X2", "X3"))
 #' @importFrom httr GET
 #' @importFrom crayon yellow red green blue
-#' @importFrom cli symbol
 check_urls = function() {
   if (!required_texlive(2017)) return(invisible(NULL))
 
@@ -10,7 +9,7 @@ check_urls = function() {
     message(yellow("No internet connection - skipping URL check"))
     return(invisible(NULL))
   }
-  message(yellow(symbol$circle_filled, "Checking URLS...check_urls()"))
+  message(yellow(circle_filled, "Checking URLS...check_urls()"))
   tokens = read_tokens()
   urls = dplyr::filter(tokens, X1 == "url")$X3 #nolint
 
@@ -24,15 +23,15 @@ check_urls = function() {
 
   bad_urls = FALSE
   for (url in urls) {
-    message("  ", yellow(symbol$circle_filled, "Checking ", url))
+    message("  ", yellow(circle_filled, "Checking ", url))
     ping = try(httr::GET(url), silent = TRUE)
 
     if (class(ping) == "try-error") {
-      msg = glue("  {symbol$info} {url}: {ping}")
+      msg = glue("  {info} {url}: {ping}")
       message(blue(msg))
     } else {
       if (ping$status != 200) {
-        msg = glue("  {symbol$cross} {url}  status: {ping$status}")
+        msg = glue("  {cross} {url}  status: {ping$status}")
         message(red(msg))
       }
       if (ping$status == 404) {
@@ -40,7 +39,7 @@ check_urls = function() {
       }
     }
     if (str_detect(url, "index\\.html")) {
-      msg = glue("  {symbol$info} {url}  You can probably delete index.html")
+      msg = glue("  {info} {url}  You can probably delete index.html")
       message(blue(msg))
     }
   }
@@ -48,7 +47,7 @@ check_urls = function() {
     message(red("Fix broken URLS"))
     .jrnotes$error = TRUE
   } else {
-    message(yellow(symbol$tick, "URLs look good"))
+    message(yellow(tick, "URLs look good"))
   }
   return(invisible(NULL))
 }

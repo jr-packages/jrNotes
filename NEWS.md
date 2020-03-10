@@ -1,8 +1,8 @@
 # Dev
   * Add Git/git to section exceptions
-  * Sort inst/WORDLIST
+  * Order inst/WORDLIST
   * Remove bookdown, jrPresentation from imports
-  * Change cli to clisymbols in imports
+  * Change clisymbols to cli and standardise
 
 # 0.5.4
   * Add CI and Travis to section headings

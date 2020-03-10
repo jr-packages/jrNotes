@@ -14,7 +14,7 @@ URL: https://www.jumpingrivers.com/
 Depends:
     R (>= 3.5.0)
 Imports: 
-    clisymbols,
+    cli,
     config,
     crayon,
     digest,

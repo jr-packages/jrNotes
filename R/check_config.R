@@ -9,7 +9,7 @@
 #' @description Checks that the config file is correct.
 check_config = function() {
 
-  message(yellow(glue("{symbol$circle_filled} Checking config file...check_config()")))
+  message(yellow(glue("{circle_filled} Checking config file...check_config()")))
   config_issue = FALSE
   if (is.null(config::get("advert"))) {
     message(blue(glue("{info} Advert missing from config. Add 'advert: advert'")))

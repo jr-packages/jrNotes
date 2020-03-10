@@ -6,7 +6,7 @@ check_master = function() {
   ## Needed for runner
   system2("git", args = c("fetch", "origin"))
 
-  message(yellow(symbol$circle_filled, "Comparing to master"))
+  message(yellow(circle_filled, "Comparing to master"))
   g = system2("git",
               args = c("rev-list --left-right --count origin/master...@"),
               stdout = TRUE)
@@ -14,9 +14,9 @@ check_master = function() {
   master_commits = strsplit(g, split = "\t")[[1]][1]
 
   if (master_commits > 0) {
-    msg = red(glue("{symbol$cross} Master ahead; git pull"))
+    msg = red(glue("{cross} Master ahead; git pull"))
     stop(msg, call. = FALSE)
   }
-  message(yellow(symbol$tick, "Update to date with master"))
+  message(yellow(tick, "Update to date with master"))
   return(invisible(NULL))
 }

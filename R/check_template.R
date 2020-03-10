@@ -54,26 +54,26 @@ update_gitlab_ci = function(fname, template_fname) {
 
 
 check_gitlab_runner = function(fname, template) {
-  msg = yellow(glue("  {symbol$circle_filled} Checking gitlab-ci.yml"))
+  msg = yellow(glue("  {circle_filled} Checking gitlab-ci.yml"))
   message(msg)
   if (!file.exists(fname)) {
-    msg = blue(glue("  {symbol$info} gitlab-ci is missing"))
+    msg = blue(glue("  {info} gitlab-ci is missing"))
     message(msg)
     fs::file_copy(template, fname)
-    msg = green(glue("  {symbol$tick} Updating gitlab-ci"))
+    msg = green(glue("  {tick} Updating gitlab-ci"))
     message(msg)
   }
 
   if (get_runner_hash(fname) != get_runner_hash(template)) {
     if (is_gitlab()) {
-      msg = red(glue("  {symbol$cross} gitlab-ci.yml has changed"))
+      msg = red(glue("  {cross} gitlab-ci.yml has changed"))
       message(msg)
       return(FALSE)
     }
-    msg = blue(glue("  {symbol$info} gitlab-ci.yml has changed"))
+    msg = blue(glue("  {info} gitlab-ci.yml has changed"))
     message(msg)
     update_gitlab_ci(fname, template)
-    msg = green(glue("  {symbol$tick} gitlab-ci.yml has been updated"))
+    msg = green(glue("  {tick} gitlab-ci.yml has been updated"))
     message(msg)
   }
   return(TRUE)
@@ -111,14 +111,14 @@ check_template = function() {
   }
   type = get_repo_language()
 
-  message(yellow(symbol$circle_filled, "Checking template files...check_template()"))
+  message(yellow(circle_filled, "Checking template files...check_template()"))
 
   if (".gitlab-ci.yml" %in% list.files("../", all.files = TRUE)) {
     dir = "../"
   } else {
     dir = "./"
   }
-  message("  ", yellow(symbol$circle_filled, "Cloning template repo"))
+  message("  ", yellow(circle_filled, "Cloning template repo"))
   tmp_dir = tempdir()
   on.exit(unlink(tmp_dir))
   template_repo_loc = file.path(tmp_dir, "template")
@@ -151,23 +151,23 @@ check_template = function() {
   # Keep track of any differences
   changed = logical(length(fnames))
   for (i in seq_along(fnames)) {
-    msg = yellow(glue("  {symbol$circle_filled} Checking {fnames[i]}"))
+    msg = yellow(glue("  {circle_filled} Checking {fnames[i]}"))
     message(msg)
 
     if (!file.exists(fnames[i]) && !is_gitlab()) {
-      msg = blue(glue("  {symbol$info} {fnames[i]} is missing"))
+      msg = blue(glue("  {info} {fnames[i]} is missing"))
       message(msg)
       fs::file_copy(template_fnames[i], fnames[i])
-      msg = green(glue("  {symbol$tick} Updating {fnames[i]}"))
+      msg = green(glue("  {tick} Updating {fnames[i]}"))
       message(msg)
     }
     changed[i] = has_changed(fnames[i], template_fnames[i])
 
     if (isTRUE(changed[i])) {
-      msg = glue("  {symbol$info} File {fnames[i]} does not match")
+      msg = glue("  {info} File {fnames[i]} does not match")
       message(blue(msg))
       if (!is_gitlab()) {
-        msg = green(glue("  {symbol$tick} Updating {fnames[i]}"))
+        msg = green(glue("  {tick} Updating {fnames[i]}"))
         message(msg)
         fs::file_copy(template_fnames[i], fnames[i], overwrite = TRUE)
       }
@@ -176,10 +176,10 @@ check_template = function() {
 
   refs_path = file.path(dir, "notes/references.bib")
   if (!file.exists(refs_path)) {
-    msg = blue(glue("  {symbol$info} notes/references.bib is missing"))
+    msg = blue(glue("  {info} notes/references.bib is missing"))
     message(msg)
     fs::file_copy(file.path(template_repo_loc, "notes/references.bib"), refs_path)
-    msg = green(glue("  {symbol$tick} Updating references.bib"))
+    msg = green(glue("  {tick} Updating references.bib"))
     message(msg)
   }
 
@@ -192,9 +192,9 @@ check_template = function() {
   }
 
   if (length(list.files(pattern = "*\\.Rproj", path = dir)) > 0L) {
-    msg = glue("{symbol$cross} Don't add Rproj files to the base directory.")
+    msg = glue("{cross} Don't add Rproj files to the base directory.")
     stop(red(msg), call. = FALSE)
   }
-  message(yellow(symbol$tick, "Template files look good"))
+  message(yellow(tick, "Template files look good"))
   return(invisible(NULL))
 }

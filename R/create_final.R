@@ -45,24 +45,24 @@ create_final_dir = function(note_name, pracs) {
   # add notes
   notes_loc = glue("final/notes_{note_name}_{Sys.Date()}.pdf")
   fs::file_copy("main.pdf", notes_loc, overwrite = TRUE)
-  msg = glue_col("{yellow}{symbol$tick} Created {notes_loc}")
+  msg = glue_col("{yellow}{tick} Created {notes_loc}")
   message(msg)
 
   if (fs::file_size(notes_loc) < 50) {
-    msg = glue_col("{yellow}{symbol$tick} The notes look suspiciously small!")
+    msg = glue_col("{yellow}{tick} The notes look suspiciously small!")
   }
 
   # combine practicals into single file
   prac_loc = glue("final/practicals_{note_name}_{Sys.Date()}.pdf")
   qpdf::pdf_combine(pracs, prac_loc)
-  msg = glue_col("{yellow}{symbol$tick} Created {prac_loc}")
+  msg = glue_col("{yellow}{tick} Created {prac_loc}")
   message(msg)
   if (fs::file_size(prac_loc) < 50) {
-    msg = glue_col("{blue}{symbol$tick} The practicals look suspiciously small!")
+    msg = glue_col("{blue}{tick} The practicals look suspiciously small!")
   }
 
-  message(green(symbol$star, symbol$star, praise::praise(),
-                symbol$star, symbol$star))
+  message(green(star, star, praise::praise(),
+                star, star))
   return(invisible(NULL))
 }
 
@@ -108,7 +108,7 @@ get_concat_course_name = function() {
 
 check_pkg_vignettes = function(pkg, pkg_loc) {
   if (fs::dir_exists(file.path(pkg_loc, "doc"))) return(invisible(NULL))
-  msg = glue::glue("{symbol$cross} The package {pkg} doesn't seem to have vignettes.
+  msg = glue::glue("{cross} The package {pkg} doesn't seem to have vignettes.
                    Try building and installing the package from source. Or
                    use install.packages and install from the repo.
                    Note: Standard build and install doesn't create vignettes.")
