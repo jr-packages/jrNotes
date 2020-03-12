@@ -14,6 +14,7 @@ set_knitr_options(
   fig.align = "center",
   fig.width = 4,
   fig.height = 4,
+  linewidth = 60,
   ...
 )
 }
@@ -35,6 +36,8 @@ set_knitr_options(
 \item{fig.width}{4}
 
 \item{fig.height}{4}
+
+\item{linewidth}{Code chunk line width - default 60}
 
 \item{...}{Additional arguments passed to opt_chunk}
 }

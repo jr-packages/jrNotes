@@ -8,7 +8,8 @@ set_options(
   digits = 3,
   dplyr.print_min = 4,
   dplyr.print_max = 4,
-  htmltools.dir.version = FALSE
+  htmltools.dir.version = FALSE,
+  width = 60
 )
 }
 \arguments{
@@ -19,6 +20,9 @@ set_options(
 \item{dplyr.print_max}{4}
 
 \item{htmltools.dir.version}{FALSE}
+
+\item{width}{R output width default 60. Not everything obeys this, hence the
+need for a knitr_hook}
 }
 \description{
 Set consistent options for notes

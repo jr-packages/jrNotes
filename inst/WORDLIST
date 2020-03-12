@@ -417,3 +417,13 @@ ymax
 ymin
 yml
 yy
+keepaspectratio
+lcc
+OperatorTok
+statusAdded
+statusCopied
+statusDeleted
+statusModified
+statusRenamed
+statusUnmerged
+statusUntracked
