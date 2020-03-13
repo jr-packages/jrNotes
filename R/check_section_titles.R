@@ -66,9 +66,7 @@ standard_exceptions = function(title, title_case) {
 
 check_section_titles = function() {
   if (!required_texlive(2017)) return(invisible(NULL))
-
-  message(yellow(circle_filled,
-                 "Checking section for sentence case...check_section_titles()"))
+  msg_start("Checking section for sentence case...check_section_titles()")
   if (!file.exists("extractor.csv")) return()
 
   tokens = read_tokens()
@@ -96,8 +94,7 @@ check_section_titles = function() {
   chapter_num = 1
   for (i in seq_len(nrow(sections))) {
     if (sections$X1[i] == "chapter") {
-      msg = glue::glue("{circle_filled} Chapter {chapter_num}")
-      message(yellow(msg))
+      msg_info(glue::glue("Chapter {chapter_num}"), padding = 2)
       chapter_num = chapter_num + 1
     } else {
       title = sections$text[i]
@@ -106,12 +103,10 @@ check_section_titles = function() {
         title_case = standard_exceptions(title, title_case)
       }
       if (title_case != title) {
-        msg = glue::glue("  {info} {sections[i, 1]}: {title_case} vs {title}")
-        message(blue(msg))
+        msg_info(glue::glue("{sections[i, 1]}: {title_case} vs {title}"), padding = 4)
         error = TRUE
       } else {
-        msg = glue::glue("  {tick} {sections[i, 1]}: {title_case}")
-        message(yellow(msg))
+        msg_ok(glue::glue("{sections[i, 1]}: {title_case}"), padding = 2)
       }
     }
   }
@@ -121,9 +116,9 @@ check_section_titles = function() {
                 If so, ask Colin to add an exception.
 
                 If a word is wrapped in \\texttt it isn't checked.")
-    message(blue(msg))
+    msg_info(msg, padding = 2)
   } else {
-    message(yellow(tick, "Section titles look good"))
+    msg_ok("Section titles look good")
   }
   return(invisible(NULL))
 }

@@ -11,14 +11,13 @@ check_version = function() {
   if (Sys.getenv("CI_PROJECT_NAME") == "template") {
     return(invisible(TRUE))
   }
-
-  message(yellow(circle_filled, "Checking version in config.yml...check_version()"))
+  msg_start("Checking version in config.yml...check_version()")
   # Don't update on non-release
   r = readLines("../.gitlab-ci.yml")
   release = r[stringr::str_detect(r, "RELEASE:")]
   if (stringr::str_detect(release, '"FALSE"')) {
-    message(yellow(info, "RELEASE is FALSE in .gitlab-ci.yml"))
-    message(yellow(info, "Skipping version number check"))
+    msg_info("RELEASE is FALSE in .gitlab-ci.yml", padding = 2)
+    msg_info("Skipping version number check", padding = 2)
     return(invisible(TRUE))
   }
 
@@ -33,10 +32,9 @@ check_version = function() {
   config_changed = sum(str_detect(output, "notes/config\\.yml"))
 
   if (chapters_changed > 0 && config_changed == 0) {
-    message(red(cross,
-                   "Chapters.Rmd have been updated, but version is unchanged!"))
-    stop(red(cross, "Please update version number."), call. = FALSE)
+    msg_error("Chapters.Rmd have been updated, but version is unchanged!")
+    msg_error("Please update version number.", stop = TRUE)
   }
-  message(yellow(tick, "Config looks good!"))
+  msg_ok("Config looks good!")
   return(invisible(TRUE))
 }

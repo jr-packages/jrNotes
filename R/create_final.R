@@ -39,30 +39,29 @@ create_final_dir = function(note_name, pracs) {
   if (isTRUE(.jrnotes$error)) {
     stop("Please fix errors", call. = FALSE)
   }
+  msg_start("Creating pdf outputs...")
   dir.create("final", showWarnings = FALSE)
   # Remove old notes/practicals
   file.remove(list.files("final", full.names = TRUE))
   # add notes
   notes_loc = glue("final/notes_{note_name}_{Sys.Date()}.pdf")
   fs::file_copy("main.pdf", notes_loc, overwrite = TRUE)
-  msg = glue_col("{yellow}{tick} Created {notes_loc}")
-  message(msg)
+  msg_ok(glue("Created {notes_loc}"), padding = 2)
 
   if (fs::file_size(notes_loc) < 50) {
-    msg = glue_col("{yellow}{tick} The notes look suspiciously small!")
+    msg_info("The notes look suspiciously small!", padding = 2)
   }
 
   # combine practicals into single file
   prac_loc = glue("final/practicals_{note_name}_{Sys.Date()}.pdf")
   qpdf::pdf_combine(pracs, prac_loc)
-  msg = glue_col("{yellow}{tick} Created {prac_loc}")
-  message(msg)
+  msg_ok(glue("Created {prac_loc}"), padding = 2)
   if (fs::file_size(prac_loc) < 50) {
-    msg = glue_col("{blue}{tick} The practicals look suspiciously small!")
+    msg_info("The practicals look suspiciously small!", padding = 2)
   }
+  msg_ok("PDF outputs created in final/")
 
-  message(green(star, star, praise::praise(),
-                star, star))
+  message(green("\n\n", star, star, praise::praise(), star, star))
   return(invisible(NULL))
 }
 
@@ -112,7 +111,7 @@ check_pkg_vignettes = function(pkg, pkg_loc) {
                    Try building and installing the package from source. Or
                    use install.packages and install from the repo.
                    Note: Standard build and install doesn't create vignettes.")
-  message(red(msg))
+  msg_error(msg)
   stop(call. = FALSE)
 }
 

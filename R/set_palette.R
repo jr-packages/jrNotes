@@ -17,7 +17,7 @@ set_palette = function(set = 0, alpha=255) {
               rgb(131, 108, 192, alpha = alpha, maxColorValue = 255),
               rgb(63, 142, 96, alpha = alpha, maxColorValue = 255)))
   } else {
-    message("Setting Default palette")
+    msg_info("Setting Default palette")
     palette("default")
   }
 }

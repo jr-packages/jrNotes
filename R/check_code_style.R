@@ -1,15 +1,15 @@
 check_r_style = function() {
-  message(yellow(circle_filled, "Checking lint...check_code_style()"))
+  msg_start("Checking lint...check_code_style()")
   if (isFALSE(config::get("lintr"))) {
     return(invisible(NULL))
   }
   fnames = list.files(pattern = "^c.*Rmd$")
   bad_lints = FALSE
   for (i in seq_along(fnames)) {
-    message("  ", yellow(circle_filled, "Checking ", fnames[i]))
+    msg_info(paste("Checking", fnames[i]), padding = 2)
     l = lintr::lint(fnames[i])
     if (length(l) > 0) {
-      message(red(cross, fnames[i]))
+      msg_error(fnames[i], padding = 4)
       print(l)
       bad_lints = TRUE
     }
@@ -29,17 +29,17 @@ check_r_style = function() {
 
 
 check_python_style = function() {
-  message(yellow(circle_filled, "Checking lint...check_code_style()"))
+  msg_start("Checking lint...check_code_style()")
   if (!fs::file_exists("flake8.ini")) {
-    message("Missing flake8_config.ini file - creating a default")
+    msg_info("Missing flake8_config.ini file - creating a default", padding = 2)
     flake8_ini_sys = system.file("", "flake8_config_Rmd.ini", package = "jrNotes", mustWork = TRUE)
     file.copy(flake8_ini_sys, to = "flake8_config_Rmd.ini", overwrite = TRUE)
   }
-  message(yellow(circle_filled, "Checking lint...check_code_style()"))
+  msg_start("Checking lint...check_code_style()")
   fnames = list.files(pattern = "^c.*Rmd$")
   bad_lints = FALSE
   for (i in seq_along(fnames)) {
-    message("  ", yellow(circle_filled, "Checking ", fnames[i]))
+    msg_info(paste("Checking", fnames[i]), padding = 2)
     jrpytests = reticulate::import("jrpytests")
     jrpytests$runflake8rmdpychunks(filename = fnames[i])
   }
@@ -55,10 +55,10 @@ check_code_style = function() {
   }
 
   if (bad_lints) {
-    message(red(cross, "Fix styling"))
+    msg_error("Fix styling")
     .jrnotes$error = TRUE
   } else {
-    message(yellow(tick, "Styling looks good"))
+    msg_ok("Styling looks good")
   }
 }
 #' Lintr functions

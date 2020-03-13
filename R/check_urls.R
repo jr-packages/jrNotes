@@ -6,10 +6,10 @@ check_urls = function() {
 
   # Hack to detect internet connection on laptops
   if (httr::GET("www.google.com")$status != 200) {
-    message(yellow("No internet connection - skipping URL check"))
+    msg_info("No internet connection - skipping URL check")
     return(invisible(NULL))
   }
-  message(yellow(circle_filled, "Checking URLS...check_urls()"))
+  msg_start("Checking URLS...check_urls()")
   tokens = read_tokens()
   urls = dplyr::filter(tokens, X1 == "url")$X3 #nolint
 
@@ -23,31 +23,29 @@ check_urls = function() {
 
   bad_urls = FALSE
   for (url in urls) {
-    message("  ", yellow(circle_filled, "Checking ", url))
+    msg_info(paste("Checking ", url), padding = 2)
     ping = try(httr::GET(url), silent = TRUE)
 
     if (class(ping) == "try-error") {
-      msg = glue("  {info} {url}: {ping}")
-      message(blue(msg))
+      msg_info(glue("{url}: {ping}"), padding = 2)
     } else {
       if (ping$status != 200) {
-        msg = glue("  {cross} {url}  status: {ping$status}")
-        message(red(msg))
+        msg_error(glue("status: {ping$status}"), padding = 2)
       }
       if (ping$status == 404) {
         bad_urls = TRUE
       }
     }
     if (str_detect(url, "index\\.html")) {
-      msg = glue("  {info} {url}  You can probably delete index.html")
-      message(blue(msg))
+      msg = glue("You can probably delete index.html from the URL")
+      msg_info(msg, padding = 2)
     }
   }
   if (bad_urls) {
-    message(red("Fix broken URLS"))
+    msg_error("Fix broken URLS")
     .jrnotes$error = TRUE
   } else {
-    message(yellow(tick, "URLs look good"))
+    msg_ok("URLs look good")
   }
   return(invisible(NULL))
 }

@@ -53,7 +53,9 @@ clone_git_template = function(name = NULL,
   if (push) {
     system2("git", args = c("push", "-u", "origin", "master"))
   } else {
-    message("Remember to run \"git push -u origin master\" if you want to later push to and create the repo.") #nolint
+    msg = glue::glue("Remember to run \"git push -u origin master\" \\
+                     if you want to later push to and create the repo.")
+    msg_info(msg, padding = 2)
   }
 
   return(invisible(repo_name))

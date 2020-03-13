@@ -6,8 +6,7 @@ get_texlive_version = function() {
 required_texlive = function(version) {
   current = get_texlive_version()
   if (current < version) {
-    msg = "Old texlive version used. Skipping checks"
-    message(blue(msg))
+    msg_info("Old texlive version used. Skipping checks")
   }
   return(current >= version)
 }

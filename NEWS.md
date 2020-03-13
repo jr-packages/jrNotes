@@ -1,9 +1,10 @@
-# Dev
+# 0.5.5
   * Add Git/git to section exceptions
   * Order inst/WORDLIST
   * Remove bookdown, jrPresentation from imports
   * Change clisymbols to cli and standardise
   * Setting width to code chunks (thanks to @theoroe3)
+  * Standardise messages
 
 # 0.5.4
   * Add CI and Travis to section headings

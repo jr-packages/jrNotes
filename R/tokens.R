@@ -4,11 +4,11 @@ tokenise = function() {
 
   file.copy(fname, to = "extractor.tex", overwrite = TRUE)
   file.copy("main.tex", "extractor-tmp.tex", overwrite = TRUE)
-  message(yellow(info, "Checking tokens"))
+  msg_info("Checking tokens", padding = 2)
   system2("xelatex",
           args = c("'\\input extractor \\input extractor-tmp.tex'"),
           stdout = FALSE)
-  message(yellow(tick, "Tokens created"))
+  msg_ok("Tokens created", padding = 2)
 }
 
 globalVariables("text")

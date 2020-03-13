@@ -6,10 +6,10 @@
 #' @importFrom utils install.packages
 check_pkgs = function() {
   if (httr::GET("www.google.com")$status != 200) {
-    message(blue("No internet connection - skipping PKG check"))
+    msg_info("No internet connection - skipping PKG check")
     return(invisible(NULL))
   }
-  message(yellow(circle_filled, "Checking package versions...check_pkgs()"))
+  msg_start("Checking package versions...check_pkgs()")
   r = getOption("repos")
   jr_pkgs = "https://jr-packages.github.io/drat/"
   if (!(jr_pkgs %in% r)) {
@@ -41,11 +41,11 @@ check_pkgs = function() {
   pkgs$Version.y[is.na(pkgs$Version.y)] = "0.0.0"
   for (i in seq_len(nrow(pkgs))) {
     if (package_version(pkgs$Version.x[i]) > package_version(pkgs$Version.y[i])) {
-      msg = glue("  {cross} Update {pkgs$Package[i]}: {pkgs$Version.x[i]} > {pkgs$Version.y[i]}") #nolint
-      message(red(msg))
+      msg = glue("Update {pkgs$Package[i]}: {pkgs$Version.x[i]} > {pkgs$Version.y[i]}") #nolint
+      msg_error(msg, padding = 2)
     } else {
-      msg = glue("  {tick} {pkgs$Package[i]} (v{pkgs$Version.x[i]}) is up to date")
-      message(yellow(msg))
+      msg = glue("{pkgs$Package[i]} (v{pkgs$Version.x[i]}) is up to date")
+      msg_ok(msg, padding = 2)
     }
   }
 
@@ -53,10 +53,8 @@ check_pkgs = function() {
   if (sum(to_update) == 0 || nchar(Sys.getenv("GITLAB_CI")) != 0) {
     return(invisible(NULL))
   }
-  m = glue("{info} Automatically updating packages")
-  message(red(m))
+  msg_info("Automatically updating packages", padding = 2)
   install.packages(pkgs$Package[to_update])
   clean()
-
-  stop(red("Packages have been updated. Please run make final again"), call. = FALSE)
+  msg_error("Packages have been updated. Please run make final again", stop = TRUE)
 }

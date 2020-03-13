@@ -8,22 +8,22 @@
 #' @title Config checker
 #' @description Checks that the config file is correct.
 check_config = function() {
-
-  message(yellow(glue("{circle_filled} Checking config file...check_config()")))
+  msg_start("Checking config file...check_config()")
   config_issue = FALSE
   if (is.null(config::get("advert"))) {
-    message(blue(glue("{info} Advert missing from config. Add 'advert: advert'")))
+    msg_info("Advert missing from config.", padding = 2)
+    msg_info("Add 'advert: advert'", padding = 4)
     config_issue = TRUE
   }
 
   if (is.null(config::get("courses"))) {
-    message(blue(glue("{info} Course dependency graph has not been included.
-                      Add 'courses: course-dependencies' to the config.yml")))
+    msg_info("Course dependency graph has not been included.", padding = 2)
+    msg_info("Add 'courses: course-dependencies' to the config.yml", padding = 4)
     config_issue = TRUE
   }
 
   if (isFALSE(config_issue)) {
-    message(yellow(glue("{tick} Config looks good!")))
+    msg_ok("Config looks good!")
   }
   return(invisible(NULL))
 }
