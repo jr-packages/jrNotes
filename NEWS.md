@@ -1,3 +1,6 @@
+# 0.5.6 
+  * Reduce widths by 1 to 59
+
 # 0.5.5
   * Add Git/git to section exceptions
   * Order inst/WORDLIST

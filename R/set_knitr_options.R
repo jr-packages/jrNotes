@@ -19,7 +19,7 @@ split_lines = function(x) {
 #' @param fig.align center
 #' @param fig.width 4
 #' @param fig.height 4
-#' @param linewidth Code chunk line width - default 60
+#' @param linewidth Code chunk line width - default 59
 #' @param ... Additional arguments passed to opt_chunk
 #' @export
 #' @import knitr
@@ -32,7 +32,7 @@ set_knitr_options = function(tidy = FALSE,
                              fig.align = "center", # nolint
                              fig.width = 4,        # nolint
                              fig.height = 4,       # nolint
-                             linewidth = 60,
+                             linewidth = 59,
                              ...
 ) {
   knitr::opts_chunk$set(

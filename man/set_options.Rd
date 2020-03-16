@@ -9,7 +9,7 @@ set_options(
   dplyr.print_min = 4,
   dplyr.print_max = 4,
   htmltools.dir.version = FALSE,
-  width = 60
+  width = 59
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ set_options(
 
 \item{htmltools.dir.version}{FALSE}
 
-\item{width}{R output width default 60. Not everything obeys this, hence the
+\item{width}{R output width default 59. Not everything obeys this, hence the
 need for a knitr_hook}
 }
 \description{

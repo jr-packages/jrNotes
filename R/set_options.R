@@ -6,14 +6,14 @@
 #' @param dplyr.print_min 4
 #' @param dplyr.print_max 4
 #' @param htmltools.dir.version FALSE
-#' @param width R output width default 60. Not everything obeys this, hence the
+#' @param width R output width default 59. Not everything obeys this, hence the
 #' need for a knitr_hook
 #' @export
 set_options = function(digits = 3,
                        dplyr.print_min = 4,
                        dplyr.print_max = 4,
                        htmltools.dir.version = FALSE,
-                       width = 60
+                       width = 59
 ) {
 
   options(digits = digits,
