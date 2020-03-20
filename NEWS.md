@@ -1,3 +1,6 @@
+# 0.5.7
+  * Check for rogue markdown in sidenotes #10
+
 # 0.5.6 
   * Reduce widths by 1 to 59
 

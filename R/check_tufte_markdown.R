@@ -1,3 +1,36 @@
+globalVariables(c("is_star", "is_backtick"))
+check_rogue_markdown = function() {
+  if (!required_texlive(2017)) return(invisible(NULL))
+
+  if (!file.exists("extractor.csv")) return()
+  msg_start("Checking for rogue markdown...check_rogue_markdown()")
+  # Don't check for underscores - this would break latex anyway
+  tokens = read_tokens()
+  issues = tokens %>%
+    dplyr::mutate(chap_num = cumsum(X1 == "chapter")) %>%
+    dplyr::filter(X1 == "marginnote" | X1 == "sidenote") %>%
+    dplyr::filter(!str_detect(X3, "flushright")) %>% # Remove include graphics
+    dplyr::mutate(is_star = str_detect(X3, "\\*"),
+           is_backtick = str_detect(X3, "`")) %>%
+    dplyr::filter(is_star | is_backtick)
+  i = 1
+  for (i in seq_len(nrow(issues))) {
+    row = issues[i, ]
+    msg = glue::glue("Chapter {row$chap_num} - {row$X1}: {row$X3}", padding = 2)
+    if (isTRUE(row$is_backtick)) {
+      .jrnotes$error = TRUE
+      msg_error(msg, padding = 2)
+    } else {
+      msg_info(msg, padding = 2)
+    }
+  }
+
+  if (sum(issues$is_backtick) == 0L) {
+    msg_ok("Markdown looks good")
+  }
+  return(invisible(NULL))
+}
+
 check_tufte = function() {
   msg_start("Checking tufte latex...check_tufte()")
 
@@ -19,5 +52,6 @@ check_tufte = function() {
   for (msg in msgs) {
     msg_error(msg, padding = 2)
   }
+  check_rogue_markdown()
   return(invisible(NULL))
 }
