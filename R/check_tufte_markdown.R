@@ -11,21 +11,16 @@ check_rogue_markdown = function() {
     dplyr::filter(X1 == "marginnote" | X1 == "sidenote") %>%
     dplyr::filter(!str_detect(X3, "flushright")) %>% # Remove include graphics
     dplyr::mutate(is_star = str_detect(X3, "\\*"),
-           is_backtick = str_detect(X3, "`")) %>%
+                  is_backtick = str_detect(X3, "`")) %>%
     dplyr::filter(is_star | is_backtick)
   i = 1
   for (i in seq_len(nrow(issues))) {
     row = issues[i, ]
     msg = glue::glue("Chapter {row$chap_num} - {row$X1}: {row$X3}", padding = 2)
-    if (isTRUE(row$is_backtick)) {
-      .jrnotes$error = TRUE
-      msg_error(msg, padding = 2)
-    } else {
-      msg_info(msg, padding = 2)
-    }
+    msg_info(msg, padding = 2)
   }
 
-  if (sum(issues$is_backtick) == 0L) {
+  if ((sum(issues$is_backtick) + sum(issues$is_star)) == 0L) {
     msg_ok("Markdown looks good")
   }
   return(invisible(NULL))
