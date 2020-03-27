@@ -1,3 +1,6 @@
+# Dev
+  * Bug: Now detect flake8 files
+
 # 0.5.7
   * Check for rogue markdown in sidenotes #10
 
