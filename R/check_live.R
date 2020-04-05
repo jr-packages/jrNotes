@@ -32,9 +32,6 @@ get_section_tibble = function() {
 
 check_live_file_names = function(dir_name) {
 
-  #if (!any(str_detect(dir_name, "/slides.Rmd$"))) {
-  #  jrNotes:::msg_error("slides.Rmd file missing", padding = 2)
-  #}
   fname = file.path(dir_name, "tutor.R")
   if (!file.exists(fname)) {
     msg_error("tutor.R file missing", padding = 2)
@@ -42,11 +39,6 @@ check_live_file_names = function(dir_name) {
     msg_info(file.path(dir_name, "tutor.R"), padding = 2)
     check_live_r_file(file.path(dir_name, "tutor.R"))
   }
-
-  #if (!any(str_detect(dir_name, "/exercises.R$"))) {
-  #  jrNotes:::msg_error("exercises.R file missing", padding = 2)
-  #}
-
   return(invisible(NULL))
 }
 
@@ -58,7 +50,6 @@ check_live = function() {
   chapters = fs::dir_ls("live", regexp = "live/chapter")
   i = 4
   for (i in chapters) {
-#    files = fs::dir_ls(chapters[i])
     msg_info(paste0("Checking ", chapters[i]))
     check_live_file_names(chapters[i])
   }
@@ -116,6 +107,3 @@ check_live_r_file = function(fname) {
   }
   return(invisible(NULL))
 }
-
-
-
