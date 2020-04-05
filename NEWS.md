@@ -1,5 +1,6 @@
 # Dev
   * Bug: Now detect flake8 files
+  * Feature: Check live directory
 
 # 0.5.7
   * Check for rogue markdown in sidenotes #10
