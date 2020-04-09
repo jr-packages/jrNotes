@@ -32,6 +32,9 @@ create_final_dir = function(note_name, pracs) {
   check_config()
   # Check lint
   check_code_style() # nolint
+  # Check live
+  check_live()
+  create_live_scripts()
   # Check version number
   check_version()
   check_unstaged()
