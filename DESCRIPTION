@@ -1,7 +1,7 @@
 Type: Package
 Package: jrNotes
 Title: Jumping Rivers: Helper Package for Notes
-Version: 0.5.7.9003
+Version: 0.5.7.9004
 Authors@R: 
     person(given = "Jumping",
            family = "Rivers",
@@ -34,7 +34,8 @@ Imports:
     spelling,
     stringr,
     tibble,
-    tufte (>= 0.5)
+    tufte (>= 0.5),
+    zip
 Suggests:
     drat,
     formatR,
