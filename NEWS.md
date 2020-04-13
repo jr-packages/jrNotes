@@ -1,6 +1,7 @@
 # Dev
   * Bug: Now detect flake8 files
   * Feature: Check live directory
+  * Feature: Update knitr options, use cairo_pdf, set out.width
 
 # 0.5.7
   * Check for rogue markdown in sidenotes #10
