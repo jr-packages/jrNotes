@@ -1,0 +1,14 @@
+Name: Add live comment
+Description: Inserts `#> ` at the cursor position.
+Binding: insert_live_comment
+Interactive: false
+
+Name: Insert Banner
+Description: Inserts a code banner at the cursor position.
+Binding: insert_banner
+Interactive: false
+
+Name: Live comment highlight
+Description: Inserts `#> ` in front of highlighted code.
+Binding: code_live_highlight
+Interactive: false
