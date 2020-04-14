@@ -15,6 +15,12 @@ set_knitr_options(
   fig.width = 4,
   fig.height = 4,
   linewidth = 59,
+  fig.retina = 1,
+  out.width = "100\%",
+  out.height = "100\%",
+  dev = "cairo_pdf",
+  dpi = 192,
+  dev.args = list(png = list(type = "cairo-png")),
   ...
 )
 }
@@ -38,6 +44,18 @@ set_knitr_options(
 \item{fig.height}{4}
 
 \item{linewidth}{Code chunk line width - default 59}
+
+\item{fig.retina}{Default 1}
+
+\item{out.width}{Output width default 100\%}
+
+\item{out.height}{Output height default 100\%}
+
+\item{dev}{Default device \code{cairo_pdf}}
+
+\item{dpi}{If changed to png, set to 192}
+
+\item{dev.args}{If dev changed to png, use \code{cairo-png}}
 
 \item{...}{Additional arguments passed to opt_chunk}
 }
