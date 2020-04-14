@@ -2,7 +2,7 @@
 % Please edit documentation in R/addins.R
 \name{insert_live_comment}
 \alias{insert_live_comment}
-\title{Insert '#> '.}
+\title{Insert \code{#> } .}
 \usage{
 insert_live_comment()
 }

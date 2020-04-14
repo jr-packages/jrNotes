@@ -2,7 +2,7 @@
 % Please edit documentation in R/addins.R
 \name{live_comment_highlight}
 \alias{live_comment_highlight}
-\title{Insert '#> ' in front of highlighted text.}
+\title{Inserts \code{#> }  in front of highlighted text.}
 \usage{
 live_comment_highlight()
 }

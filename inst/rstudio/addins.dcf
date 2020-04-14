@@ -10,5 +10,5 @@ Interactive: false
 
 Name: Live comment highlight
 Description: Inserts `#> ` in front of highlighted code.
-Binding: code_live_highlight
+Binding: live_comment_highlight
 Interactive: false

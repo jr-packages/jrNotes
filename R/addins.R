@@ -1,4 +1,4 @@
-#' Insert '#> '.
+#' Insert \code{#> } .
 #'
 #' Call this function as an addin to insert \code{#> } at the cursor position.
 #' @importFrom rstudioapi insertText
@@ -17,7 +17,7 @@ insert_banner <- function() {
 }
 
 
-#' Insert '#> ' in front of highlighted text.
+#' Inserts \code{#> }  in front of highlighted text.
 #'
 #' Call this function as insert \code{#> } at the start of highlighted text.
 #' @importFrom rstudioapi getActiveDocumentContext insertText
