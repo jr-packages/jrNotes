@@ -50,11 +50,12 @@ check_live = function() {
 
   if (!fs::dir_exists("../live")) return(invisible(NULL))
   chapters = fs::dir_ls("../live", regexp = "../live/chapter")
-
+  msg_start("Checking live scripts formatting")
   for (i in chapters) {
     msg_info(paste0("Checking ", chapters[i]))
     check_live_file_names(chapters[i])
   }
+  msg_ok("Live script formatting looks good")
   return(invisible(NULL))
 }
 
@@ -69,12 +70,12 @@ check_live_r_file = function(fname) {
   r_code = readLines(fname)
 
   ## Check banner
-  banner_line_numbers = which(str_detect(r_code, pattern = "^# ==="))
+  banner_line_numbers = which(str_detect(r_code, pattern = "^## ==="))
   banners = r_code[banner_line_numbers]
-  check = banners == paste("## ", paste(rep("=", 47), collapse = ""), collapse = "")
+  check = banners == paste0("## ", paste(rep("=", 47), collapse = ""))
   if (!all(check)) {
     msg_info("Banner length should be ## ========, with 47 ='s")
-    msg_info(paste("See lines:", banner_line_numbers[!check]))
+    msg_info(paste("See lines:", banner_line_numbers[!check], "\n"))
     stop(call. = FALSE)
   }
   ## Check Section
