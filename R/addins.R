@@ -23,8 +23,7 @@ insert_banner <- function() {
 #' @importFrom rstudioapi getActiveDocumentContext insertText
 #' @export
 live_comment_highlight <- function() {
-
-  # Gets The active Documeent
+  # Gets The active Document
   ctx <- rstudioapi::getActiveDocumentContext()
 
   # Checks that a document is active
@@ -32,7 +31,21 @@ live_comment_highlight <- function() {
     selection = ctx$selection
     selection_start = selection[[1]]$range$start[1]
     selection_end = selection[[1]]$range$end[1]
-    pos = Map(c, selection_start:selection_end, 1)
-    rstudioapi::insertText(pos, "#> ")
+    text = selection[[1]]$text
+    code = unlist(strsplit(text, split = "\n"))
+    # If code already prefaced by #>, then remove
+    if (all(grepl("#> ", code))) {
+      range = lapply(selection_start:selection_end,
+                     function(x)
+                       rstudioapi::document_range(
+                         rstudioapi::document_position(x, 1),
+                         rstudioapi::document_position(x, 4)
+                       ))
+      rstudioapi::modifyRange(range, "")
+    } else{
+      # otherwise add #>
+      pos = Map(c, selection_start:selection_end, 1)
+      rstudioapi::insertText(pos, "#> ")
+    }
   }
 }
