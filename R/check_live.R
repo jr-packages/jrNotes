@@ -104,7 +104,7 @@ check_live_r_file = function(fname) {
     actual_title = section_hashes[i]
     if (expected_title != actual_title) {
       msg_info(glue::glue("Chapter {sec_num}"))
-      msg_error(glue::glue("{expected_title} vs {actual_title}"), padding = 2)
+      msg_info(glue::glue("{expected_title} vs {actual_title}"), padding = 2)
     }
 
   }
