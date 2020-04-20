@@ -156,10 +156,12 @@ create_live_python = function() {
 
   # Zip folder
   msg_start("Zipping scripts...")
-  tutor_scripts = list.files("../live/tutor_scripts", "ipynb$", full.names = TRUE, recursive =  TRUE)
-  vm_scripts = list.files("../live/vm_scripts", "ipynb$", full.names = TRUE, recursive = TRUE)
-  zip::zipr(zipfile = "../live/tutor_scripts.zip", files = tutor_scripts)
-  zip::zipr(zipfile = "../live/vm_scripts.zip", files = vm_scripts)
+  # clear out the Rmd files first
+  unlink(list.files("../live/tutor_scripts", "Rmd$", full.names = TRUE, recursive =  TRUE))
+  unlink(list.files("../live/vm_scripts", "Rmd$", full.names = TRUE, recursive =  TRUE))
+
+  zip::zipr(zipfile = "../live/tutor_scripts.zip", files = "../live/tutor_scripts")
+  zip::zipr(zipfile = "../live/vm_scripts.zip", files = "../live/vm_scripts")
 
   # Clean up
   unlink("../live/vm_scripts/", recursive = TRUE)
