@@ -10,7 +10,7 @@
 #' @export
 create_live_scripts = function() {
 
-  if(get_repo_language() == "python"){
+  if (get_repo_language() == "python") {
     create_live_python()
   }else{
     if (!fs::dir_exists("../live")) return(invisible(NULL))
@@ -127,7 +127,13 @@ create_live_python = function() {
               stdout = glue::glue("../live/vm_scripts/{chapter}/tutor.Rmd"))
 
       # convert student scripts to notebooks
-      system2("jupytext", c("--to", "notebook", glue::glue("../live/vm_scripts/{chapter}/tutor.Rmd")))
+      system2(
+        "jupytext",
+        c(
+          "--to", "notebook",
+          glue::glue("../live/vm_scripts/{chapter}/tutor.Rmd")
+        )
+      )
     }
 
     # Create exercises and solutions
@@ -137,7 +143,13 @@ create_live_python = function() {
       system2("sed",
               args = c(shQuote("/^#>.*/d"), glue::glue("../live/{chapter}/master_exercises.Rmd")),
               stdout = glue::glue("../live/vm_scripts/{chapter}/exercises_original.Rmd"))
-      system2("jupytext", c("--to", "notebook", glue::glue("../live/vm_scripts/{chapter}/exercises_original.Rmd")))
+      system2(
+        "jupytext",
+        c(
+          "--to", "notebook",
+          glue::glue("../live/vm_scripts/{chapter}/exercises_original.Rmd")
+        )
+      )
 
       # Create excercises.R
       fs::file_copy(path = glue::glue("../live/vm_scripts/{chapter}/exercises_original.ipynb"),
@@ -149,7 +161,13 @@ create_live_python = function() {
               args = c(shQuote("s/^#> //"), glue::glue("../live/{chapter}/master_exercises.Rmd")),
               stdout = glue::glue("../live/vm_scripts/{chapter}/solutions.Rmd"))
 
-      system2("jupytext", c("--to", "notebook", glue::glue("../live/vm_scripts/{chapter}/solutions.Rmd")))
+      system2(
+        "jupytext",
+        c(
+          "--to", "notebook",
+          glue::glue("../live/vm_scripts/{chapter}/solutions.Rmd")
+        )
+      )
 
     }
   }
