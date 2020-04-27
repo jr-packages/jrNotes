@@ -18,7 +18,7 @@ set_knitr_options(
   fig.retina = 1,
   out.width = "100\%",
   out.height = "100\%",
-  dev = "cairo_pdf",
+  dev = NULL,
   dpi = 192,
   dev.args = list(png = list(type = "cairo-png")),
   ...
@@ -51,11 +51,11 @@ set_knitr_options(
 
 \item{out.height}{Output height default 100\%}
 
-\item{dev}{Default device \code{cairo_pdf}}
+\item{dev}{If \code{NULL} & language R, then \code{cairo_pdf}. Otherwise, \code{pdf}.}
 
 \item{dpi}{If changed to png, set to 192}
 
-\item{dev.args}{If dev changed to png, use \code{cairo-png}}
+\item{dev.args}{If \code{dev} changed to \code{png}, use \code{cairo-png}}
 
 \item{...}{Additional arguments passed to opt_chunk}
 }

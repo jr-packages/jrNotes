@@ -1,4 +1,4 @@
-# Dev
+# 0.5.8
   * Bug: Now detect flake8 files
   * Feature: Check live directory
   * Feature: Update knitr options, use cairo_pdf, set out.width

@@ -23,9 +23,9 @@ split_lines = function(x) {
 #' @param fig.retina Default 1
 #' @param out.width Output width default 100\%
 #' @param out.height Output height default 100\%
-#' @param dev Default device \code{cairo_pdf}
+#' @param dev If \code{NULL} & language R, then \code{cairo_pdf}. Otherwise, \code{pdf}.
 #' @param dpi If changed to png, set to 192
-#' @param dev.args If dev changed to png, use \code{cairo-png}
+#' @param dev.args If \code{dev} changed to \code{png}, use \code{cairo-png}
 #' @param ... Additional arguments passed to opt_chunk
 #' @export
 #' @import knitr
@@ -42,10 +42,20 @@ set_knitr_options = function(tidy = FALSE,
                              fig.retina = 1,       # nolint
                              out.width = "100%",   # nolint
                              out.height = "100%",  # nolint
-                             dev = "cairo_pdf",
+                             dev = NULL,
                              dpi = 192,
-                             dev.args = list(png = list(type = "cairo-png")), #nolint
+                             dev.args = list(png = list(type = "cairo-png")), # nolint
                              ...) {
+
+  if (is.null(dev)) {
+    language = get_repo_language()
+    if (language == "r") {
+      dev = "cairo_pdf"
+    } else {
+      dev = "pdf"
+    }
+  }
+
   knitr::opts_chunk$set(
     tidy = tidy,
     echo = echo,
