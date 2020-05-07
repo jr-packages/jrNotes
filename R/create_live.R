@@ -68,6 +68,9 @@ create_live_scripts = function() {
 
     # Zip folder
     msg_start("Zipping scripts...")
+    # Copy notes into vm_scripts.zip
+    fs::file_copy("main.pdf", "../live/vm_scripts/notes.pdf", overwrite = TRUE)
+
     zip::zipr(zipfile = "../live/tutor_scripts.zip", files = "../live/tutor_scripts/")
     zip::zipr(zipfile = "../live/vm_scripts.zip", files = "../live/vm_scripts/")
 
