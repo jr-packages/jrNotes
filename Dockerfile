@@ -16,3 +16,4 @@ RUN install2.r -n -1 -d TRUE --error jrNotes jrPresentation \
     ## Clean-up; reduce docker size
     && rm -rf  /tmp/downloaded_packages/
 
+RUN python3 -m pip install jupytext
