@@ -181,6 +181,9 @@ create_live_python = function() {
   unlink(list.files("../live/tutor_scripts", "Rmd$", full.names = TRUE, recursive =  TRUE))
   unlink(list.files("../live/vm_scripts", "Rmd$", full.names = TRUE, recursive =  TRUE))
 
+  # Copy notes into vm_scripts.zip
+  fs::file_copy("main.pdf", "../live/vm_scripts/notes.pdf", overwrite = TRUE)
+
   zip::zipr(zipfile = "../live/tutor_scripts.zip", files = "../live/tutor_scripts")
   zip::zipr(zipfile = "../live/vm_scripts.zip", files = "../live/vm_scripts")
 
