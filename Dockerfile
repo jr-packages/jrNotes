@@ -1,9 +1,6 @@
 FROM jumpingrivers/base-image
 # docker run --rm -ti jrpackages/jrnotes /bin/bash
 
-RUN echo "options(repos = c(CRAN = 'https://cran.rstudio.com/', \
-            jrpackages = 'https://jr-packages.github.io/drat/'))" >> /usr/lib/R/etc/Rprofile.site
-
 ## Hack to get github package installed
 ## Once countdown is on CRAN, then update jrPres and remove this line
 RUN install2.r --error -n -1 remotes
