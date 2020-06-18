@@ -30,7 +30,7 @@ create_live_scripts = function() {
 
     # Set up file extension
     course = str_to_lower(get_project_name())
-    if(course == "jrrmarkdown"){
+    if (course == "jrrmarkdown") {
       ext = "Rmd"
     } else{
       ext = "R"
@@ -39,6 +39,19 @@ create_live_scripts = function() {
     for (chapter in chapters) {
       # Create folder
       dir.create(glue("../live/vm_scripts/{chapter}", showWarnings = FALSE))
+
+      # Check for images
+      files = list.files(glue("../live/{chapter}"), full.names = TRUE)
+      imgs = str_subset(files, "\\.png$")
+
+      # Copy images
+      if (length(imgs) > 0) {
+        fs::file_copy(
+          path = imgs,
+          new_path = str_replace(imgs, "live", "live/vm_scripts"),
+          overwrite = TRUE
+        )
+      }
 
       # Create tutor scripts
       if (file.exists(glue("../live/{chapter}/master_tutor.{ext}"))) {
