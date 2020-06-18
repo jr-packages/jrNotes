@@ -28,41 +28,55 @@ create_live_scripts = function() {
     unlink(list.files("../live/tutor_scripts", full.names = TRUE, include.dirs = TRUE),
            recursive = TRUE)
 
+    # Set up file extension
+    course = str_to_lower(get_project_name())
+    if(course == "jrrmarkdown"){
+      ext = "Rmd"
+    } else{
+      ext = "R"
+    }
+
     for (chapter in chapters) {
       # Create folder
       dir.create(glue("../live/vm_scripts/{chapter}", showWarnings = FALSE))
 
       # Create tutor scripts
-      if (file.exists(glue("../live/{chapter}/master_tutor.R"))) {
+      if (file.exists(glue("../live/{chapter}/master_tutor.{ext}"))) {
 
-        # Create tutor_scripts/chapterX.R
+        # Create tutor_scripts/chapterX.{ext}
         system2("sed",
-                args = c(shQuote("/^#>.*/d"), glue("../live/{chapter}/master_tutor.R")),
-                stdout = glue("../live/tutor_scripts/{chapter}.R"))
+                args = c(shQuote("/^#>.*/d"), glue("../live/{chapter}/master_tutor.{ext}")),
+                stdout = glue("../live/tutor_scripts/{chapter}.{ext}"))
 
-        # Create vm_scripts/chapterX/tutor.R
+        # Create vm_scripts/chapterX/tutor.{ext}
         system2("sed",
-                args = c(shQuote("s/^#> //"), glue("../live/{chapter}/master_tutor.R")),
-                stdout = glue("../live/vm_scripts/{chapter}/tutor.R"))
+                args = c(shQuote("s/^#> //"), glue("../live/{chapter}/master_tutor.{ext}")),
+                stdout = glue("../live/vm_scripts/{chapter}/tutor.{ext}"))
       }
 
       # Create exercises and solutions
-      if (file.exists(glue("../live/{chapter}/master_exercises.R"))) {
+      if (file.exists(glue("../live/{chapter}/master_exercises.{ext}"))) {
 
-        # Create exercises_original.R
+        # Create exercises_original.{ext}
+        ## Delete lines starting with #>
+        ## Keep lines starting with #<
         system2("sed",
-                args = c(shQuote("/^#>.*/d"), glue("../live/{chapter}/master_exercises.R")),
-                stdout = glue("../live/vm_scripts/{chapter}/exercises_original.R"))
+                args = c(shQuote("/^#>.*/d ; s/^#< //"),
+                         glue("../live/{chapter}/master_exercises.{ext}")),
+                stdout = glue("../live/vm_scripts/{chapter}/exercises_original.{ext}"))
 
-        # Create excercises.R
-        fs::file_copy(path = glue("../live/vm_scripts/{chapter}/exercises_original.R"),
-                      new_path = glue("../live/vm_scripts/{chapter}/exercises.R"),
+        # Create exercises.{ext}
+        fs::file_copy(path = glue("../live/vm_scripts/{chapter}/exercises_original.{ext}"),
+                      new_path = glue("../live/vm_scripts/{chapter}/exercises.{ext}"),
                       overwrite = TRUE)
 
-        # Create solutions.R
+        # Create solutions.{ext}
+        ## Delete lines starting with #<
+        ## Keep lines starting with #>
         system2("sed",
-                args = c(shQuote("s/^#> //"), glue("../live/{chapter}/master_exercises.R")),
-                stdout = glue("../live/vm_scripts/{chapter}/solutions.R"))
+                args = c(shQuote("/^#<.*/d ; s/^#> //"),
+                         glue("../live/{chapter}/master_exercises.{ext}")),
+                stdout = glue("../live/vm_scripts/{chapter}/solutions.{ext}"))
       }
     }
 
