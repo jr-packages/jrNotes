@@ -54,7 +54,10 @@ check_code_style = function() {
     bad_lints = check_r_style()
   }
 
-  if (bad_lints) {
+  if (is.null(bad_lints)) {
+    msg_info("Skipping lint check")
+  }
+  else if (bad_lints) {
     msg_error("Fix styling")
     .jrnotes$error = TRUE
   } else {
