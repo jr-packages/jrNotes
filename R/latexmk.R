@@ -9,9 +9,9 @@ latexmk = function(fname) {
 
   refs = readLines("references.bib")
   if (length(refs) > 2) {
-    system2("latexmk", args = c("--xelatex", fname))
+    system2("latexmk", args = c("--xelatex", "--shell-escape", fname))
   } else {
-    system2("latexmk", args = c("--xelatex", "-bibtex-", fname))
+    system2("latexmk", args = c("--xelatex", "--shell-escape", "-bibtex-", fname))
 
   }
   return(invisible(TRUE))
