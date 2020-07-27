@@ -1,3 +1,6 @@
+# jrNotes 0.5.9 __2020/07/27__
+  * Feature: check_news()
+
 # 0.5.8
   * Bug: Now detect flake8 files
   * Feature: Check live directory

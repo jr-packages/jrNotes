@@ -1,7 +1,7 @@
 Type: Package
 Package: jrNotes
 Title: Jumping Rivers: Helper Package for Notes
-Version: 0.5.8.9007
+Version: 0.5.9
 Authors@R: 
     person(given = "Jumping",
            family = "Rivers",
@@ -24,8 +24,8 @@ Imports:
     gert,
     glue,
     httr,
-    knitr (>= 1.22),
-    lintr (>= 2.0.0),
+    knitr (>= 1.29),
+    lintr (>= 2.0.1),
     namer (>= 0.1.4),
     praise,
     purrr,
@@ -46,4 +46,4 @@ Suggests:
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
