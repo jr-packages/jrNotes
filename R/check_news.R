@@ -27,7 +27,8 @@ check_news = function() {
 
   news = readLines("../NEWS.md")
   con = config::get()
-  version = con$version
+
+  # Check first line
   header_pattern  = glue::glue("^# {con$running}$")
   if (stringr::str_detect(news[1], pattern = header_pattern, negate = TRUE)) {
     msg = glue::glue("Top line of NEWS.md not have correct format. It should be
@@ -37,10 +38,20 @@ check_news = function() {
     return(invisible(NULL))
   }
 
+  # Check line 2
+  version = con$version
   pattern = glue::glue("^## Version <version> _20\\d{2}-\\d{2}-\\d{2}_$", .open = "<", .close = ">")
-  if (stringr::str_detect(news[2], pattern = pattern, negate = TRUE)) {
+  if (length(news) < 2 || stringr::str_detect(news[2], pattern = pattern, negate = TRUE)) {
     msg = glue::glue("Second line of NEWS.md not have correct format. It should be
                        ## Version {version} _{Sys.Date()}_")
+    msg_error(msg, stop = FALSE)
+    .jrnotes$error = TRUE
+    return(invisible(NULL))
+  }
+  # Check line 3: Make sure there is news!
+  if (length(news) < 3 || stringr::str_detect(news[3], pattern = "^  \\* ", negate = TRUE)) {
+    msg = glue::glue("This entry seems to be not news worthy!
+    Please add a little info of the form: '  * '")
     msg_error(msg, stop = FALSE)
     .jrnotes$error = TRUE
     return(invisible(NULL))
