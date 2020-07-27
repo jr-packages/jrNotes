@@ -8,6 +8,13 @@ check_news()
 }
 \description{
 Checks that NEWS.md exists and title lines follow the correct format.
-If the \code{pattern} is \code{NULL}, then the expected format is either:
-\code{# pkg_name Version _YYYY-MM-DD_} or \code{# pkg_name _(development version)_}
+\itemize{
+\item If RELEASE: FALSE in the .github.yml, the test will be skipped. Useful when developing notes.
+Otherwise
+\item NEWS.md should exist in the root directory
+\item Line 1 should be: # con$running
+\item Line 2 : ## Version con$version \emph{20YY-MM-DD}
+\item Line 3:  \verb{ * }
+The
+}
 }
