@@ -14,11 +14,11 @@ check_news = function() {
     return(invisible(TRUE))
   }
 
-  if (!file.exists(file.path(path, "../NEWS.md"))) {
+  if (!file.exists("../NEWS.md")) {
     msg_error("NEWS.md is missing from the base directory", stop = TRUE)
   }
 
-  news = readLines(file.path(path, "../NEWS.md"))
+  news = readLines("../NEWS.md")
   con = config::get()
   version = con$version
   pattern = glue::glue("^# <version> _20\\d{2}-\\d{2}-\\d{2}_$", .open = "<", .close = ">")

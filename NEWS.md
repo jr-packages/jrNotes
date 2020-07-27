@@ -1,4 +1,4 @@
-# jrNotes 0.5.9 __2020/07/27__
+# jrNotes 0.5.9 __2020-07-27__
   * Feature: check_news()
 
 # 0.5.8
