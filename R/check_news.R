@@ -5,8 +5,9 @@
 #' Otherwise
 #' * NEWS.md should exist in the root directory
 #' * Line 1 should be: # con$running
-#' * Line 2 : ## Version con$version _20YY-MM-DD_
-#' * Line 3:  `  *  `
+#' * Line 2 should be blank
+#' * Line 3: ## Version con$version _20YY-MM-DD_
+#' * Line 4:  `  *  `
 #' The
 #' @export
 check_news = function() {
