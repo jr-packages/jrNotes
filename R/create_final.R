@@ -39,6 +39,8 @@ create_final_dir = function(note_name, pracs) {
   check_version()
   check_unstaged()
 
+  check_news()
+
   if (isTRUE(.jrnotes$error)) {
     stop("Please fix errors", call. = FALSE)
   }
