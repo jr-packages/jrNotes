@@ -93,11 +93,9 @@ set_knitr_options = function(tidy = FALSE,
     }
     hook_output(x, options)
   })
-  if (fs::file_exists("config.yml")) {
-    con = config::get()
-    if (!is.null(con$knitr)) {
-      do.call(knitr::opts_chunk$set, con$knitr)
-    }
+  con = config::get()
+  if (!is.null(con$knitr)) {
+    do.call(knitr::opts_chunk$set, con$knitr)
   }
   check_python()
 }

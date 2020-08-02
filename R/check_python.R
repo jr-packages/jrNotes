@@ -1,5 +1,4 @@
 check_python = function() {
-  if (is_legacy()) return(invisible(NULL))
   con = config::get()
   if (!isTRUE(con$python3)) return(invisible(NULL))
   msg_start("Checking python version")
