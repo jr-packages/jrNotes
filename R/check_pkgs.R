@@ -16,13 +16,11 @@ check_pkgs = function() {
     r["jrpackages"] = jr_pkgs
     options(repos = r)
   }
-  if (!is_legacy()) {
-    language = get_repo_language()
-    if (language == "r") {
-      pkgs = get_r_pkg_name()
-    } else {
-      pkgs = "reticulate"
-    }
+  language = get_repo_language()
+  if (language == "r") {
+    pkgs = get_r_pkg_name()
+  } else {
+    pkgs = "reticulate"
   }
 
   pkgs_to_update = c(pkgs, "jrNotes", "jrPresentation",

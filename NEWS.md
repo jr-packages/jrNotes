@@ -1,3 +1,6 @@
+# jrNotes 0.6.0 _2020-08-01_
+  * Feature: Remove support for legacy notes, i.e. ones without `config.yml`
+
 # jrNotes 0.5.9 _2020-07-27_
   * Feature: check_news()
   * Feature: Use markdown for `man` pages
