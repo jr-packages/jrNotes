@@ -39,17 +39,26 @@ check_news = function() {
   }
 
   # Check line 2
+  pattern = glue::glue("^$", .open = "<", .close = ">")
+  if (length(news) < 2 || stringr::str_detect(news[2], pattern = "^$", negate = TRUE)) {
+    msg = glue::glue("Second line of NEWS.md should be empty")
+    msg_error(msg, stop = FALSE)
+    .jrnotes$error = TRUE
+    return(invisible(NULL))
+  }
+
+  # Check line 3
   version = con$version
   pattern = glue::glue("^## Version <version> _20\\d{2}-\\d{2}-\\d{2}_$", .open = "<", .close = ">")
-  if (length(news) < 2 || stringr::str_detect(news[2], pattern = pattern, negate = TRUE)) {
+  if (length(news) < 3 || stringr::str_detect(news[3], pattern = pattern, negate = TRUE)) {
     msg = glue::glue("Second line of NEWS.md not have correct format. It should be
                        ## Version {version} _{Sys.Date()}_")
     msg_error(msg, stop = FALSE)
     .jrnotes$error = TRUE
     return(invisible(NULL))
   }
-  # Check line 3: Make sure there is news!
-  if (length(news) < 3 || stringr::str_detect(news[3], pattern = "^  \\* ", negate = TRUE)) {
+  # Check line 4: Make sure there is news!
+  if (length(news) < 4 || stringr::str_detect(news[4], pattern = "^  \\* ", negate = TRUE)) {
     msg = glue::glue("This entry seems to be not news worthy!
     Please add a little info of the form: '  * '")
     msg_error(msg, stop = FALSE)
