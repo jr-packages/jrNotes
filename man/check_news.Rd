@@ -13,8 +13,9 @@ Checks that NEWS.md exists and title lines follow the correct format.
 Otherwise
 \item NEWS.md should exist in the root directory
 \item Line 1 should be: # con$running
-\item Line 2 : ## Version con$version \emph{20YY-MM-DD}
-\item Line 3:  \verb{ * }
+\item Line 2 should be blank
+\item Line 3: ## Version con$version \emph{20YY-MM-DD}
+\item Line 4:  \verb{ * }
 The
 }
 }
