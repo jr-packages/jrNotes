@@ -1,3 +1,6 @@
+# jrNotes 0.6.1 _2020-08-05_
+  * Bug fix: check condition for whether there is news
+
 # jrNotes 0.6.0 _2020-08-01_
   * Feature: Remove support for legacy notes, i.e. ones without `config.yml`
 
