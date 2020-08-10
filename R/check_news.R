@@ -58,8 +58,8 @@ check_news = function() {
     .jrnotes$error = TRUE
     return(invisible(NULL))
   }
-  # Check line 5: Make sure there is news!
-  if (length(news) < 4 || stringr::str_detect(news[4], pattern = "^  \\* ")) {
+  # Check line 4: Make sure there is news!
+  if (length(news) < 4 || stringr::str_detect(news[4], pattern = "^  \\* ", negate = TRUE)) {
     msg = glue::glue("This entry seems to be not news worthy!
     Please add a little info of the form: '  * '")
     msg_error(msg, stop = FALSE)
