@@ -1,3 +1,6 @@
+# jrNotes 0.6.2 _2020-08-10_
+  * Bug fix: check condition for whether there is news
+
 # jrNotes 0.6.1 _2020-08-05_
   * Bug fix: check condition for whether there is news
 
