@@ -1,4 +1,7 @@
-# jrNotes (0.5.8)
+# jrNotes 0.5.9 _2020-07-27_
+  * Bug: Allow shell-escape compilation for ifplatform package
+
+# 0.5.8
   * Bug: Now detect flake8 files
   * Feature: Check live directory
   * Feature: Update knitr options, use cairo_pdf, set out.width
