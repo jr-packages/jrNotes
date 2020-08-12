@@ -1,4 +1,4 @@
-# jrNotes 0.5.9 _2020-07-27_
+# jrNotes (development version)
   * Bug: Allow shell-escape compilation for ifplatform package
 
 # 0.5.8
