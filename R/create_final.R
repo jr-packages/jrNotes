@@ -1,18 +1,3 @@
-# Old notes don't have config. Quick helper function
-is_legacy = function() !fs::file_exists("config.yml")
-
-get_git_url = function(dir = ".") {
-  fname = glue("{dir}/.git/config")
-  if (!file.exists(fname)) {
-    git_url = get_git_url(glue("../{dir}"))
-    return(git_url)
-  }
-  git_config = file(fname)
-  on.exit(close(git_config))
-  l = readLines(git_config)
-  l[grep(pattern = "\turl", l)]
-}
-
 #' @importFrom praise praise
 #' @importFrom qpdf pdf_combine
 create_final_dir = function(note_name, pracs) {
@@ -38,6 +23,8 @@ create_final_dir = function(note_name, pracs) {
   # Check version number
   check_version()
   check_unstaged()
+
+  check_news()
 
   if (isTRUE(.jrnotes$error)) {
     stop("Please fix errors", call. = FALSE)
@@ -81,30 +68,19 @@ get_python_pkg_name = function() {
 #' @rdname create_final
 get_r_pkg_name = function() {
   # New style - use the config file
-  if (!is_legacy()) {
-    con = config::get()
-    if (!is.null(con$packages)) {
-      pkgs = unlist(con$packages)
-      names(pkgs) = NULL
-      return(pkgs)
-    }
+  con = config::get()
+  if (!is.null(con$packages)) {
+    pkgs = unlist(con$packages)
+    names(pkgs) = NULL
+    return(pkgs)
   }
-  # XXX: Legacy - grep gitlab url
-  git_url = get_git_url()
-  pkg = stringr::str_match(git_url, "course_notes/(.*)/(.*)_notes\\.git$")
-  pkg[, length(pkg)]
 }
 
 # Replace spaces with -
 get_concat_course_name = function() {
-  if (!is_legacy()) {
-    con = config::get()
-    title = con$running
-    title = gsub(" ", "-", title)
-  } else {
-    # XXX: Fall back for old notes
-    title = get_r_pkg_name()
-  }
+  con = config::get()
+  title = con$running
+  title = gsub(" ", "-", title)
   return(title)
 }
 
@@ -129,7 +105,7 @@ check_pkg_vignettes = function(pkg, pkg_loc) {
 #' @export
 create_final = function() {
   note_name = get_concat_course_name()
-  if (!is_legacy() && isFALSE(config::get()$vignettes)) {
+  if (isFALSE(config::get()$vignettes)) {
     pracs = NULL
   } else {
     pkg = get_r_pkg_name()
@@ -138,9 +114,6 @@ create_final = function() {
     pracs = dir_ls(path = glue("{pkg_loc}/doc"),
                    regexp = ".*practical.*\\.pdf$")
   }
-  if (is_legacy()) {
-    note_name = stringr::str_sub(get_r_pkg_name(), 3)
-  }
   create_final_dir(note_name = note_name, pracs = pracs)
 }
 
@@ -148,13 +121,7 @@ create_final = function() {
 #' @export
 create_final_python = function() {
 
-  if (fs::file_exists("config.yml"))  {
-    pkg = get_python_pkg_name()
-  } else {
-    git_url = get_git_url()
-    pkg = stringr::str_match(git_url, "course_notes/(.*)/jr(.*)_python_notes.git") #nolint
-    pkg = paste0("jrpy", tolower(pkg[, length(pkg)]))
-  }
+  pkg = get_python_pkg_name()
   ## locate vignettes in package
   dirs = list.dirs(full.names = TRUE)
   dirs = dirs[grepl(pkg, dirs)]

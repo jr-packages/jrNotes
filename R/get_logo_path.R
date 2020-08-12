@@ -21,7 +21,7 @@ get_logos = function() {
 create_title_page = function(main = NULL, running = NULL, rss = NULL) {
   if (is.null(main)) main = config::get("front")
   if (is.null(running)) running = config::get("running")
-  if (is.null(rss) && fs::file_exists("config.yml")) {
+  if (is.null(rss)) {
     rss = isTRUE(config::get("rss"))
   } else {
     rss = isTRUE(rss)
@@ -53,18 +53,15 @@ create_jrStyle = function() { #nolint
   fname = system.file("extdata", "jrStyle.sty",
                       package = "jrNotes", mustWork = TRUE)
   file.copy(fname, to = "jrStyle.sty", overwrite = TRUE)
-
-  if (fs::file_exists("config.yml")) {
-    con = config::get()
-    watermark = con$watermark
-    if (!is.null(watermark)) {
-      f = file("jrStyle.sty", "a")
-      on.exit(close(f))
-      cat("% Adding watermark\n", file = f)
-      cat("\\usepackage[printwatermark]{xwatermark}\n", file = f)
-      cat("\\newwatermark*[allpages,angle=45,scale=3,xpos=0,ypos=0]{",
-          watermark, "}\n\n", file = f, sep = "")
-    }
+  con = config::get()
+  watermark = con$watermark
+  if (!is.null(watermark)) {
+    f = file("jrStyle.sty", "a")
+    on.exit(close(f))
+    cat("% Adding watermark\n", file = f)
+    cat("\\usepackage[printwatermark]{xwatermark}\n", file = f)
+    cat("\\newwatermark*[allpages,angle=45,scale=3,xpos=0,ypos=0]{",
+        watermark, "}\n\n", file = f, sep = "")
   }
 }
 
@@ -89,12 +86,8 @@ create_course_dep = function() {
 #' @rdname  get_logos
 create_version = function() {
   year = substr(Sys.Date(), 1, 4) #nolint
-  if (fs::file_exists("config.yml")) {
-    con = config::get()
-    version = con$version
-  } else {
-    version = readLines("VERSION")
-  }
+  con = config::get()
+  version = con$version
 
   pkg_name = con$packages[[1]]
   if (get_repo_language() == "r") {
@@ -111,6 +104,6 @@ create_version = function() {
      Version <version> \\qquad (\\textbf{<pkg_name>} v<pkg_ver>) \\hfill
      \\textcopyright Jumping Rivers Ltd <year>
      \\end{table*}",
-                     .open = "<", .close = ">")
+                           .open = "<", .close = ">")
   version_str
 }

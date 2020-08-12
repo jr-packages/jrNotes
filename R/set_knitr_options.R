@@ -7,9 +7,9 @@ split_lines = function(x) {
   unlist(strsplit(x, "\n"))
 }
 
-#' Set consistent knitr options
+#' @title Set consistent knitr options
 #'
-#' Set consistent knitr options
+#' @description Set consistent knitr options
 #' @param tidy FALSE
 #' @param echo TRUE
 #' @param highlight TRUE
@@ -21,8 +21,8 @@ split_lines = function(x) {
 #' @param fig.height 4
 #' @param linewidth Code chunk line width - default 59
 #' @param fig.retina Default 1
-#' @param out.width Output width default 100\%
-#' @param out.height Output height default 100\%
+#' @param out.width Output width default 100%
+#' @param out.height Output height default 100%
 #' @param dev If \code{NULL} & language R, then \code{cairo_pdf}. Otherwise, \code{pdf}.
 #' @param dpi If changed to png, set to 192
 #' @param dev.args If \code{dev} changed to \code{png}, use \code{cairo-png}
@@ -93,11 +93,9 @@ set_knitr_options = function(tidy = FALSE,
     }
     hook_output(x, options)
   })
-  if (fs::file_exists("config.yml")) {
-    con = config::get()
-    if (!is.null(con$knitr)) {
-      do.call(knitr::opts_chunk$set, con$knitr)
-    }
+  con = config::get()
+  if (!is.null(con$knitr)) {
+    do.call(knitr::opts_chunk$set, con$knitr)
   }
   check_python()
 }

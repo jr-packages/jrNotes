@@ -1,5 +1,16 @@
-# jrNotes (development version)
+# jrNotes 0.6.2 _2020-08-10_
+  * Bug fix: check condition for whether there is news
   * Bug: Allow shell-escape compilation for ifplatform package
+
+# jrNotes 0.6.1 _2020-08-05_
+  * Bug fix: check condition for whether there is news
+
+# jrNotes 0.6.0 _2020-08-01_
+  * Feature: Remove support for legacy notes, i.e. ones without `config.yml`
+
+# jrNotes 0.5.9 _2020-07-27_
+  * Feature: check_news()
+  * Feature: Use markdown for `man` pages
 
 # 0.5.8
   * Bug: Now detect flake8 files
