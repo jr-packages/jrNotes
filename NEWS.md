@@ -1,3 +1,7 @@
+# jrNotes 0.6.3 _2020-08-27_
+  * Feature: check that pkg name and title match
+  * Bug: output from check_news now standard
+
 # jrNotes 0.6.2 _2020-08-10_
   * Bug fix: check condition for whether there is news
 
