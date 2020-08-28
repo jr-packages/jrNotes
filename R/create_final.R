@@ -25,6 +25,7 @@ create_final_dir = function(note_name, pracs) {
   check_unstaged()
 
   check_news()
+  check_pkgtitle()
 
   if (isTRUE(.jrnotes$error)) {
     stop("Please fix errors", call. = FALSE)

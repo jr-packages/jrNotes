@@ -11,7 +11,7 @@
 #' The
 #' @export
 check_news = function() {
-  cli::cli_h3("Checking NEWS.md...check_news()")
+  msg_start("Checking NEWS.md...check_news()")
   r = readLines("../.gitlab-ci.yml")
   release = r[stringr::str_detect(r, "RELEASE:")]
   if (stringr::str_detect(release, '"FALSE"')) {
@@ -67,6 +67,6 @@ check_news = function() {
     return(invisible(NULL))
   }
 
-  cli::cli_alert_success("NEWS.md looks good!")
+  msg_ok("NEWS.md looks good!")
   return(invisible(NULL))
 }
