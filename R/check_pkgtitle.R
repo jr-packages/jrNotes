@@ -16,8 +16,8 @@ check_pkgtitle = function() {
   msg_start("Checking PKG title matches course title...check_pkgtitle()")
   con = config::get()
   # Remove line breaks
-  notes_title = stringr::str_squish(con$front)
-
+  notes_title = stringr::str_remove_all(con$front, pattern = "\\\\")
+  notes_title = stringr::str_squish(notes_title)
   # Check PKG title starts with "Jumping Rivers: "
   if (stringr::str_starts(pkg_title, pattern = "Jumping Rivers: ", negate = TRUE)) {
     msg_error("PKG title should start with 'Jumping Rivers: '", stop = FALSE)

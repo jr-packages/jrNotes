@@ -1,7 +1,8 @@
-# jrNotes (development version)
+# jrNotes 0.6.4 _2020-08-29_
   * Internal: Set global error via `set_error()`
   * Feature: Notes most now have an advert, or an error will be raised
- 
+  * Bug: Remove line breaks from course titles on `check_pkgtitle()`
+
 # jrNotes 0.6.3 _2020-08-27_
   * Feature: check that pkg name and title match
   * Bug: output from check_news now standard
