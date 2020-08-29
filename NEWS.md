@@ -1,5 +1,6 @@
 # jrNotes (development version)
   * Internal: Set global error via `set_error()`
+  * Feature: Notes most now have an advert, or an error will be raised
  
 # jrNotes 0.6.3 _2020-08-27_
   * Feature: check that pkg name and title match
