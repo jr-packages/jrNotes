@@ -11,9 +11,9 @@ check_config = function() {
   msg_start("Checking config file...check_config()")
   config_issue = FALSE
   if (is.null(config::get("advert"))) {
-    msg_info("Advert missing from config.", padding = 2)
-    msg_info("Add 'advert: advert'", padding = 4)
-    config_issue = TRUE
+    msg_error("Advert missing from config.", padding = 2)
+    msg_error("Add 'advert: advert'", padding = 4)
+    set_error()
   }
 
   if (is.null(config::get("courses"))) {
