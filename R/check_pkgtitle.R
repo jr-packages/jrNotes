@@ -21,7 +21,7 @@ check_pkgtitle = function() {
   # Check PKG title starts with "Jumping Rivers: "
   if (stringr::str_starts(pkg_title, pattern = "Jumping Rivers: ", negate = TRUE)) {
     msg_error("PKG title should start with 'Jumping Rivers: '", stop = FALSE)
-    .jrnotes$error = TRUE
+    set_error()
     return(invisible(NULL))
   }
 
@@ -31,7 +31,7 @@ check_pkgtitle = function() {
     msg = glue::glue("PKG title should be 'Jumping Rivers: {notes_title}' \\
                      instead of 'Jumping Rivers: {pkg_title}'")
     msg_error(msg, stop = FALSE)
-    .jrnotes$error = TRUE
+    set_error()
     return(invisible(NULL))
   }
 

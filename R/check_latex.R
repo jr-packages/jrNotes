@@ -16,7 +16,7 @@ check_citations = function() {
     msg_ok("Citations look good")
   } else {
     msg_error("Undefined citations")
-    .jrnotes$error = TRUE
+    set_error()
   }
   return(invisible(NULL))
 }
@@ -35,7 +35,7 @@ check_labels = function() {
   } else {
     msg_error("Multiply defined labels:", padding = 2)
     message(red(paste(main_log[labels], collapse = "\n  ")))
-                .jrnotes$error = TRUE
+                set_error()
   }
   return(invisible(NULL))
 }
@@ -56,7 +56,7 @@ check_references = function() {
   } else {
     message("\n", red(glue("{cross} Underfined refs")), "\n",
             red(paste(main_log[refs], collapse = "\n")))
-    .jrnotes$error = TRUE
+    set_error()
   }
   return(invisible(NULL))
 }
