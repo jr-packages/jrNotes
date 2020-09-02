@@ -1,3 +1,7 @@
+# jrNotes 0.6.5 _2020-09-02_
+  * Bug: Update check_template() to use new naming standard
+  * Internal: Ensure no package imports
+
 # jrNotes 0.6.4 _2020-08-29_
   * Internal: Set global error via `set_error()`
   * Feature: Notes must now have an advert, or an error will be raised

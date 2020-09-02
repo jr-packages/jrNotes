@@ -1,7 +1,7 @@
 #' Build python vignettes in the package
 #'
-#' @import fs
-#' @import stringr
+#' @importFrom fs dir_ls path
+#' @importFrom stringr str_detect
 #' @importFrom purrr walk
 #' @export
 build_python_vignettes = function() {

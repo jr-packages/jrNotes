@@ -4,6 +4,7 @@ get_words = function() {
   words
 }
 
+#' @importFrom glue glue_collapse
 make_wordlist = function(spelling_results) {
   f = file("WORDLIST", "w")
   on.exit(close(f))

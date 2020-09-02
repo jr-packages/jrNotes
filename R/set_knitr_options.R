@@ -28,7 +28,7 @@ split_lines = function(x) {
 #' @param dev.args If \code{dev} changed to \code{png}, use \code{cairo-png}
 #' @param ... Additional arguments passed to opt_chunk
 #' @export
-#' @import knitr
+#' @importFrom knitr opts_chunk knit_hooks
 set_knitr_options = function(tidy = FALSE,
                              echo = TRUE,
                              highlight = TRUE,

@@ -1,5 +1,6 @@
 # Only knit the document if the hash has changed
 #' @importFrom stringr str_replace
+#' @importFrom knitr opts_knit
 knit_rmd = function(fname, hashes) {
   if (fs::file_exists("jrnotes_cache/hashes.rds")) {
     old_hashes = readRDS("jrnotes_cache/hashes.rds")

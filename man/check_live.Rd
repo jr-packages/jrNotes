@@ -2,14 +2,10 @@
 % Please edit documentation in R/check_live.R
 \name{check_live}
 \alias{check_live}
-\title{Check the live directory
-
-Run checks on the live/ directory}
+\title{Check the live directory}
 \usage{
 check_live()
 }
 \description{
-Check the live directory
-
-Run checks on the live/ directory
+Run checks on the live directory
 }

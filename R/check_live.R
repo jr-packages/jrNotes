@@ -1,4 +1,5 @@
 globalVariables(c("id", "is_chapter"))
+#' @importFrom stringr str_match str_trim
 get_section_tibble = function() {
   tokens = read_tokens()
   tokens = tibble::as_tibble(tokens)
@@ -42,9 +43,9 @@ check_live_file_names = function(dir_name) {
   return(invisible(NULL))
 }
 
+#' Run checks on the live directory
 #' @title Check the live directory
-#'
-#' Run checks on the live/ directory
+#' @importFrom stringr str_extract
 #' @export
 check_live = function() {
 

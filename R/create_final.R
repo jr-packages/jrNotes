@@ -101,8 +101,8 @@ check_pkg_vignettes = function(pkg, pkg_loc) {
 #' the practials from the package and combines them.
 #' @importFrom fs dir_ls file_copy
 #' @importFrom utils vignette
-#' @import stringr
-#' @import glue
+#' @importFrom stringr str_sub
+#' @importFrom glue glue
 #' @export
 create_final = function() {
   note_name = get_concat_course_name()
