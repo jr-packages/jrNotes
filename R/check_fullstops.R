@@ -1,4 +1,5 @@
 globalVariables("chap_num")
+#' @importFrom stringr str_count str_ends
 check_fullstops = function() {
   msg_start("Checking for full stops...check_fullstops()")
   if (!required_texlive(2017)) return(invisible(NULL))

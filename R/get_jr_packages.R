@@ -1,3 +1,4 @@
+#' @importFrom stringr str_match
 git_clone = function(repo, path) {
   dir_name = str_match(repo, "/(.*)\\.git$")[1, 2] #nolint
   path = file.path(path, dir_name)
@@ -10,6 +11,7 @@ git_clone = function(repo, path) {
 #'
 #' A convience function for downloading all jr-packages.
 #' @param path Default \code{.}
+#' @importFrom stringr str_extract
 #' @export
 get_jr_packages = function(path = ".") {
   repos = system2("curl",

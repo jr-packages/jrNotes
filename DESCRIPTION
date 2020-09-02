@@ -26,6 +26,7 @@ Imports:
     httr,
     knitr (>= 1.29),
     lintr (>= 2.0.1),
+    magrittr,
     namer (>= 0.1.4),
     praise,
     purrr,

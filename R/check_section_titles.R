@@ -1,5 +1,5 @@
 globalVariables(c("text", "texorpdf", "label", "footnote"))
-
+#' @importFrom stringr str_sub str_locate str_detect str_sub<-
 latex_environments = function(title, title_case) {
   if (str_detect(string = title, "\\\\texttt \\{.*\\}")) { # nolint
     locs = str_locate(string = title, "\\\\texttt \\{.*\\}")[1, ] # nolint
@@ -18,7 +18,7 @@ latex_environments = function(title, title_case) {
   else return(title_case)
 }
 
-
+#' @importFrom stringr str_match str_to_title str_replace
 #' @importFrom dplyr row_number
 standard_exceptions = function(title, title_case) {
   from = c("r", "shiny", "dt", "rstudio", "anova", "uk", "usa",
@@ -64,6 +64,7 @@ standard_exceptions = function(title, title_case) {
   latex_environments(title, title_case)
 }
 
+#' @importFrom stringr str_trim str_detect str_match str_trim str_to_sentence
 check_section_titles = function() {
   if (!required_texlive(2017)) return(invisible(NULL))
   msg_start("Checking section for sentence case...check_section_titles()")
