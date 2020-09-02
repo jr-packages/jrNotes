@@ -43,7 +43,7 @@ create_title_page = function(main = NULL, running = NULL, rss = NULL) {
   ", main, " \\par \\vspace{4cm}
   \\usebox{\\titleimage}}
 \\author[jumpingrivers.com]{", client, "}
-\\publisher{\\href{http://www.jumpingrivers.com}{jumpingrivers.com} \\newline ", rss, "}") #nolint
+\\publisher{\\href{https://www.jumpingrivers.com}{jumpingrivers.com} \\newline ", rss, "}") #nolint
   cat(title_str, file = "titlepage.tex")
 }
 

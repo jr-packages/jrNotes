@@ -1,3 +1,6 @@
+# jrNotes 0.6.6 _2020-09-02_
+  * Feature: Page header now includes href to jr homepage
+  
 # jrNotes 0.6.5 _2020-09-02_
   * Bug: Update check_template() to use new naming standard
   * Internal: Ensure no package imports
