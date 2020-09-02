@@ -1,7 +1,7 @@
 #' @title Check PKG and Notes title
 #' @description Package title should start with "Jumping Rivers: ".
 #' Notes and Package titles should then be the same (excluding "Jumping Rivers : ").
-#' @importFrom utils packageDescription 
+#' @importFrom utils packageDescription
 #' @importFrom stringr str_remove_all str_squish str_starts str_remove
 #' @export
 check_pkgtitle = function() {
