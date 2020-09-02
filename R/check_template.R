@@ -76,7 +76,7 @@ check_gitlab_runner = function(fname, template) {
 
 get_r_template_fnames = function(template_repo_loc) {
   file.path(template_repo_loc,
-            c("notes/notes.Rproj", "slides/slides.Rproj",
+            c("notes/notes_template.Rproj", "slides/slides_template.Rproj",
               "Makefile", ".gitignore",
               "notes/Makefile", "notes/main.Rmd",
               "slides/Makefile"))
