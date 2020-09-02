@@ -25,6 +25,6 @@ check_fullstops = function() {
     msg = glue::glue("Chapter {issues[i, 3]} ({issues[i, 1]}): {issues[i, 2]}")
     msg_error(msg, padding = 2)
   }
-  .jrnotes$error = TRUE
+  set_error()
   return(invisible(FALSE))
 }

@@ -43,7 +43,7 @@ check_chapter_titles = function() {
   }
   if (isTRUE(error)) {
     msg_error("Please correct chapter titles")
-    .jrnotes$error = TRUE
+    set_error()
   } else {
     msg_ok("Titles look good")
   }

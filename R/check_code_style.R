@@ -59,7 +59,7 @@ check_code_style = function() {
   }
   else if (bad_lints) {
     msg_error("Fix styling")
-    .jrnotes$error = TRUE
+    set_error()
   } else {
     msg_ok("Styling looks good")
   }

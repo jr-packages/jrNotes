@@ -22,7 +22,7 @@ check_news = function() {
 
   if (!file.exists("../NEWS.md")) {
     msg_error("NEWS.md is missing from the base directory", stop = FALSE)
-    .jrnotes$error = TRUE
+    set_error()
     return(invisible(NULL))
   }
 
@@ -35,7 +35,7 @@ check_news = function() {
     msg = glue::glue("Top line of NEWS.md not have correct format. It should be
                        # {con$running}")
     msg_error(msg, stop = FALSE)
-    .jrnotes$error = TRUE
+    set_error()
     return(invisible(NULL))
   }
 
@@ -44,7 +44,7 @@ check_news = function() {
   if (length(news) < 2 || stringr::str_detect(news[2], pattern = "^$", negate = TRUE)) {
     msg = glue::glue("Second line of NEWS.md should be empty")
     msg_error(msg, stop = FALSE)
-    .jrnotes$error = TRUE
+    set_error()
     return(invisible(NULL))
   }
 
@@ -55,7 +55,7 @@ check_news = function() {
     msg = glue::glue("Second line of NEWS.md not have correct format. It should be
                        ## Version {version} _{Sys.Date()}_")
     msg_error(msg, stop = FALSE)
-    .jrnotes$error = TRUE
+    set_error()
     return(invisible(NULL))
   }
   # Check line 4: Make sure there is news!
@@ -63,7 +63,7 @@ check_news = function() {
     msg = glue::glue("This entry seems to be not news worthy!
     Please add a little info of the form: '  * '")
     msg_error(msg, stop = FALSE)
-    .jrnotes$error = TRUE
+    set_error()
     return(invisible(NULL))
   }
 

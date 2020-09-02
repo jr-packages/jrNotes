@@ -1,7 +1,8 @@
 #' @title Check PKG and Notes title
 #' @description Package title should start with "Jumping Rivers: ".
 #' Notes and Package titles should then be the same (excluding "Jumping Rivers : ").
-#' @importFrom utils packageDescription
+#' @importFrom utils packageDescription 
+#' @importFrom stringr str_remove_all str_squish str_starts str_remove
 #' @export
 check_pkgtitle = function() {
   language = get_repo_language()
@@ -16,12 +17,12 @@ check_pkgtitle = function() {
   msg_start("Checking PKG title matches course title...check_pkgtitle()")
   con = config::get()
   # Remove line breaks
-  notes_title = stringr::str_squish(con$front)
-
+  notes_title = stringr::str_remove_all(con$front, pattern = "\\\\")
+  notes_title = stringr::str_squish(notes_title)
   # Check PKG title starts with "Jumping Rivers: "
   if (stringr::str_starts(pkg_title, pattern = "Jumping Rivers: ", negate = TRUE)) {
     msg_error("PKG title should start with 'Jumping Rivers: '", stop = FALSE)
-    .jrnotes$error = TRUE
+    set_error()
     return(invisible(NULL))
   }
 
@@ -31,7 +32,7 @@ check_pkgtitle = function() {
     msg = glue::glue("PKG title should be 'Jumping Rivers: {notes_title}' \\
                      instead of 'Jumping Rivers: {pkg_title}'")
     msg_error(msg, stop = FALSE)
-    .jrnotes$error = TRUE
+    set_error()
     return(invisible(NULL))
   }
 

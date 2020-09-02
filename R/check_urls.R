@@ -43,7 +43,7 @@ check_urls = function() {
   }
   if (bad_urls) {
     msg_error("Fix broken URLS")
-    .jrnotes$error = TRUE
+    set_error()
   } else {
     msg_ok("URLs look good")
   }
