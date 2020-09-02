@@ -84,7 +84,7 @@ get_r_template_fnames = function(template_repo_loc) {
 
 get_python_template_fnames = function(template_repo_loc) {
   file.path(template_repo_loc,
-            c("notes/notes.Rproj", "slides/slides.Rproj",
+            c("notes/notes_template.Rproj", "slides/slides_template.Rproj",
               "Makefile", ".gitignore",
               "notes/Makefile-python", "notes/main.Rmd",
               "slides/Makefile-python"))
