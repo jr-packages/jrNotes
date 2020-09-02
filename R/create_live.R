@@ -6,7 +6,7 @@
 #' Zips VM folder ready to be exposed as an artifact
 #' @importFrom fs dir_ls file_copy
 #' @importFrom zip zipr
-#' @import stringr
+#' @importFrom stringr str_to_lower str_subset str_replace
 #' @export
 create_live_scripts = function() {
 

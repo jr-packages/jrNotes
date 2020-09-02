@@ -1,3 +1,7 @@
+# jrNotes 0.6.4 _2020-09-02_
+  * Bug: Update check_template() to use new naming standard
+  * Clean: Ensure no package imports
+
 # jrNotes 0.6.3 _2020-08-27_
   * Feature: check that pkg name and title match
   * Bug: output from check_news now standard

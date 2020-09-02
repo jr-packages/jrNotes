@@ -26,6 +26,8 @@ check_rogue_markdown = function() {
   return(invisible(NULL))
 }
 
+#' @importFrom glue glue_col
+#' @importFrom stringr str_detect
 check_tufte = function() {
   msg_start("Checking tufte latex...check_tufte()")
 

@@ -21,6 +21,7 @@ get_padding = function(padding) {
 }
 
 globalVariables("pads")
+#' @importFrom glue glue_col
 msg_error = function(msg, padding = 0, stop = FALSE) {
   pads = get_padding(padding)
   if (isFALSE(stop)) {
@@ -30,16 +31,19 @@ msg_error = function(msg, padding = 0, stop = FALSE) {
   }
 }
 
+#' @importFrom glue glue_col
 msg_start = function(msg, padding = 0) {
   pads = get_padding(padding)
   message(glue::glue_col("{blue}{pads}{circle_filled} {msg}"))
 }
 
+#' @importFrom glue glue_col
 msg_ok = function(msg, padding = 0) {
   pads = get_padding(padding)
   message(glue::glue_col("{green}{pads}{tick} {msg}"))
 }
 
+#' @importFrom glue glue_col
 msg_info = function(msg, padding = 0) {
   pads = get_padding(padding)
   message(glue::glue_col("{yellow}{pads}{info} {msg}"))
