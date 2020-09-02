@@ -126,3 +126,19 @@
 
 \usepackage{tabu}
 \usepackage{colortbl}
+
+
+% Fancy headers
+\pagestyle{fancy}
+
+% Remove hrule underneath header
+\renewcommand{\headrulewidth}{0pt}
+% See Figure 3 of fancyhdr documentation
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+
+\fancyhf{}
+\fancyhead[LE]{\smallcapsspacing{%
+                \scshape{\thepage}\quad%
+                \href{https://jumpingrivers.com}{jumpingrivers.com}}}
+\fancyhead[RO]{\smallcapsspacing{\scshape{\rightmark\quad\thepage}}}
