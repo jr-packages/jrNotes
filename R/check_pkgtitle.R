@@ -13,7 +13,7 @@ check_pkgtitle = function() {
     python_pkg = get_python_pkg_name()
     pkg_title = system(glue::glue("pip show {python_pkg} | sed -n -e 's/Summary: //p'"))
   } else {
-    cli::cli_alert_info(glue::glue("Checking PKG titles not implemented for {language}."))
+    cli::cli_alert_info("Checking PKG titles not implemented for {language}.")
     return(NULL)
   }
 
