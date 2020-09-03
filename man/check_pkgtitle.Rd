@@ -8,5 +8,5 @@ check_pkgtitle()
 }
 \description{
 Package title should start with "Jumping Rivers: ".
-Notes and Package titles should then be the same (excluding "Jumping Rivers : ").
+Notes and Package titles should then be the same (excluding "Jumping Rivers: ").
 }
