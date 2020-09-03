@@ -1,3 +1,6 @@
+# jrNotes 0.6.7 _2020-09-03_
+  * Feature: check that pkg name and title match for python notes
+
 # jrNotes 0.6.6 _2020-09-02_
   * Feature: Page header now includes href to jr homepage
   
