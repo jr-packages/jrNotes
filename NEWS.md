@@ -1,3 +1,6 @@
+# jrNotes 0.6.8 _2020-09-03_
+  * Bug: Return python package name in call to system
+
 # jrNotes 0.6.7 _2020-09-03_
   * Feature: check that pkg name and title match for python notes
 
