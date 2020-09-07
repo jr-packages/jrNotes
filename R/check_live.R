@@ -86,8 +86,10 @@ check_live_r_file = function(fname) {
   ## Check chapter number
   pattern = glue::glue("^## Section {chap_num}\\.\\d*: ")
   check = str_detect(section_hashes, pattern = pattern)
+  line_numbers = which(str_detect(r_code, pattern = pattern))
   if (!all(check)) {
     msg_error("Section should have the form: ## Section X.X: ", padding = 2)
+    msg_error(paste("See lines:", line_numbers, "\n"))
     stop(call. = FALSE)
   }
 

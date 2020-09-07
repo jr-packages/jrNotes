@@ -1,3 +1,6 @@
+# jrNotes 0.6.9 _2020-09-07_
+  * Feature: Error message with line number of section title with incorrect formatting
+
 # jrNotes 0.6.8 _2020-09-03_
   * Bug: Return python package name in call to system
 
