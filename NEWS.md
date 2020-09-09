@@ -1,3 +1,6 @@
+# jrNotes 0.6.9 _2020-09-09_
+  * Feature: Add links to advert page 
+
 # jrNotes 0.6.8 _2020-09-03_
   * Bug: Return python package name in call to system
 

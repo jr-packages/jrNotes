@@ -142,3 +142,20 @@
                 \scshape{\thepage}\quad%
                 \href{https://jumpingrivers.com}{jumpingrivers.com}}}
 \fancyhead[RO]{\smallcapsspacing{\scshape{\rightmark\quad\thepage}}}
+
+
+% https://tex.stackexchange.com/a/85103/181010 
+% redefine \includgraphics to add \XeTeXLinkBox, allowing images to be links
+\ifxetex
+  \usepackage{letltxmacro}
+  \setlength{\XeTeXLinkMargin}{1pt}
+  \LetLtxMacro\SavedIncludeGraphics\includegraphics
+  \def\includegraphics#1#{% #1 catches optional stuff (star/opt. arg.)
+    \IncludeGraphicsAux{#1}%
+  }%
+  \newcommand*{\IncludeGraphicsAux}[2]{%
+    \XeTeXLinkBox{%
+      \SavedIncludeGraphics#1{#2}%
+    }%
+  }%
+\fi
