@@ -1,5 +1,8 @@
-# jrNotes 0.6.9 _2020-09-07_
+# jrNotes 0.6.10 _2020-09-09_
   * Feature: Error message with line number of section title with incorrect formatting
+  
+# jrNotes 0.6.9 _2020-09-08_
+  * Feature: Add links to advert page 
 
 # jrNotes 0.6.8 _2020-09-03_
   * Bug: Return python package name in call to system
