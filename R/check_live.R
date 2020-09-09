@@ -90,7 +90,7 @@ check_live_r_file = function(fname) {
     msg_error("Section should have the form: ## Section X.X: ", padding = 2)
     error_strings = section_hashes[!check]
     line_numbers = vector("numeric", length(error_strings))
-    for (pattern in seq_length(error_strings)) {
+    for (pattern in seq_len(error_strings)) {
       line_numbers[pattern] = which(str_detect(r_code, pattern = error_strings[pattern]))
     }
     msg_error(paste("See line:", line_numbers, "\n"))
