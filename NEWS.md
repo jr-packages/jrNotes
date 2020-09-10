@@ -1,4 +1,4 @@
-# jrNotes 0.7.1 _2020-09-11_
+# jrNotes 0.7.2 _2020-09-10_
   * Improvement: Improve readability of output of `check_spelling()`
   * Feature: Force per course WORDLIST
 
