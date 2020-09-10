@@ -16,7 +16,7 @@ make_wordlist = function(spelling_results) {
 #'
 #' @description check_spelling runs a spell check on all c*.Rmd files.
 #' @importFrom spelling spell_check_files
-#' @importFrom unnest tidyr
+#' @importFrom tidyr unnest
 #' @export
 check_spelling = function() {
   fnames = list.files(pattern = "^c.*\\.Rmd$")
