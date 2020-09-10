@@ -26,4 +26,5 @@ script:
 
 after_success:
   - wget https://raw.githubusercontent.com/jr-packages/drat/master/deploy.sh
+  - Rscript -e 'covr::codecov()'
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash deploy.sh

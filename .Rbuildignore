@@ -4,3 +4,4 @@
 Dockerfile
 ^.lintr$
 ^\.httr-oauth$
+^codecov\.yml$
