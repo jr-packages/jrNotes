@@ -1,3 +1,7 @@
+# jrNotes 0.6.10 _2020-09-10_
+  * Improvement: Order output of `check_spelling()` by chapter
+  * Improvement: Improve readability of output of `check_spelling()`
+
 # jrNotes 0.6.9 _2020-09-09_
   * Feature: Add links to advert page 
 
