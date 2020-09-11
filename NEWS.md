@@ -1,3 +1,7 @@
+# jrNotes 0.7.2 _2020-09-10_
+  * Improvement: Improve readability of output of `check_spelling()`
+  * Feature: Force per course WORDLIST
+
 # jrNotes 0.7.1 _2020-09-10_
   * Improvement: Order output of `check_spelling()` by chapter
   * Improvement: Improve readability of output of `check_spelling()`
