@@ -1,11 +1,25 @@
+# Checks that WORDLIST is in alphabetical order
+check_wordlist = function() {
+  fname = file.path(get_root_dir(), "WORDLIST")
+  if (!file.exists(fname)) return(TRUE)
+
+  words = readLines(fname, warn = FALSE)
+  if (!all(words == sort(words))) {
+    msg_error("WORDLIST is not in alphabetical order", padding = 2)
+    set_error()
+    return(FALSE)
+  }
+  return(TRUE)
+}
+
+
 get_words = function() {
   ## Get Global spelling file
   fname = system.file("WORDLIST", package = "jrNotes")
   words = readLines(fname, warn = FALSE)
 
   ## Check for local spelling file
-  dir = get_root_dir()
-  fname = file.path(dir, "WORDLIST")
+  fname = file.path(get_root_dir(), "WORDLIST")
   if (file.exists(fname)) {
     words = c(words, readLines(fname, warn = FALSE))
   } else {
@@ -43,8 +57,12 @@ make_wordlist = function(spelling_results) {
 #' @export
 check_spelling = function() {
   msg_start("Spell check...check_spelling()")
-  words = get_words()
 
+  if (!check_wordlist()) {
+    return(invisible(NULL))
+  }
+
+  words = get_words()
   fnames = list.files(pattern = "^c.*\\.Rmd$")
   in_words = spelling::spell_check_files(fnames, lang = "en_GB", ignore = words)
   if (nrow(in_words) == 0L) {
