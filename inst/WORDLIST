@@ -6,27 +6,33 @@ YAML
 ## Latex
 bigskip
 bottomrule
+cdots
 center
 centering
-cmidrule
 clearpage
+cmidrule
+columnwidth
+emph
+hspace
 includegraphics
 ldots
-noindent
 marginfigure
 marginnote
 margintable
-medskip
 mbox
-newthought
-newpage
+medskip
 midrule
+newpage
+newthought
+noindent
 resizebox
 sidenote
 smallskip
 textbackslash
 textbf
 textit
+textsc
+textsl
 texttt
 textwidth
 tilda
@@ -37,11 +43,11 @@ vspace
 ## Names
 RStudio
 
-## Standard R package
+## Standard R packages
 dplyr
 DT
-ggplot2
 forcats
+ggplot2
 knitr
 lubridate
 magrittr
@@ -53,6 +59,18 @@ tibble
 tidyr
 tidytext
 tidyverse
+
+## Standard Python package
+conda
+ipython
+jupyter
+jupyterlab
+matplotlib
+numpy
+pandas
+scipy
+seaborn
+spyder
 
 ## Other
 ggplot
