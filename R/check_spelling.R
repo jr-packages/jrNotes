@@ -9,7 +9,7 @@ get_words = function() {
   if (file.exists(fname)) {
     words = c(words, readLines(fname, warn = FALSE))
   } else {
-    msg_info("Local WORDLIST file not detected", padding = 2)
+    msg_info("WORDLIST file not found in the root directory", padding = 2)
   }
 
   # Remove comments & blank lines
@@ -20,17 +20,16 @@ get_words = function() {
 
 #' @importFrom glue glue_collapse
 make_wordlist = function(spelling_results) {
-  # Creates a WORDLIST file with exceptions
+  # Creates a spelling_issues file with exceptions
   # Intentionally doesn't put it in the root - make the user look at it
-  f = file("WORDLIST", "w")
+  f = file("spelling_issues.txt", "w")
   on.exit(close(f))
   words = sort(unique(spelling_results$word))
   words = glue::glue_collapse(words, sep = "\n")
   cat(words, file = f, append = TRUE)
-
-  msg_error("A WORDLIST file has been created with potential exceptions.", padding = 2)
-  msg_error("Please check & edit this file carefully.", padding = 2)
-  msg_error("Then add to the WORDLIST file in the root directory", padding = 2)
+  msg_error("Spelling mistakes have been found in the notes", padding = 2)
+  msg_error("The file spelling_issues contains a list of potential spelling mistakes", padding = 2)
+  msg_error("Any words that are not errors should be added to ../WORDLIST", padding = 2)
   return(NULL)
 }
 
@@ -44,11 +43,11 @@ make_wordlist = function(spelling_results) {
 #' @export
 check_spelling = function() {
   msg_start("Spell check...check_spelling()")
-  fnames = list.files(pattern = "^c.*\\.Rmd$")
   words = get_words()
 
+  fnames = list.files(pattern = "^c.*\\.Rmd$")
   in_words = spelling::spell_check_files(fnames, lang = "en_GB", ignore = words)
-  if (nrow(in_words) == 0) {
+  if (nrow(in_words) == 0L) {
     msg_ok("Spell check passed")
     return(invisible(NULL))
   }
@@ -62,7 +61,7 @@ check_spelling = function() {
   pad = 20 - nchar(in_words$word)
   pad = pad - min(pad) + 4
   for (i in seq_len(nrow(in_words))) {
-    msg_info(glue("{in_words[i, 1]}{paste(character(pad[i]), collapse = ' ')}{in_words[i, 2]}"),
+    msg_error(glue("{in_words[i, 1]}{paste(character(pad[i]), collapse = ' ')}{in_words[i, 2]}"),
              padding = 4)
   }
 
