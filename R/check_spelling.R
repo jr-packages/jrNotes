@@ -16,10 +16,12 @@ make_wordlist = function(spelling_results) {
 #'
 #' @description check_spelling runs a spell check on all c*.Rmd files.
 #' @importFrom spelling spell_check_files
+#' @importFrom tidyr unnest
+#' @importFrom dplyr arrange
 #' @export
 check_spelling = function() {
   fnames = list.files(pattern = "^c.*\\.Rmd$")
-  words =  get_words()
+  words = get_words()
   msg_start("Spell check (experimental)...check_spelling()")
 
 
@@ -34,8 +36,14 @@ check_spelling = function() {
               and append to inst/WORDLIST.")
   msg_info(msg, padding = 2)
 
+  found = NULL
+  word = NULL
+  # Order spelling mistakes grouped by chapter
+  in_words = unnest(in_words, cols = found)
+  in_words = arrange(in_words, found, word)
+
   for (i in seq_len(nrow(in_words))) {
-    msg_info(glue("{in_words[i, 1]}  {in_words[i, 2]}"), padding = 4)
+    msg_info(glue("{in_words[i, 1]}\t\t{in_words[i, 2]}"), padding = 4)
   }
   make_wordlist(in_words)
   return(invisible(in_words))
