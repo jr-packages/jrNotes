@@ -1,5 +1,9 @@
-# jrNotes 0.7.2 _2020-09-09_
+# jrNotes 0.7.3 _2020-09-15_
   * Feature: Error message with line number of section title with incorrect formatting
+  
+# jrNotes 0.7.2 _2020-09-10_
+  * Improvement: Improve readability of output of `check_spelling()`
+  * Feature: Force per course WORDLIST
   
 # jrNotes 0.7.1 _2020-09-10_
   * Improvement: Order output of `check_spelling()` by chapter

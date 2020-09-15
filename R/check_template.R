@@ -90,6 +90,15 @@ get_python_template_fnames = function(template_repo_loc) {
               "slides/Makefile-python"))
 }
 
+get_root_dir = function() {
+  if (".gitlab-ci.yml" %in% list.files("../", all.files = TRUE)) {
+    dir = "../"
+  } else {
+    dir = "./"
+  }
+  dir
+}
+
 #' @title Checks notes files are the same as template
 #'
 #' Ensures that certain notes files are the same as the notes template.
@@ -106,12 +115,8 @@ check_template = function() {
   }
   type = get_repo_language()
   msg_start("Checking template files...check_template()")
+  dir = get_root_dir()
 
-  if (".gitlab-ci.yml" %in% list.files("../", all.files = TRUE)) {
-    dir = "../"
-  } else {
-    dir = "./"
-  }
   msg_info("Cloning template repo", padding = 2)
   tmp_dir = tempdir()
   on.exit(unlink(tmp_dir))
