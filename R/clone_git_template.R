@@ -34,11 +34,13 @@ clone_git_template = function(name = NULL,
 
   repo_name = file.path(path, name)
   system2("git", args = c("clone",
-                          "--depth",
-                          "1",
                           "git@gitlab.com:jumpingrivers-notes/template.git", #nolint
                           repo_name))
   setwd(repo_name)
+  # Don't bring templates history
+  system2("rm", args = c("-rf", ".git"))
+  system2("git", args = c("init"))
+
 
   ### remove current README and add general notes one
   file.remove("README.md")
@@ -48,7 +50,7 @@ clone_git_template = function(name = NULL,
 
   git_repo = paste0("git@gitlab.com:jumpingrivers-notes/course_notes/",
                     name, ".git")
-  system2("git", args = c("remote", "set-url", "origin", git_repo))
+  system2("git", args = c("remote", "add", "origin", git_repo))
 
   if (push) {
     system2("git", args = c("push", "-u", "origin", "master"))
