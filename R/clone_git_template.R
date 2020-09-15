@@ -50,7 +50,7 @@ clone_git_template = function(name = NULL,
 
 
   # Ask use whether they're making a python or r course
-  language_id = utils::menu(c("Python", "R"), title="Are you creating a Python or R course?")
+  language_id = utils::menu(c("Python", "R"), title = "Are you creating a Python or R course?")
   language_path = tolower(c("Python/", "R/")[language_id])
 
   # Construct url in correct subgroup
