@@ -1,5 +1,6 @@
 # jrNotes 0.7.3 _2020-09-15_
   * Feature: Error message with line number of section title with incorrect formatting
+  * Feature: Add first test to jrNotes (check_section_headers())
   
 # jrNotes 0.7.2 _2020-09-10_
   * Improvement: Improve readability of output of `check_spelling()`

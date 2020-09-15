@@ -83,18 +83,7 @@ check_live_r_file = function(fname) {
   section_hashes = r_code[str_detect(r_code, pattern = "^## \\wec")]
   chap_num = str_extract(fname, "[0-9][0-9]?")
 
-  ## Check chapter number
-  pattern = glue::glue("^## Section {chap_num}\\.\\d*: ")
-  check = str_detect(section_hashes, pattern = pattern)
-  if (!all(check)) {
-    msg_error("Section should have the form: ## Section X.X: ", padding = 2)
-    error_strings = section_hashes[!check]
-    for (pattern in seq_along(error_strings)) {
-      line_number = which(str_detect(r_code, pattern = error_strings[pattern]))
-      msg_error(paste("See line:", line_number), padding = 4)
-    }
-    set_error()
-  }
+  check_section_headers(r_code, section_hashes, chap_num)
 
   sections = get_section_tibble()
   sections = sections[sections$chap_num == chap_num, ]
@@ -116,3 +105,17 @@ check_live_r_file = function(fname) {
   }
   return(invisible(NULL))
 }
+
+check_section_headers = function(r_code, section_hashes, chap_num) {
+  pattern = glue::glue("^## Section {chap_num}\\.\\d*: ")
+  check = str_detect(section_hashes, pattern = pattern)
+  if (!all(check)) {
+    msg_error("Section should have the form: ## Section X.X: ", padding = 2)
+    error_strings = section_hashes[!check]
+    for (pattern in seq_along(error_strings)) {
+      line_number = which(str_detect(r_code, pattern = error_strings[pattern]))
+      msg_error(paste("See line:", line_number), padding = 4)
+      }
+    set_error()
+    }
+  }
