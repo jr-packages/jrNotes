@@ -51,13 +51,10 @@ clone_git_template = function(name = NULL,
 
   # Ask use whether they're making a python or r course
   language_id = utils::menu(c("Python", "R"), title = "Are you creating a Python or R course?")
-  language_path = tolower(c("Python/", "R/")[language_id])
+  language_path = c("python/", "r/")[language_id]
 
   # Construct url in correct subgroup
-  git_repo = glue::glue("git@gitlab.com:jumpingrivers-notes/",
-                        language_path,
-                        name,
-                        ".git")
+  git_repo = glue::glue("git@gitlab.com:jumpingrivers-notes/{language_path}/{name}.git")
   system2("git", args = c("remote", "add", "origin", git_repo))
 
   if (push) {
