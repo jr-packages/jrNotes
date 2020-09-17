@@ -34,11 +34,13 @@ clone_git_template = function(name = NULL,
 
   repo_name = file.path(path, name)
   system2("git", args = c("clone",
-                          "--depth",
-                          "1",
                           "git@gitlab.com:jumpingrivers-notes/template.git", #nolint
                           repo_name))
   setwd(repo_name)
+  # Don't bring templates history
+  system2("rm", args = c("-rf", ".git"))
+  system2("git", args = c("init"))
+
 
   ### remove current README and add general notes one
   file.remove("README.md")
@@ -46,9 +48,14 @@ clone_git_template = function(name = NULL,
   build_status = "Package build status: [![Build Status](https://api.travis-ci.org/jr-packages/jrXxxx.png?branch=master)](https://travis-ci.org/jr-packages/)" #nolint
   writeLines(c(title, build_status), "README.md")
 
-  git_repo = paste0("git@gitlab.com:jumpingrivers-notes/course_notes/",
-                    name, ".git")
-  system2("git", args = c("remote", "set-url", "origin", git_repo))
+
+  # Ask use whether they're making a python or r course
+  language_id = utils::menu(c("Python", "R"), title = "Are you creating a Python or R course?")
+  language_path = c("python/", "r/")[language_id]
+
+  # Construct url in correct subgroup
+  git_repo = glue::glue("git@gitlab.com:jumpingrivers-notes/{language_path}/{name}.git")
+  system2("git", args = c("remote", "add", "origin", git_repo))
 
   if (push) {
     system2("git", args = c("push", "-u", "origin", "master"))
