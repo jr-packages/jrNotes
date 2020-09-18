@@ -1,5 +1,7 @@
-# jrNotes 0.7.3 _2020-09-17_
+# jrNotes 0.7.4 _2020-09-18_
   * Bug: Errors hit in `create_final` should be printed in red (not green)
+
+# jrNotes 0.7.3 _2020-09-17_
   * Bug: repos created with `jrNotes::clone_git_repo` could not be pushed
 
 # jrNotes 0.7.2 _2020-09-10_
