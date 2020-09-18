@@ -10,6 +10,7 @@ blue = crayon::blue
 yellow = crayon::yellow
 green = crayon::green
 cyan = crayon::cyan
+reset = crayon::reset
 
 get_padding = function(padding) {
   if (padding == 0) {
@@ -25,26 +26,26 @@ globalVariables("pads")
 msg_error = function(msg, padding = 0, stop = FALSE) {
   pads = get_padding(padding)
   if (isFALSE(stop)) {
-    message(glue::glue_col("{red}{pads}{cross} {msg}"))
+    message(glue::glue_col("{red}{pads}{cross} {msg}{reset}"))
   } else {
-    stop(glue::glue_col("{red}{pads}{cross} {msg}"), call. = FALSE)
+    stop(glue::glue_col("{red}{pads}{cross} {msg}{reset}"), call. = FALSE)
   }
 }
 
 #' @importFrom glue glue_col
 msg_start = function(msg, padding = 0) {
   pads = get_padding(padding)
-  message(glue::glue_col("{blue}{pads}{circle_filled} {msg}"))
+  message(glue::glue_col("{blue}{pads}{circle_filled} {msg}{reset}"))
 }
 
 #' @importFrom glue glue_col
 msg_ok = function(msg, padding = 0) {
   pads = get_padding(padding)
-  message(glue::glue_col("{green}{pads}{tick} {msg}"))
+  message(glue::glue_col("{green}{pads}{tick} {msg}{reset}"))
 }
 
 #' @importFrom glue glue_col
 msg_info = function(msg, padding = 0) {
   pads = get_padding(padding)
-  message(glue::glue_col("{yellow}{pads}{info} {msg}"))
+  message(glue::glue_col("{yellow}{pads}{info} {msg}{reset}"))
 }
