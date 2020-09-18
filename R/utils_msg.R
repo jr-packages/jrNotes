@@ -28,7 +28,7 @@ msg_error = function(msg, padding = 0, stop = FALSE) {
   if (isFALSE(stop)) {
     message(glue::glue_col("{red}{pads}{cross} {msg}{reset}"))
   } else {
-    stop(glue::glue_col("{red}{pads}{cross} {msg}{reset}"), call. = FALSE)
+    stop(glue::glue_col("{red}{pads}{cross} {msg}"), call. = FALSE)
   }
 }
 
