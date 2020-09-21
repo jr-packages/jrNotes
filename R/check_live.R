@@ -70,7 +70,7 @@ check_live_section_titles = function(r_code, sections, chap_num) {
     actual_title = section_hashes[i]
     if (expected_title != actual_title) {
       line_num = section_hashes_line_numbers[i]
-      msg_error(glue::glue("-L{line_num}: {expected_title} vs {actual_title}"), padding = 2)
+      msg_error(glue::glue("L{line_num}: {expected_title} vs {actual_title}"), padding = 2)
       set_error()
       is_correct = FALSE
     }
