@@ -14,11 +14,11 @@ get_section_tibble = function() {
                                  str_match(X3, "^\\\\texorpdfstring \\{(.*)\\}\\{.*\\}$")[, 2],
                                  text)) %>%
     dplyr::mutate(text = dplyr::if_else(label,
-                                 str_match(text, "(.*)\\W\\label .*")[, 2],
-                                 text)) %>%
+                                        str_match(text, "(.*)\\W\\label .*")[, 2],
+                                        text)) %>%
     dplyr::mutate(text = dplyr::if_else(footnote,
-                                 str_match(text, "(.*)\\\\footnote.*")[, 2],
-                                 text)) %>%
+                                        str_match(text, "(.*)\\\\footnote.*")[, 2],
+                                        text)) %>%
     dplyr::mutate(text = str_trim(text),
                   is_chapter = X1 == "chapter",
                   chap_num = cumsum(is_chapter)) %>%
@@ -109,13 +109,15 @@ check_live_r_file = function(fname) {
 check_section_headers = function(r_code, section_hashes, chap_num) {
   pattern = glue::glue("^## Section {chap_num}\\.\\d*: ")
   check = str_detect(section_hashes, pattern = pattern)
-  if (!all(check)) {
-    msg_error("Section should have the form: ## Section X.X: ", padding = 2)
-    error_strings = section_hashes[!check]
-    for (pattern in seq_along(error_strings)) {
-      line_number = which(str_detect(r_code, pattern = error_strings[pattern]))
-      msg_error(paste("See line:", line_number), padding = 4)
-      }
-    set_error()
-    }
+  if (all(check)) return(invisible(TRUE))
+
+  ## Error feedback
+  msg_error("Section should have the form: ## Section X.X: ", padding = 2)
+  error_strings = section_hashes[!check]
+  for (pattern in seq_along(error_strings)) {
+    line_number = which(str_detect(r_code, pattern = error_strings[pattern]))
+    msg_error(paste("See line:", line_number), padding = 4)
   }
+  set_error()
+  return(invisible(FALSE))
+}
