@@ -1,5 +1,3 @@
-context("section headers")
-
 # Correct headers
 code = c("## ===============================================",
          "## Section 2.1: A simple R session",
