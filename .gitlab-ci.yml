@@ -1,0 +1,93 @@
+# Change image
+# jrpackages/jrnotes will work below, but
+# jrpackages/jrXXX will be quicker if available
+# For standard R courses, make a Docker image!!
+
+image: jrpackages/jrnotes
+
+variables:
+  NOTES:   "TRUE" # Should we check notes? Should be TRUE!
+  SLIDES:  "TRUE" # Should we check slides?
+  RELEASE: "TRUE" # Should we tag? Set to FALSE when developing
+
+stages:
+  - check # Run on branches & master
+  - tag   # master only
+
+########################################
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#
+########################################
+# Do not edit below except in template/
+# Changes may/will get overwritten
+########################################
+
+before_script:
+    # Rewrite git clones for runner
+    - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/".insteadOf "git@gitlab.com:"
+    # Docker image can take hours to get updates
+    - install2.r -n 2 --error jrNotes jrPresentation
+    # Get required core packages from config: installed when needed below
+    - cd $CI_PROJECT_DIR/notes && pkgs=$(r -e 'cat(jrNotes::get_r_pkg_name())') && cd ..
+    - install2.r -n -1 -d TRUE --error $pkgs
+
+#########################################
+# make
+#########################################
+notes-build:
+  stage: check
+  except:
+    refs:
+      - tags
+    variables:
+      - $NOTES == "FALSE"
+  script:
+    - cd $CI_PROJECT_DIR/notes && make final && cd final
+    - mv notes_* notes.pdf # Rename to create badges
+    - mv practicals_* practicals.pdf
+  artifacts:
+    paths:
+    - $CI_PROJECT_DIR/notes/final/notes.pdf
+    - $CI_PROJECT_DIR/notes/final/practicals.pdf
+    - $CI_PROJECT_DIR/live/vm_scripts.zip
+    - $CI_PROJECT_DIR/live/tutor_scripts.zip
+
+slides-build:
+  stage: check
+  except:
+    refs:
+      - tags
+    variables:
+      - $SLIDES == "FALSE"
+  script:
+    - cd $CI_PROJECT_DIR/slides && make final
+
+#########################################
+# tagging - when notes/chapters complete
+#########################################
+tagging:
+  stage: tag
+  image: alpine # Lightweight image
+  except:
+    refs:
+      - tags
+    variables:
+      - $RELEASE == "FALSE"
+  only:
+    refs:
+      - master
+    changes:
+      - notes/c*.Rmd
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - cd notes
+    - "VERSION=$(grep '^  version:' config.yml | cut -d: -f2 | tr -d '[:space:]')"
+    - VERSION=${VERSION//\./-} # Replace . with dash
+    - curl -X POST -v  --show-error --fail "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/repository/tags?tag_name=v${VERSION}&ref=${CI_COMMIT_SHA}&private_token=${GITLAB_TOKEN}"
+
+########################################
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#
+########################################
+# End of template
+########################################
+

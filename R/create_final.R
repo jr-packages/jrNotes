@@ -28,7 +28,7 @@ create_final_dir = function(note_name, pracs) {
   check_pkgtitle()
 
   if (isTRUE(.jrnotes$error)) {
-    stop("Please fix errors", call. = FALSE)
+    msg_error("Please fix errors", stop = TRUE)
   }
   msg_start("Creating pdf outputs...")
   dir.create("final", showWarnings = FALSE)
