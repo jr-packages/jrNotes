@@ -1,27 +1,24 @@
 # Defining a dummy chapter number
-chapter = "2"
-# Correct headers
-code = c("## ===============================================",
-         "## Section 2.1: A simple R session",
-         "",
-         "## ===============================================",
-         "## Section 2.2: Assignment operations")
-right_headers = code[stringr::str_detect(code, pattern = "^## \\wec")]
+chap_num = "2"
+sections = tibble::tibble(chap_num = c(2, 2), section = 1:2,
+                          text = c("A simple R session", "Assignment operations"))
+
+## Find example files
+dir = system.file("testthat", package = "jrNotes")
+r_code = readLines(file.path(dir, "live-code.Rmd"))
 
 # Test Correct headers
 test_that("Check section headings (correct)", {
-  expect_true(check_section_headers(code, right_headers, chapter))
+  expect_true(check_live_section_titles(r_code, sections, chap_num))
   expect_false(.jrnotes$error)
 })
 
-# Make bad headers
-incorrect_code = c(code[-5], "## Section 2.2 - Assignment operations")
-wrong_headers = incorrect_code[stringr::str_detect(incorrect_code, pattern = "^## \\wec")]
 
 # Test bad headers
+r_code = readLines(file.path(dir, "live-code-bad.Rmd"))
 test_that("Check section headings (bad)", {
-  expect_equal(check_section_headers(incorrect_code, wrong_headers, chapter), FALSE)
-  expect_message(check_section_headers(incorrect_code, wrong_headers, chapter))
+  expect_equal(check_live_section_titles(r_code, sections, chap_num), FALSE)
+  expect_message(check_live_section_titles(r_code, sections, chap_num))
   expect_true(.jrnotes$error)
   .jrnotes$error = FALSE
 })
