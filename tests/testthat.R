@@ -1,4 +1,4 @@
-library(testthat)
-library(jrNotes)
+library("testthat")
+library("jrNotes")
 
 test_check("jrNotes")
