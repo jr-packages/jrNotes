@@ -1,6 +1,6 @@
 # jrNotes 0.7.5 _2020-09-21_
   * Feature: Error message with line number of section title with incorrect formatting
-  * Feature: Add first test to jrNotes (check_section_headers())
+  * Feature: Add first test to {jrNotes} (check_section_headers())
   
 # jrNotes 0.7.4 _2020-09-18_
   * Bug: Errors hit in `create_final()` should be printed in red (not green)
