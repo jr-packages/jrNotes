@@ -1,9 +1,8 @@
 ## TODO:
-## Check if advert & courses file exisits
+## Check if advert & courses file exists
 ## Warning about .tex as the include/input doesn't work
 ## Check length of title to ensure that it doesn't go over page
 ## Check RSS is true for certain courses
-## Change packages to be list config than named elements
 
 #' @title Config checker
 #' @description Checks that the config file is correct.
@@ -14,12 +13,24 @@ check_config = function() {
     msg_error("Advert missing from config.", padding = 2)
     msg_error("Add 'advert: advert'", padding = 4)
     set_error()
+    config_issue = TRUE
   }
 
   if (is.null(config::get("courses"))) {
     msg_info("Course dependency graph has not been included.", padding = 2)
     msg_info("Add 'courses: course-dependencies' to the config.yml", padding = 4)
     config_issue = TRUE
+  }
+
+  lang = get_repo_language()
+  p = config::get("packages")
+  if (!is.null(p)) {
+    msg_error("Old style pkg config detected. Please remove", padding = 2)
+    msg_error("Instead use:", padding = 2)
+    message(glue::glue("  {lang}_packages:"))
+    message("    - package1")
+    message("    - package2")
+    set_error()
   }
 
   if (isFALSE(config_issue)) {

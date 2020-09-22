@@ -1,3 +1,6 @@
+# jrNotes 0.7.5 _2020-09-22_
+  * Improvement: Stop using generic `packages` in config.yml
+
 # jrNotes 0.7.4 _2020-09-18_
   * Bug: Errors hit in `create_final()` should be printed in red (not green)
 
