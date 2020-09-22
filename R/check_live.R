@@ -31,11 +31,11 @@ get_section_tibble = function() {
 }
 
 clean_title = function(title) {
-  title = stringr::str_remove_all(title, "\\\\text(tt|it|bf) \\{")
-  title = stringr::str_remove_all(title, "\\}")
+  title = stringr::str_remove_all(title, "\\\\text(tt|it|bf)")
+  title = stringr::str_remove_all(title, "(\\{|\\})")
   title = stringr::str_replace(title, "\\\\_", "_")
   title = stringr::str_remove_all(title, "\\\\")
-  title
+  stringr::str_squish(title)
 }
 
 ## Check banner length and formatting
