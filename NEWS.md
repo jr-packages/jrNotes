@@ -1,3 +1,7 @@
+# jrNotes 0.7.5 _2020-09-21_
+  * Feature: Include line number indicator in `check_section_headers()` error message
+  * Feature: Add first test to `{jrNotes}` (`check_section_headers()`)
+  
 # jrNotes 0.7.4 _2020-09-18_
   * Bug: Errors hit in `create_final()` should be printed in red (not green)
 
@@ -7,7 +11,7 @@
 # jrNotes 0.7.2 _2020-09-10_
   * Improvement: Improve readability of output of `check_spelling()`
   * Feature: Force per course WORDLIST
-
+  
 # jrNotes 0.7.1 _2020-09-10_
   * Improvement: Order output of `check_spelling()` by chapter
   * Improvement: Improve readability of output of `check_spelling()`
