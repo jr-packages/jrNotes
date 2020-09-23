@@ -60,11 +60,14 @@ create_final_dir = function(note_name, pracs) {
 #' @rdname create_final
 get_python_pkg_name = function() {
   con = config::get()
+  ## XXX: Old style - delete in the future
   if (!is.null(con$packages)) {
     pkgs = unlist(con$packages)
     names(pkgs) = NULL
     return(pkgs)
   }
+  pkgs = unlist(con$python_packages)
+  return(pkgs)
 }
 
 #' @export
@@ -72,11 +75,14 @@ get_python_pkg_name = function() {
 get_r_pkg_name = function() {
   # New style - use the config file
   con = config::get()
+  ## XXX: Old style - delete in the future
   if (!is.null(con$packages)) {
     pkgs = unlist(con$packages)
     names(pkgs) = NULL
     return(pkgs)
   }
+  pkgs = unlist(con$r_packages)
+  return(pkgs)
 }
 
 # Replace spaces with -

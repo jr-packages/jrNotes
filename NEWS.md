@@ -1,3 +1,6 @@
+# jrNotes 0.7.8 _2020-09-23_
+  * Improvement: Stop using generic `packages` in config.yml
+
 # jrNotes 0.7.7 _2020-09-22_
   * Improvement: Don't add page numbers to advert and course-dependencies
   * Improvement: Number course contents from page 1
