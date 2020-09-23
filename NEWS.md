@@ -1,3 +1,7 @@
+# jrNotes 0.7.6 _2020-09-22_
+  * Improvement: Add `\usepackage{float}` to `jrStyle.sty` (previously
+    specified in `header-includes` of `main.Rmd` in notes template)
+
 # jrNotes 0.7.5 _2020-09-21_
   * Feature: Include line number indicator in `check_section_headers()` error message
   * Feature: Add first test to `{jrNotes}` (`check_section_headers()`)
