@@ -1,3 +1,6 @@
+# jrNotes 0.7.9 _2020-09-24_
+  * Bug: Fix bug introduced in `get_logo_path.R` by changes to `config.yml`
+
 # jrNotes 0.7.8 _2020-09-23_
   * Improvement: Stop using generic `packages` in config.yml
 

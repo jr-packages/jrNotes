@@ -89,8 +89,9 @@ create_version = function() {
   con = config::get()
   version = con$version
 
-  pkg_name = con$packages[[1]]
+  version = con$version
   if (get_repo_language() == "r") {
+    pkg_name = get_r_pkg_name()
     pkg_ver = packageVersion(pkg_name)
   } else {
     pkg_ver = ""
