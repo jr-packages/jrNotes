@@ -1,5 +1,9 @@
-# jrNotes 0.8.0 _2020-09-24_
+# jrNotes 0.8.1 _2020-09-24_
   * Feature: Check title length
+
+# jrNotes 0.8.0 _2020-09-24_
+  * Bug: Don't lookup package version twice in get_logo_path()
+  * Improvement: specify config_issue = TRUE in check_config.R
 
 # jrNotes 0.7.* _2020-09-24_
   * Improvement: Stop using generic `packages` in config.yml
