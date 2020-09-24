@@ -14,6 +14,7 @@
   * Improvement: Improve readability of output of `check_spelling()`
   * Improvement: Order output of `check_spelling()` by chapter
   * Improvement: Improve readability of output of `check_spelling()`
+  * Improvement: specify `config_issue = TRUE` in `check_config.R`
 
   * Feature: Include line number indicator in `check_section_headers()` error message
   * Feature: Add first test to `{jrNotes}` (`check_section_headers()`)

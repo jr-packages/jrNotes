@@ -87,7 +87,6 @@ create_course_dep = function() {
 create_version = function() {
   year = substr(Sys.Date(), 1, 4) #nolint
   con = config::get()
-  version = con$version
 
   version = con$version
   if (get_repo_language() == "r") {
