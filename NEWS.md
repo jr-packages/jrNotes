@@ -1,4 +1,4 @@
-# jrNotes 0.8.0 _2020_09-24_
+# jrNotes 0.8.0 _2020-09-24_
   * Bug: Don't loookup package version twice in `get_logo_path()`
   * Improvement: specify `config_issue = TRUE` in `check_config.R`
 
