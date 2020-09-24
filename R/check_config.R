@@ -31,6 +31,7 @@ check_config = function() {
     message("    - package1")
     message("    - package2")
     set_error()
+    config_issue = TRUE
   }
 
   if (isFALSE(config_issue)) {
