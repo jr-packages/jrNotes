@@ -9,6 +9,18 @@
 check_config = function() {
   msg_start("Checking config file...check_config()")
   config_issue = FALSE
+
+  ## Check length of title on front page
+  front = config::get("front")
+  ## Remove line breaks & right hand whitespace
+  front = stringr::str_split(front, "\\\\")[[1]][1]
+  front = stringr::str_trim(front, side = "right")
+  if (stringr::str_length(front) > 25L) {
+    msg_error("Title is too long. Add a line break?", padding = 2)
+    set_error()
+    config_issue = TRUE
+  }
+
   if (is.null(config::get("advert"))) {
     msg_error("Advert missing from config.", padding = 2)
     msg_error("Add 'advert: advert'", padding = 4)
@@ -22,9 +34,9 @@ check_config = function() {
     config_issue = TRUE
   }
 
-  lang = get_repo_language()
   p = config::get("packages")
   if (!is.null(p)) {
+    lang = get_repo_language()
     msg_error("Old style pkg config detected. Please remove", padding = 2)
     msg_error("Instead use:", padding = 2)
     message(glue::glue("  {lang}_packages:"))
