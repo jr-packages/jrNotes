@@ -124,7 +124,7 @@
   * Copy logo; fixes annoying bug involving spaces and directory names.
   * Normalise path for logo
   
-# 0.1.9
+# 0.1.*
   * Add to gitignore
   * Add to jrStyle.sty to correct fonts on section headings
   * Change jrStyle.sty to give numberings in notes (bug in titlesec)
