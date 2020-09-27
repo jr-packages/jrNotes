@@ -13,8 +13,9 @@ check_master = function() {
   master_commits = strsplit(g, split = "\t")[[1]][1]
 
   if (master_commits > 0) {
-    msg_error("Master ahead; git pull", stop = TRUE)
+    msg_error("Master ahead; git pull")
+    stop()
   }
-  msg_ok("Up to date with master")
+  msg_success("Up to date with master")
   return(invisible(NULL))
 }

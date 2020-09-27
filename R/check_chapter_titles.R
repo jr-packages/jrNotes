@@ -37,15 +37,14 @@ check_chapter_titles = function() {
       error = TRUE
     } else {
       msg = glue::glue("Chapter {i}: {title_case}")
-      msg_ok(msg, padding = 2)
+      msg_success(msg, padding = TRUE)
     }
 
   }
   if (isTRUE(error)) {
     msg_error("Please correct chapter titles")
-    set_error()
   } else {
-    msg_ok("Titles look good")
+    msg_success("Titles look good")
   }
   return(invisible(NULL))
 }

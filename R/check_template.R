@@ -1,13 +1,22 @@
-has_changed = function(fname1, fname2) {
-  if (!file.exists(fname1)) return(TRUE)
+has_changed = function(i, fnames, templates) {
+  fname1 = fnames[i]; template_file = templates[i]
+  if (!file.exists(fname1) && !is_gitlab()) {
+    fs::file_copy(template_file, fname1)
+    msg_info(glue("Updating {fname1}"), padding = TRUE)
+    return(invisible(TRUE))
+  }
 
   d1 = digest::digest(readLines(fname1))
-  d2 = digest::digest(readLines(fname2))
+  d2 = digest::digest(readLines(template_file))
   if (d1 != d2) {
-    return(TRUE)
-  } else {
-    return(FALSE)
+    if (!is_gitlab()) {
+      msg_info(glue("Updating {fname1}"), padding = TRUE)
+      fs::file_copy(template_file, fname1, overwrite = TRUE)
+    }
+    return(invisible(TRUE))
   }
+  msg_success(fname1, padding = TRUE)
+  return(invisible(FALSE))
 }
 
 get_project_name = function() {
@@ -54,22 +63,18 @@ update_gitlab_ci = function(fname, template_fname) {
 
 
 check_gitlab_runner = function(fname, template) {
-  msg_info("Checking gitlab-ci.yml", padding = 2)
   if (!file.exists(fname)) {
-    msg_info("Checking gitlab-ci.yml", padding = 4)
     fs::file_copy(template, fname)
-    msg_ok("Updating gitlab-ci", padding = 4)
-  }
-
-  if (get_runner_hash(fname) != get_runner_hash(template)) {
+    msg_info("Updating gitlab-ci", padding = TRUE)
+  } else if (get_runner_hash(fname) != get_runner_hash(template)) {
     if (is_gitlab()) {
-      msg_error("gitlab-ci.yml has changed", padding = 4)
+      msg_error("gitlab-ci.yml has changed", padding = TRUE)
       return(FALSE)
     }
-    msg_info("gitlab-ci.yml has changed", padding = 4)
     update_gitlab_ci(fname, template)
-    msg_ok("gitlab-ci.yml has been updated", padding = 4)
-
+    msg_info("gitlab-ci.yml has been updated", padding = TRUE)
+  } else {
+    msg_success(fname, padding = TRUE)
   }
   return(TRUE)
 }
@@ -91,18 +96,18 @@ get_python_template_fnames = function(template_repo_loc) {
 }
 
 get_root_dir = function() {
-  if (".gitlab-ci.yml" %in% list.files("../", all.files = TRUE)) {
-    dir = "../"
+  if (".git" %in% list.files("../", all.files = TRUE)) {
+    dir = ".."
   } else {
     dir = "./"
   }
   dir
 }
 
-#' @title Checks notes files are the same as template
+#' Checks notes files are the same as template
 #'
 #' Ensures that certain notes files are the same as the notes template.
-#' These cannonical files are identical for all notes, e.g. Makefiles,
+#' These canonical files are identical for all notes, e.g. Makefiles,
 #' main.Rmd.
 #'
 #' Typically this used by the gitlab-ci runner. The programming
@@ -117,7 +122,7 @@ check_template = function() {
   msg_start("Checking template files...check_template()")
   dir = get_root_dir()
 
-  msg_info("Cloning template repo", padding = 2)
+  msg_info("Cloning template repo", padding = TRUE)
   tmp_dir = tempdir()
   on.exit(unlink(tmp_dir))
   template_repo_loc = file.path(tmp_dir, "template")
@@ -145,37 +150,22 @@ check_template = function() {
     runner_check = check_gitlab_runner(file.path(dir, ".gitlab-ci.yml"),
                                        file.path(template_repo_loc, "python-gitlab-ci.yml"))
   }
-
   # Compare files to template
   # Keep track of any differences
-  changed = logical(length(fnames))
-  for (i in seq_along(fnames)) {
-    msg_info(glue("Checking {fnames[i]}"), padding = 2)
-
-    if (!file.exists(fnames[i]) && !is_gitlab()) {
-      msg_info(glue("{fnames[i]} is missing"), padding = 4)
-      fs::file_copy(template_fnames[i], fnames[i])
-      msg_ok(glue("Updating {fnames[i]}"), padding = 4)
-    }
-    changed[i] = has_changed(fnames[i], template_fnames[i])
-
-    if (isTRUE(changed[i])) {
-      msg_info(glue("File {fnames[i]} does not match"), padding = 4)
-      if (!is_gitlab()) {
-        msg_ok(glue("Updating {fnames[i]}"), padding = 4)
-        fs::file_copy(template_fnames[i], fnames[i], overwrite = TRUE)
-      }
-    }
-  }
+  changed = vapply(seq_along(fnames), has_changed,
+                   fnames, template_fnames, FUN.VALUE = logical(1))
+  changed = any(changed)
 
   refs_path = file.path(dir, "notes/references.bib")
-  if (!file.exists(refs_path)) {
-    msg_info("notes/references.bib is missing", padding = 2)
+  if (file.exists(refs_path)) {
+    msg_success("notes/references.bib", padding = TRUE)
+  } else {
+    msg_info("notes/references.bib is missing", padding = TRUE)
     fs::file_copy(file.path(template_repo_loc, "notes/references.bib"), refs_path)
-    msg_ok("Updating references.bib", padding = 4)
+    msg_success("Updating references.bib", padding = TRUE)
   }
 
-  if ((any(changed) || isFALSE(runner_check)) &&
+  if ((changed || isFALSE(runner_check)) &&
       nchar(Sys.getenv("GITLAB_CI")) != 0) {
     msg = glue::glue("Files differs from template repo. \\
           Either revert your changes or update the template. \\
@@ -185,17 +175,20 @@ check_template = function() {
   }
 
   if (length(list.files(pattern = "*\\.Rproj$", path = dir)) > 0L) {
-    msg_error("Don't add Rproj files to the base directory.", stop = TRUE)
+    msg_error("Don't add Rproj files to the base directory.")
+    changed = TRUE
   }
 
   if (length(list.files(pattern = "*\\.Rproj$", path = file.path(dir, "notes"))) != 1L) {
-    msg_error("There should only be a single Rproj file in notes/", stop = TRUE)
+    msg_error("There should only be a single Rproj file in notes/")
+    changed = TRUE
   }
 
   if (length(list.files(pattern = "*\\.Rproj$", path = file.path(dir, "slides"))) != 1L) {
-    msg_error("There should only be a single Rproj file in slides/", stop = TRUE)
+    msg_error("There should only be a single Rproj file in slides/")
+    changed = TRUE
   }
 
-  msg_ok("Template files look good")
+  if (isFALSE(changed)) msg_success("Template files look good")
   return(invisible(NULL))
 }

@@ -1,3 +1,7 @@
+# jrNotes 0.8.2 _2020-09-27_
+  * Internal: Use `{cli}` instead of our own system
+  * Internal: Set `depth` equal to 1 when cloning template
+
 # jrNotes 0.8.1 _2020-09-24_
   * Feature: Check title length
 

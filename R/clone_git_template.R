@@ -33,7 +33,7 @@ clone_git_template = function(name = NULL,
   on.exit(setwd(old_wd))
 
   repo_name = file.path(path, name)
-  system2("git", args = c("clone",
+  system2("git", args = c("clone", "--depth", "1",
                           "git@gitlab.com:jumpingrivers-notes/template.git", #nolint
                           repo_name))
   setwd(repo_name)
@@ -62,7 +62,7 @@ clone_git_template = function(name = NULL,
   } else {
     msg = glue::glue("Remember to run \"git push -u origin master\" \\
                      if you want to later push to and create the repo.")
-    msg_info(msg, padding = 2)
+    msg_info(msg, padding = TRUE)
   }
 
   return(invisible(repo_name))

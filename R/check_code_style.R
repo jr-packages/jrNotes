@@ -6,12 +6,12 @@ check_r_style = function() {
   fnames = list.files(pattern = "^c.*Rmd$")
   bad_lints = FALSE
   for (i in seq_along(fnames)) {
-    msg_info(paste("Checking", fnames[i]), padding = 2)
+    file_lint = FALSE
     l = lintr::lint(fnames[i])
     if (length(l) > 0) {
-      msg_error(fnames[i], padding = 4)
+      msg_error(fnames[i], padding = TRUE)
       print(l)
-      bad_lints = TRUE
+      bad_lints = file_lint = TRUE
     }
     ## Check that library calls are correctly quoted
     ## library("XXX") not library(XXX) #nolint
@@ -21,25 +21,27 @@ check_r_style = function() {
     if (any(!is_quoted)) {
       msg = paste0(cross, " Quote package names: ", libraries[!is_quoted], collapse = "\n")
       message(red(msg))
-      bad_lints = TRUE
+      bad_lints = file_lint = TRUE
+    }
+
+    if (isFALSE(file_lint)) {
+      msg_success(fnames[i], padding = TRUE)
     }
   }
   return(bad_lints)
 }
 
-
 check_python_style = function() {
   msg_start("Checking lint...check_code_style()")
   if (!fs::file_exists("flake8_config_Rmd.ini")) {
-    msg_info("Missing flake8_config_Rmd.ini file - creating a default", padding = 2)
+    msg_info("Missing flake8_config_Rmd.ini file - creating a default", padding = TRUE)
     flake8_ini_sys = system.file("", "flake8_config_Rmd.ini", package = "jrNotes", mustWork = TRUE)
     file.copy(flake8_ini_sys, to = "flake8_config_Rmd.ini", overwrite = TRUE)
   }
-  msg_start("Checking lint...check_code_style()")
   fnames = list.files(pattern = "^c.*Rmd$")
   bad_lints = FALSE
   for (i in seq_along(fnames)) {
-    msg_info(paste("Checking", fnames[i]), padding = 2)
+    msg_info(paste("Checking", fnames[i]), padding = TRUE)
     jrpytests = reticulate::import("jrpytests")
     jrpytests$runflake8rmdpychunks(filename = fnames[i])
   }
@@ -56,12 +58,10 @@ check_code_style = function() {
 
   if (is.null(bad_lints)) {
     msg_info("Skipping lint check")
-  }
-  else if (bad_lints) {
+  } else if (bad_lints) {
     msg_error("Fix styling")
-    set_error()
   } else {
-    msg_ok("Styling looks good")
+    msg_success("Styling looks good")
   }
 }
 #' Lintr functions

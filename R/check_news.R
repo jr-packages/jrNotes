@@ -15,14 +15,13 @@ check_news = function() {
   r = readLines("../.gitlab-ci.yml")
   release = r[stringr::str_detect(r, "RELEASE:")]
   if (stringr::str_detect(release, '"FALSE"')) {
-    msg_info("RELEASE is FALSE in .gitlab-ci.yml", padding = 2)
-    msg_info("Skipping NEWS.md check", padding = 2)
+    msg_info("RELEASE is FALSE in .gitlab-ci.yml", padding = TRUE)
+    msg_info("Skipping NEWS.md check", padding = TRUE)
     return(invisible(TRUE))
   }
 
   if (!file.exists("../NEWS.md")) {
-    msg_error("NEWS.md is missing from the base directory", stop = FALSE)
-    set_error()
+    msg_error("NEWS.md is missing from the base directory")
     return(invisible(NULL))
   }
 
@@ -34,8 +33,7 @@ check_news = function() {
   if (stringr::str_detect(news[1], pattern = header_pattern, negate = TRUE)) {
     msg = glue::glue("Top line of NEWS.md not have correct format. It should be
                        # {con$running}")
-    msg_error(msg, stop = FALSE)
-    set_error()
+    msg_error(msg)
     return(invisible(NULL))
   }
 
@@ -43,8 +41,7 @@ check_news = function() {
   pattern = glue::glue("^$", .open = "<", .close = ">")
   if (length(news) < 2 || stringr::str_detect(news[2], pattern = "^$", negate = TRUE)) {
     msg = glue::glue("Second line of NEWS.md should be empty")
-    msg_error(msg, stop = FALSE)
-    set_error()
+    msg_error(msg)
     return(invisible(NULL))
   }
 
@@ -54,19 +51,17 @@ check_news = function() {
   if (length(news) < 3 || stringr::str_detect(news[3], pattern = pattern, negate = TRUE)) {
     msg = glue::glue("Second line of NEWS.md not have correct format. It should be
                        ## Version {version} _{Sys.Date()}_")
-    msg_error(msg, stop = FALSE)
-    set_error()
+    msg_error(msg)
     return(invisible(NULL))
   }
   # Check line 4: Make sure there is news!
   if (length(news) < 4 || stringr::str_detect(news[4], pattern = "^  \\* ", negate = TRUE)) {
     msg = glue::glue("This entry seems to be not news worthy!
     Please add a little info of the form: '  * '")
-    msg_error(msg, stop = FALSE)
-    set_error()
+    msg_error(msg)
     return(invisible(NULL))
   }
 
-  msg_ok("NEWS.md looks good!")
+  msg_success("NEWS.md looks good!")
   return(invisible(NULL))
 }

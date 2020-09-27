@@ -5,8 +5,7 @@ check_wordlist = function() {
 
   words = readLines(fname, warn = FALSE)
   if (!all(words == sort(words))) {
-    msg_error("WORDLIST is not in alphabetical order", padding = 2)
-    set_error()
+    msg_error("WORDLIST is not in alphabetical order", padding = TRUE)
     return(FALSE)
   }
   return(TRUE)
@@ -23,7 +22,7 @@ get_words = function() {
   if (file.exists(fname)) {
     words = c(words, readLines(fname, warn = FALSE))
   } else {
-    msg_info("WORDLIST file not found in the root directory", padding = 2)
+    msg_info("WORDLIST file not found in the root directory", padding = TRUE)
   }
 
   # Remove comments & blank lines
@@ -41,9 +40,10 @@ make_wordlist = function(spelling_results) {
   words = sort(unique(spelling_results$word))
   words = glue::glue_collapse(words, sep = "\n")
   cat(words, file = f, append = TRUE)
-  msg_error("Spelling mistakes have been found in the notes", padding = 2)
-  msg_error("The file spelling_issues contains a list of potential spelling mistakes", padding = 2)
-  msg_error("Any words that are not errors should be added to ../WORDLIST", padding = 2)
+  msg_error("Spelling mistakes have been found in the notes", padding = TRUE)
+  msg_error("The file spelling_issues contains a list of potential spelling mistakes",
+            padding = TRUE)
+  msg_error("Any words that are not errors should be added to ../WORDLIST", padding = TRUE)
   return(NULL)
 }
 
@@ -66,10 +66,9 @@ check_spelling = function() {
   fnames = list.files(pattern = "^c.*\\.Rmd$")
   in_words = spelling::spell_check_files(fnames, lang = "en_GB", ignore = words)
   if (nrow(in_words) == 0L) {
-    msg_ok("Spell check passed")
+    msg_success("Spell check passed")
     return(invisible(NULL))
   }
-  set_error()
   make_wordlist(in_words)
 
   # Order spelling mistakes grouped by chapter
@@ -80,8 +79,7 @@ check_spelling = function() {
   pad = pad - min(pad) + 4
   for (i in seq_len(nrow(in_words))) {
     msg_error(glue("{in_words[i, 1]}{paste(character(pad[i]), collapse = ' ')}{in_words[i, 2]}"),
-             padding = 4)
+             padding = TRUE)
   }
-
   return(invisible(in_words))
 }

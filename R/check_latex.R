@@ -13,10 +13,9 @@ check_citations = function() {
                                pattern = "Warning: There were undefined citations\\.$")
 
   if (sum(labels) == 0) {
-    msg_ok("Citations look good")
+    msg_success("Citations look good")
   } else {
     msg_error("Undefined citations")
-    set_error()
   }
   return(invisible(NULL))
 }
@@ -31,9 +30,9 @@ check_labels = function() {
                       pattern = "^LaTeX Warning: Label .* multiply defined\\.$")
 
   if (sum(labels) == 0) {
-    msg_ok("Labels look good")
+    msg_success("Labels look good")
   } else {
-    msg_error("Multiply defined labels:", padding = 2)
+    msg_error("Multiply defined labels:", padding = TRUE)
     message(red(paste(main_log[labels], collapse = "\n  ")))
                 set_error()
   }
@@ -52,7 +51,7 @@ check_references = function() {
                              pattern = "undefined on input line")
 
   if (sum(refs) == 0) {
-    msg_ok("Refs look good")
+    msg_success("Refs look good")
   } else {
     message("\n", red(glue("{cross} Underfined refs")), "\n",
             red(paste(main_log[refs], collapse = "\n")))

@@ -2,24 +2,16 @@
 % Please edit documentation in R/check_template.R
 \name{check_template}
 \alias{check_template}
-\title{Checks notes files are the same as template
-
-Ensures that certain notes files are the same as the notes template.
-These cannonical files are identical for all notes, e.g. Makefiles,
-main.Rmd.
-
-Typically this used by the gitlab-ci runner. The programming
-language is inferred via \code{get_repo_language}.}
+\title{Checks notes files are the same as template}
 \usage{
 check_template()
 }
 \description{
-Checks notes files are the same as template
-
 Ensures that certain notes files are the same as the notes template.
-These cannonical files are identical for all notes, e.g. Makefiles,
+These canonical files are identical for all notes, e.g. Makefiles,
 main.Rmd.
-
+}
+\details{
 Typically this used by the gitlab-ci runner. The programming
 language is inferred via \code{get_repo_language}.
 }
