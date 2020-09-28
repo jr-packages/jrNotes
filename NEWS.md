@@ -1,3 +1,6 @@
+# jrNotes 0.8.2 _2020-09-25_
+  * Feature: Point version number shouldn't go past 9
+
 # jrNotes 0.8.1 _2020-09-24_
   * Feature: Check title length
 

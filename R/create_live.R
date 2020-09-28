@@ -12,7 +12,7 @@ create_live_scripts = function() {
 
   if (get_repo_language() == "python") {
     create_live_python()
-  }else{
+  } else {
     if (!fs::dir_exists("../live")) return(invisible(NULL))
 
     msg_start("Creating scripts for VM...")
