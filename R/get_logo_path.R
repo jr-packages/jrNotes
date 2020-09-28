@@ -96,7 +96,7 @@ create_version = function() {
     pkg_name = get_python_pkg_name()
     pkg_ver = system2("pip", c("show", pkg_name, "|",
                                "sed", "-n", "-e", "'s/Version: //p'"),
-                      stdout=TRUE)
+                      stdout = TRUE)
   }
 
   version_dots = strsplit(version, split = "\\.")[[1]]
