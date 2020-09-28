@@ -23,14 +23,15 @@ check_urls = function() {
 
   bad_urls = FALSE
   for (url in urls) {
-    msg_info(paste("Checking ", url), padding = 2)
     ping = try(httr::GET(url), silent = TRUE)
 
     if (class(ping) == "try-error") {
-      msg_info(glue("{url}: {ping}"), padding = 2)
+      msg_warning(glue("{url}: {ping}"), padding = TRUE)
     } else {
-      if (ping$status != 200) {
-        msg_error(glue("status: {ping$status}"), padding = 2)
+      if (ping$status == 200) {
+        msg_success(glue::glue("{url}"), padding = TRUE)
+      } else if (ping$status != 200) {
+        msg_error(glue("status: {ping$status}"), padding = TRUE)
       }
       if (ping$status == 404) {
         bad_urls = TRUE
@@ -38,14 +39,13 @@ check_urls = function() {
     }
     if (str_detect(url, "index\\.html")) {
       msg = glue("You can probably delete index.html from the URL")
-      msg_info(msg, padding = 2)
+      msg_warning(msg, padding = TRUE)
     }
   }
   if (bad_urls) {
     msg_error("Fix broken URLS")
-    set_error()
   } else {
-    msg_ok("URLs look good")
+    msg_success("URLs look good")
   }
   return(invisible(NULL))
 }

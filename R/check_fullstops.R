@@ -16,15 +16,14 @@ check_fullstops = function() {
     dplyr::filter(str_ends(X3, "(\\?|\\.|!|/|\\.\\})", negate = TRUE))
 
   if (nrow(issues) == 0) {
-    msg_ok("Captions and friends look good")
+    msg_success("Captions and friends look good")
     return(invisible(TRUE))
   }
 
   msg_error("Sentences should end with a full stop.")
   for (i in seq_len(nrow(issues))) {
     msg = glue::glue("Chapter {issues[i, 3]} ({issues[i, 1]}): {issues[i, 2]}")
-    msg_error(msg, padding = 2)
+    msg_error(msg, padding = TRUE)
   }
-  set_error()
   return(invisible(FALSE))
 }

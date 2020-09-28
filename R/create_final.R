@@ -1,34 +1,41 @@
 #' @importFrom praise praise
 #' @importFrom qpdf pdf_combine
 create_final_dir = function(note_name, pracs) {
+  # This will start our cli theme.
+  # Will auto-close at the end of this function
+  cli::start_app(theme = get_cli_theme())
+  cli::cli_h2("Checking Core files")
   check_master()
   check_template()
   check_pkgs()
   # #
+  cli::cli_h2("Checking Notes")
   check_spelling()
   tokenise()
   check_chapter_titles()
   check_section_titles()
   check_fullstops()
-  # # Latex checks
-  check_latex()
-  # Check urls
   check_urls()
-  check_config()
+  check_latex()
+
+    # # Latex checks
+  # Check urls
   # Check lint
   check_code_style() # nolint
-  # Check live
+  cli::cli_h2("Checking live")
   check_live()
   create_live_scripts()
   # Check version number
+  cli::cli_h2("Checking meta files")
+  check_news()
+  check_pkgtitle()
+  check_config()
   check_version()
   check_unstaged()
 
-  check_news()
-  check_pkgtitle()
-
   if (isTRUE(.jrnotes$error)) {
-    msg_error("Please fix errors", stop = TRUE)
+    msg_error("Please fix errors")
+    stop()
   }
   msg_start("Creating pdf outputs...")
   dir.create("final", showWarnings = FALSE)
@@ -37,20 +44,20 @@ create_final_dir = function(note_name, pracs) {
   # add notes
   notes_loc = glue("final/notes_{note_name}_{Sys.Date()}.pdf")
   fs::file_copy("main.pdf", notes_loc, overwrite = TRUE)
-  msg_ok(glue("Created {notes_loc}"), padding = 2)
+  msg_success(glue("Created {notes_loc}"), padding = TRUE)
 
   if (fs::file_size(notes_loc) < 50) {
-    msg_info("The notes look suspiciously small!", padding = 2)
+    msg_warning("The notes look suspiciously small!", padding = TRUE)
   }
 
   # combine practicals into single file
   prac_loc = glue("final/practicals_{note_name}_{Sys.Date()}.pdf")
   qpdf::pdf_combine(pracs, prac_loc)
-  msg_ok(glue("Created {prac_loc}"), padding = 2)
+  msg_success(glue("Created {prac_loc}"), padding = TRUE)
   if (fs::file_size(prac_loc) < 50) {
-    msg_info("The practicals look suspiciously small!", padding = 2)
+    msg_warning("The practicals look suspiciously small!", padding = TRUE)
   }
-  msg_ok("PDF outputs created in final/")
+  msg_success("PDF outputs created in final/")
 
   message(green("\n\n", star, star, praise::praise(), star, star))
   return(invisible(NULL))

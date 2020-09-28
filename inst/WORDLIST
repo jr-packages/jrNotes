@@ -22,6 +22,7 @@ margintable
 mbox
 medskip
 midrule
+newcommand
 newpage
 newthought
 noindent
@@ -31,6 +32,7 @@ smallskip
 textbackslash
 textbf
 textit
+textrm
 textsc
 textsl
 texttt

@@ -94,7 +94,7 @@ create_live_scripts = function() {
     }
 
     # Zip folder
-    msg_start("Zipping scripts...")
+    msg_info("Zipping scripts...", padding = TRUE)
     # Copy notes into vm_scripts.zip
     fs::file_copy("main.pdf", "../live/vm_scripts/notes.pdf", overwrite = TRUE)
 
@@ -105,7 +105,7 @@ create_live_scripts = function() {
     unlink("../live/vm_scripts/", recursive = TRUE)
     unlink("../live/tutor_scripts/", recursive = TRUE)
 
-    msg_ok("Live scripts created and zipped")
+    msg_success("Live scripts created and zipped")
   }
 }
 
@@ -218,5 +218,5 @@ create_live_python = function() {
   unlink("../live/vm_scripts/", recursive = TRUE)
   unlink("../live/tutor_scripts/", recursive = TRUE)
 
-  msg_ok("Live scripts created and zipped")
+  msg_success("Live scripts created and zipped")
 }

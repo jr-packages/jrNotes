@@ -4,7 +4,8 @@ check_python = function() {
   msg_start("Checking python version")
 
   if (!isTRUE(nchar(con$knitr$engine.path) > 2)) {
-    msg_error("knitr Python engine path fail", stop = TRUE)
+    msg_error("knitr Python engine path fail")
+    stop()
   }
-  msg_ok("Python version looks good")
+  msg_success("Python version looks good")
 }

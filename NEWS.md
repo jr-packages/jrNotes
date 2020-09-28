@@ -1,3 +1,7 @@
+# jrNotes 0.8.3 _2020-09-28_
+  * Internal: Use `{cli}` instead of our own system
+  * Internal: Set `depth` equal to 1 when cloning template
+
 # jrNotes 0.8.2 _2020-09-25_
   * Feature: Point version number shouldn't go past 9
 

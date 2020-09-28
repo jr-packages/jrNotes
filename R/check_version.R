@@ -16,8 +16,8 @@ check_version = function() {
   r = readLines("../.gitlab-ci.yml")
   release = r[stringr::str_detect(r, "RELEASE:")]
   if (stringr::str_detect(release, '"FALSE"')) {
-    msg_info("RELEASE is FALSE in .gitlab-ci.yml", padding = 2)
-    msg_info("Skipping version number check", padding = 2)
+    msg_info("RELEASE is FALSE in .gitlab-ci.yml", padding = TRUE)
+    msg_info("Skipping version number check", padding = TRUE)
     return(invisible(TRUE))
   }
 
@@ -33,8 +33,9 @@ check_version = function() {
 
   if (chapters_changed > 0 && config_changed == 0) {
     msg_error("Chapters.Rmd have been updated, but version is unchanged!")
-    msg_error("Please update version number.", stop = TRUE)
+    msg_error("Please update version number.")
+    stop()
   }
-  msg_ok("Config looks good!")
+  msg_success("Config looks good!")
   return(invisible(TRUE))
 }

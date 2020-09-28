@@ -95,7 +95,7 @@ check_section_titles = function() {
   chapter_num = 1
   for (i in seq_len(nrow(sections))) {
     if (sections$X1[i] == "chapter") {
-      msg_info(glue::glue("Chapter {chapter_num}"), padding = 2)
+      cli::cli_alert("Chapter {chapter_num}")
       chapter_num = chapter_num + 1
     } else {
       title = sections$text[i]
@@ -104,22 +104,22 @@ check_section_titles = function() {
         title_case = standard_exceptions(title, title_case)
       }
       if (title_case != title) {
-        msg_info(glue::glue("{sections[i, 1]}: {title_case} vs {title}"), padding = 4)
+        msg_info(glue::glue("{sections[i, 1]}: {title_case} vs {title}"), padding = TRUE)
         error = TRUE
       } else {
-        msg_ok(glue::glue("{sections[i, 1]}: {title_case}"), padding = 2)
+        msg_success(glue::glue("{sections[i, 1]}: {title_case}"), padding = TRUE)
       }
     }
   }
   if (isTRUE(error)) {
-    msg = glue::glue("{info} Please check sections. \\
+    msg = glue::glue("Please check sections. \\
                 Note: some of the warnings may be incorrect. \\
                 If so, ask Colin to add an exception.
 
                 If a word is wrapped in \\texttt it isn't checked.")
-    msg_info(msg, padding = 2)
+    msg_info(msg)
   } else {
-    msg_ok("Section titles look good")
+    msg_success("Section titles look good")
   }
   return(invisible(NULL))
 }

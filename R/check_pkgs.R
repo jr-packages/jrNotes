@@ -40,19 +40,21 @@ check_pkgs = function() {
   for (i in seq_len(nrow(pkgs))) {
     if (package_version(pkgs$Version.x[i]) > package_version(pkgs$Version.y[i])) {
       msg = glue("Update {pkgs$Package[i]}: {pkgs$Version.x[i]} > {pkgs$Version.y[i]}") #nolint
-      msg_error(msg, padding = 2)
+      msg_error(msg, padding = TRUE)
     } else {
       msg = glue("{pkgs$Package[i]} (v{pkgs$Version.x[i]}) is up to date")
-      msg_ok(msg, padding = 2)
+      msg_success(msg, padding = TRUE)
     }
   }
 
   to_update = package_version(pkgs$Version.x) > package_version(pkgs$Version.y)
   if (sum(to_update) == 0 || nchar(Sys.getenv("GITLAB_CI")) != 0) {
+    msg_success("Pkg versions look good")
     return(invisible(NULL))
   }
-  msg_info("Automatically updating packages", padding = 2)
+  msg_info("Automatically updating packages", padding = TRUE)
   install.packages(pkgs$Package[to_update])
   clean()
-  msg_error("Packages have been updated. Please run make final again", stop = TRUE)
+  msg_error("Packages have been updated. Please run make final again")
+  stop()
 }

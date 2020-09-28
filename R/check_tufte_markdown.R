@@ -16,12 +16,12 @@ check_rogue_markdown = function() {
   i = 1
   for (i in seq_len(nrow(issues))) {
     row = issues[i, ]
-    msg = glue::glue("Chapter {row$chap_num} - {row$X1}: {row$X3}", padding = 2)
-    msg_info(msg, padding = 2)
+    msg = glue::glue("Chapter {row$chap_num} - {row$X1}: {row$X3}", padding = TRUE)
+    msg_info(msg, padding = TRUE)
   }
 
   if ((sum(issues$is_backtick) + sum(issues$is_star)) == 0L) {
-    msg_ok("Markdown looks good")
+    msg_success("Markdown looks good")
   }
   return(invisible(NULL))
 }
@@ -39,15 +39,14 @@ check_tufte = function() {
     if (sum(is_in) > 0) {
       line_numbers = which(is_in)
       msgs = c(msgs, glue_col("{fname}, Line {line_numbers}: {out[is_in]}"))
-      set_error()
     }
   }
   if (length(msgs) == 0L) {
-    msg_ok("Tufte latex looks good")
+    msg_success("Tufte latex looks good")
   }
 
   for (msg in msgs) {
-    msg_error(msg, padding = 2)
+    msg_error(msg, padding = TRUE)
   }
   check_rogue_markdown()
   return(invisible(NULL))

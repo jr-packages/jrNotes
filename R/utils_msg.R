@@ -1,51 +1,64 @@
-info = cli::symbol$info
-tick = cli::symbol$tick
 cross = cli::symbol$cross
-circle_filled = cli::symbol$circle_filled
 star = cli::symbol$star
-question = cli::symbol$fancy_question_mark
 
-red = crayon::red
-blue = crayon::blue
-yellow = crayon::yellow
-green = crayon::green
-cyan = crayon::cyan
-reset = crayon::reset
+#' @importFrom cli cli_ol
+open_pad = function() {
+  cli::cli_ol(.auto_close = FALSE)
+  cli::cli_ol(.auto_close = FALSE)
+}
 
-get_padding = function(padding) {
-  if (padding == 0) {
-    pads = ""
-  } else{
-    pads = paste(rep(" ", padding), collapse = "")
+#' @importFrom cli cli_end
+close_pad = function() {
+  cli::cli_end()
+  cli::cli_end()
+}
+
+#' @importFrom glue glue_col
+#' @importFrom cli cli_alert_danger
+msg_error = function(msg, padding = FALSE) {
+  if (padding > 0) {
+    open_pad()
+    on.exit(close_pad())
   }
-  pads
+  cli::cli_alert_danger("{msg}")
+  set_error()
 }
 
-globalVariables("pads")
 #' @importFrom glue glue_col
-msg_error = function(msg, padding = 0, stop = FALSE) {
-  pads = get_padding(padding)
-  if (isFALSE(stop)) {
-    message(glue::glue_col("{red}{pads}{cross} {msg}{reset}"))
-  } else {
-    stop(glue::glue_col("{red}{pads}{cross} {msg}"), call. = FALSE)
+#' @importFrom cli cli_h3
+msg_start = function(msg, padding = FALSE) {
+  if (padding > 0) {
+    open_pad()
+    on.exit(close_pad())
   }
+  cli::cli_h3("{msg}")
+}
+
+#' @importFrom cli cli_alert_warning
+msg_warning = function(msg, padding = FALSE) {
+  if (padding > 0) {
+    open_pad()
+    on.exit(close_pad())
+  }
+  cli::cli_alert_warning("{msg}")
 }
 
 #' @importFrom glue glue_col
-msg_start = function(msg, padding = 0) {
-  pads = get_padding(padding)
-  message(glue::glue_col("{blue}{pads}{circle_filled} {msg}{reset}"))
+#' @importFrom cli cli_alert_success
+msg_success = function(msg, padding = 0) {
+  if (padding > 0) {
+    open_pad()
+    on.exit(close_pad())
+  }
+  cli::cli_alert_success("{msg}")
 }
 
 #' @importFrom glue glue_col
-msg_ok = function(msg, padding = 0) {
-  pads = get_padding(padding)
-  message(glue::glue_col("{green}{pads}{tick} {msg}{reset}"))
-}
-
-#' @importFrom glue glue_col
+#' @importFrom cli cli_alert_info
 msg_info = function(msg, padding = 0) {
-  pads = get_padding(padding)
-  message(glue::glue_col("{yellow}{pads}{info} {msg}{reset}"))
+  if (padding > 0) {
+    open_pad()
+    on.exit(close_pad())
+  }
+  cli::cli_alert_info("{msg}")
 }

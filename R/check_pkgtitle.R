@@ -5,6 +5,8 @@
 #' @importFrom stringr str_remove_all str_squish str_starts str_remove
 #' @export
 check_pkgtitle = function() {
+  msg_start("Checking PKG title matches course title...check_pkgtitle()")
+
   language = get_repo_language()
   if (language == "r") {
     r_pkg = get_r_pkg_name()
@@ -19,15 +21,13 @@ check_pkgtitle = function() {
     return(NULL)
   }
 
-  msg_start("Checking PKG title matches course title...check_pkgtitle()")
   con = config::get()
   # Remove line breaks
   notes_title = stringr::str_remove_all(con$front, pattern = "\\\\")
   notes_title = stringr::str_squish(notes_title)
   # Check PKG title starts with "Jumping Rivers: "
   if (stringr::str_starts(pkg_title, pattern = "Jumping Rivers: ", negate = TRUE)) {
-    msg_error("PKG title should start with 'Jumping Rivers: '", stop = FALSE)
-    set_error()
+    msg_error("PKG title should start with 'Jumping Rivers: '")
     return(invisible(NULL))
   }
 
@@ -36,11 +36,10 @@ check_pkgtitle = function() {
   if (pkg_title != notes_title) {
     msg = glue::glue("PKG title should be 'Jumping Rivers: {notes_title}' \\
                      instead of 'Jumping Rivers: {pkg_title}'")
-    msg_error(msg, stop = FALSE)
-    set_error()
+    msg_error(msg)
     return(invisible(NULL))
   }
 
-  msg_ok("PKG titles look good!")
+  msg_success("PKG titles look good!")
   return(invisible(NULL))
 }
