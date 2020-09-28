@@ -1,3 +1,6 @@
+# jrNotes 0.8.4 _2020-09-28_
+  * Bug: Fix `get_logo_path()` for python notes
+
 # jrNotes 0.8.3 _2020-09-28_
   * Internal: Use `{cli}` instead of our own system
   * Internal: Set `depth` equal to 1 when cloning template
