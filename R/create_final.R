@@ -4,11 +4,12 @@ create_final_dir = function(note_name, pracs) {
   # This will start our cli theme.
   # Will auto-close at the end of this function
   cli::start_app(theme = get_cli_theme())
+
   cli::cli_h2("Checking Core files")
   check_master()
   check_template()
   check_pkgs()
-  # #
+
   cli::cli_h2("Checking Notes")
   check_spelling()
   tokenise()
@@ -17,15 +18,12 @@ create_final_dir = function(note_name, pracs) {
   check_fullstops()
   check_urls()
   check_latex()
+  check_code_style()
 
-    # # Latex checks
-  # Check urls
-  # Check lint
-  check_code_style() # nolint
   cli::cli_h2("Checking live")
   check_live()
   create_live_scripts()
-  # Check version number
+
   cli::cli_h2("Checking meta files")
   check_news()
   check_pkgtitle()
@@ -63,25 +61,27 @@ create_final_dir = function(note_name, pracs) {
   return(invisible(NULL))
 }
 
+
+#' @export
+#' @rdname create_final
+get_deb_pkgs = function() {
+  con = config::get()
+  pkgs = unlist(con$deb_packages)
+  return(pkgs)
+}
+
 #' @export
 #' @rdname create_final
 get_python_pkg_name = function() {
   con = config::get()
-  pkgs = con$python_packages
+  pkgs = unlist(con$python_packages)
   return(pkgs)
 }
 
 #' @export
 #' @rdname create_final
 get_r_pkg_name = function() {
-  # New style - use the config file
   con = config::get()
-  ## XXX: Old style - delete in the future
-  if (!is.null(con$packages)) {
-    pkgs = unlist(con$packages)
-    names(pkgs) = NULL
-    return(pkgs)
-  }
   pkgs = unlist(con$r_packages)
   return(pkgs)
 }
