@@ -39,7 +39,6 @@ check_tufte = function() {
     if (sum(is_in) > 0) {
       line_numbers = which(is_in)
       msgs = c(msgs, glue_col("{fname}, Line {line_numbers}: {out[is_in]}"))
-      set_error()
     }
   }
   if (length(msgs) == 0L) {

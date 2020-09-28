@@ -33,8 +33,7 @@ check_labels = function() {
     msg_success("Labels look good")
   } else {
     msg_error("Multiply defined labels:", padding = TRUE)
-    message(red(paste(main_log[labels], collapse = "\n  ")))
-                set_error()
+    sapply(main_log[labels], msg_error, padding = TRUE)
   }
   return(invisible(NULL))
 }
@@ -47,15 +46,12 @@ check_references = function() {
   msg_start("Checking for undefined refs...check_references()")
 
   main_log = readLines("main.log")
-  refs = stringr::str_detect(main_log,
-                             pattern = "undefined on input line")
-
-  if (sum(refs) == 0) {
+  refs = stringr::str_detect(main_log, pattern = "undefined on input line")
+  if (sum(refs) == 0L) {
     msg_success("Refs look good")
   } else {
-    message("\n", red(glue("{cross} Underfined refs")), "\n",
-            red(paste(main_log[refs], collapse = "\n")))
-    set_error()
+    msg_error("Underfined refs", padding = TRUE)
+    sapply(main_log[refs], msg_error, padding = TRUE)
   }
   return(invisible(NULL))
 }

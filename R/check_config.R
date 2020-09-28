@@ -28,7 +28,6 @@ check_config = function() {
     msg_error(glue("New version should be {version[1]}.{version[2]+1}.0"), padding = 2)
     msg_error(glue("Please condense the previous NEWS.md entries to {version[1]}.{version[2]}.*"),
               padding = 2)
-    set_error()
     config_issue = TRUE
   }
 
