@@ -67,13 +67,7 @@ create_final_dir = function(note_name, pracs) {
 #' @rdname create_final
 get_python_pkg_name = function() {
   con = config::get()
-  ## XXX: Old style - delete in the future
-  if (!is.null(con$packages)) {
-    pkgs = unlist(con$packages)
-    names(pkgs) = NULL
-    return(pkgs)
-  }
-  pkgs = unlist(con$python_packages)
+  pkgs = con$python_packages
   return(pkgs)
 }
 
