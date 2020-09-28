@@ -19,8 +19,8 @@ check_r_style = function() {
     libraries = r[stringr::str_detect(r, "^library\\(.*\\)$")]
     is_quoted = stringr::str_detect(libraries, '"', negate = FALSE)
     if (any(!is_quoted)) {
-      msg = paste0(cross, " Quote package names: ", libraries[!is_quoted], collapse = "\n")
-      message(red(msg))
+      msg = paste0("Quote package names: ", libraries[!is_quoted])
+      sapply(msg, msg_error, padding = TRUE)
       bad_lints = file_lint = TRUE
     }
 
