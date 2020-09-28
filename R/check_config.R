@@ -20,6 +20,18 @@ check_config = function() {
     config_issue = TRUE
   }
 
+  ## Check version
+  version = config::get("version")
+  version = as.integer(stringr::str_split(version, "\\.")[[1]])
+  if (version[3] > 9L) {
+    msg_error("Point version larger than 10", padding = 2)
+    msg_error(glue("New version should be {version[1]}.{version[2]+1}.0"), padding = 2)
+    msg_error(glue("Please condense the previous NEWS.md entries to {version[1]}.{version[2]}.*"),
+              padding = 2)
+    set_error()
+    config_issue = TRUE
+  }
+
   if (is.null(config::get("advert"))) {
     msg_error("Advert missing from config.", padding = TRUE)
     msg_error("Add 'advert: advert'", padding = TRUE)
