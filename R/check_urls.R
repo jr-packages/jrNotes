@@ -1,11 +1,24 @@
 globalVariables(c("X1", "X2", "X3"))
-#' @importFrom httr GET
+
+url_info = function(url) {
+  ping = try(httr::HEAD(url), silent = TRUE)
+  if (class(ping) == "try-error") {
+    status = ping[1]
+    url_exists = FALSE
+  } else {
+    status = ping$status
+    url_exists = ping$status %in% 200:210
+  }
+  list(exists = url_exists, url = url, status = status)
+}
+
+#' @importFrom httr HEAD http_error
 #' @importFrom crayon yellow red green blue
 check_urls = function() {
   if (!required_texlive(2017)) return(invisible(NULL))
 
   # Hack to detect internet connection on laptops
-  if (httr::GET("www.google.com")$status != 200) {
+  if (isTRUE(httr::http_error("https://www.google.com"))) {
     msg_info("No internet connection - skipping URL check")
     return(invisible(NULL))
   }
@@ -13,39 +26,37 @@ check_urls = function() {
   tokens = read_tokens()
   urls = dplyr::filter(tokens, X1 == "url")$X3 #nolint
 
-  # Old fashioned URL grep
-  # No URLs gives a warning
-  grepped_url = suppressWarnings(system2("grep",
-                                         c('-Eo "(http|https)://[a-zA-Z0-9./?=_-]*"', "main.tex"), #nolint
-                                         stdout = TRUE))
-  urls = c(urls,  grepped_url)
-  urls = unique(urls)
-
-  bad_urls = FALSE
-  for (url in urls) {
-    ping = try(httr::GET(url), silent = TRUE)
-
-    if (class(ping) == "try-error") {
-      msg_warning(glue("{url}: {ping}"), padding = TRUE)
+  msg_info("Checking explict urls...", padding = TRUE)
+  url_statuses = TRUE
+  for (url in unique(urls)) {
+    resp = url_info(url)
+    if (resp$exists || is_gitlab()) {
+      msg_success(glue::glue("{resp$status}: {resp$url}"), padding = TRUE)
     } else {
-      if (ping$status == 200) {
-        msg_success(glue::glue("{url}"), padding = TRUE)
-      } else if (ping$status != 200) {
-        msg_error(glue("status: {ping$status}"), padding = TRUE)
-      }
-      if (ping$status == 404) {
-        bad_urls = TRUE
-      }
-    }
-    if (str_detect(url, "index\\.html")) {
-      msg = glue("You can probably delete index.html from the URL")
-      msg_warning(msg, padding = TRUE)
+      msg_error(glue::glue("{resp$status}: {resp$url}"), padding = TRUE)
+      url_statuses = FALSE
     }
   }
-  if (bad_urls) {
-    msg_error("Fix broken URLS")
-  } else {
+
+  grep_urls = suppressWarnings(system2("grep",
+                                         c('-Eo "(http|https)://[a-zA-Z0-9./?=_-]*"', "extractor-tmp.tex"), #nolint
+                                         stdout = TRUE))
+  urls = grep_urls[!(grep_urls %in% urls)]
+  msg_info("Checking other urls...", padding = TRUE)
+  for (url in unique(urls)) {
+    resp = url_info(url)
+    if (resp$exists) {
+      msg_success(glue::glue("{resp$status}: {resp$url}"), padding = TRUE)
+    } else {
+      msg_warning(glue::glue("{resp$status}: {resp$url}"), padding = TRUE)
+    }
+  }
+
+  # If any URL
+  if (all(url_statuses) || is_gitlab()) {
     msg_success("URLs look good")
+  } else {
+    msg_error("Fix broken URLS")
   }
   return(invisible(NULL))
 }
