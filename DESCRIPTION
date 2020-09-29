@@ -31,6 +31,7 @@ Imports:
     praise,
     purrr,
     qpdf,
+    RCurl,
     reticulate (>= 1.11.1),
     rlang,
     rstudioapi,

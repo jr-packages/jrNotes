@@ -1,6 +1,7 @@
 globalVariables(c("X1", "X2", "X3"))
 #' @importFrom httr GET
 #' @importFrom crayon yellow red green blue
+#' @importFrom RCurl url.exists
 check_urls = function() {
   if (!required_texlive(2017)) return(invisible(NULL))
 
@@ -15,8 +16,14 @@ check_urls = function() {
 
   # Old fashioned URL grep
   # No URLs gives a warning
+
+  # Replace {-} with - for BASH formatted lines starting with git
+  system2("sed",
+          args = c("-i", shQuote("/^\\FunctionTok{git}.*/d ; s/{-}/-/g"),
+                   "extractor-tmp.tex"))
+
   grepped_url = suppressWarnings(system2("grep",
-                                         c('-Eo "(http|https)://[a-zA-Z0-9./?=_-]*"', "main.tex"), #nolint
+                                         c('-Eo "(http|https)://[a-zA-Z0-9./?=_-]*"', "extractor-tmp.tex"), #nolint
                                          stdout = TRUE))
   urls = c(urls,  grepped_url)
   urls = unique(urls)
@@ -26,12 +33,12 @@ check_urls = function() {
       if (url_statuses[url]) {
         msg_success(glue::glue(url, padding = TRUE))
       } else {
-        msg_error(glue(url, padding = TRUE)
+        msg_error(glue(url, padding = TRUE))
       }
   }
 
   # If any URL
-  if (!all(url_status)) {
+  if (!all(url_statuses)) {
     msg_error("Fix broken URLS")
   } else {
     msg_success("URLs look good")
