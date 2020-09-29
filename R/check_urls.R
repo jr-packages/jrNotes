@@ -25,16 +25,14 @@ check_urls = function() {
   grepped_url = suppressWarnings(system2("grep",
                                          c('-Eo "(http|https)://[a-zA-Z0-9./?=_-]*"', "extractor-tmp.tex"), #nolint
                                          stdout = TRUE))
-  urls = c(urls,  grepped_url)
-  urls = unique(urls)
-
+  urls = unique(c(urls,  grepped_url))
   url_statuses = RCurl::url.exists(urls)
   for (url in names(url_statuses)) {
-      if (url_statuses[url]) {
-        msg_success(glue::glue(url, padding = TRUE))
-      } else {
-        msg_error(glue(url, padding = TRUE))
-      }
+    if (url_statuses[url]) {
+      msg_success(url, padding = TRUE)
+    } else {
+      msg_error(url, padding = TRUE)
+    }
   }
 
   # If any URL
