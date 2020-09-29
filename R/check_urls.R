@@ -36,10 +36,10 @@ check_urls = function() {
   }
 
   # If any URL
-  if (!all(url_statuses)) {
-    msg_error("Fix broken URLS")
-  } else {
+  if (all(url_statuses)) {
     msg_success("URLs look good")
+  } else {
+    msg_error("Fix broken URLS")
   }
   return(invisible(NULL))
 }
