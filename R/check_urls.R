@@ -21,28 +21,17 @@ check_urls = function() {
   urls = c(urls,  grepped_url)
   urls = unique(urls)
 
-  bad_urls = FALSE
-  for (url in urls) {
-    ping = try(httr::GET(url), silent = TRUE)
-
-    if (class(ping) == "try-error") {
-      msg_warning(glue("{url}: {ping}"), padding = TRUE)
-    } else {
-      if (ping$status == 200) {
-        msg_success(glue::glue("{url}"), padding = TRUE)
-      } else if (ping$status != 200) {
-        msg_error(glue("status: {ping$status}"), padding = TRUE)
+  url_statuses = RCurl::url.exists(urls)
+  for (url in names(url_statuses)) {
+      if (url_statuses[url]) {
+        msg_success(glue::glue(url, padding = TRUE))
+      } else {
+        msg_error(glue(url, padding = TRUE)
       }
-      if (ping$status == 404) {
-        bad_urls = TRUE
-      }
-    }
-    if (str_detect(url, "index\\.html")) {
-      msg = glue("You can probably delete index.html from the URL")
-      msg_warning(msg, padding = TRUE)
-    }
   }
-  if (bad_urls) {
+
+  # If any URL
+  if (!all(url_status)) {
     msg_error("Fix broken URLS")
   } else {
     msg_success("URLs look good")
