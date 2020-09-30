@@ -1,5 +1,6 @@
 globalVariables(c("X1", "X2", "X3"))
 
+#' @importFrom httr HEAD http_status
 url_info = function(url) {
   ping = try(httr::HEAD(url), silent = TRUE)
   if (class(ping) == "try-error") {
@@ -12,7 +13,7 @@ url_info = function(url) {
   list(exists = url_exists, url = url, status = status)
 }
 
-#' @importFrom httr HEAD http_error
+#' @importFrom httr http_error
 #' @importFrom crayon yellow red green blue
 check_urls = function() {
   if (!required_texlive(2017)) return(invisible(NULL))
