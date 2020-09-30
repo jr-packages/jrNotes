@@ -1,3 +1,6 @@
+# jrNotes 0.8.6 _2020-09-30_
+  * Improvement: `check_url()` prints problem URLs along with their status
+
 # jrNotes 0.8.5 _2020-09-28_
   * Feature: Add R, Python & deb_packages to spelling exceptions
 
