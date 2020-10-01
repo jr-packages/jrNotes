@@ -1,3 +1,6 @@
+# jrNotes 0.8.5 _2020-10-01_
+  * Feature: Add addin to collapse minor NEWS versions
+
 # jrNotes 0.8.4 _2020-09-28_
   * Bug: Fix `get_logo_path()` for python notes
 

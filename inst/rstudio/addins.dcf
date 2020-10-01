@@ -12,3 +12,8 @@ Name: Live comment highlight
 Description: Inserts `#> ` in front of highlighted code.
 Binding: live_comment_highlight
 Interactive: false
+
+Name: Collapse News
+Description: Collapses news
+Binding: collapse_news
+Interactive: false
