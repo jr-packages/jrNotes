@@ -11,11 +11,11 @@ check_wordlist = function() {
   return(TRUE)
 }
 
-
 get_words = function() {
   ## Get Global spelling file
+  words = c(get_r_pkg_name(), get_python_pkg_name(), get_deb_pkgs())
   fname = system.file("WORDLIST", package = "jrNotes")
-  words = readLines(fname, warn = FALSE)
+  words = c(words, readLines(fname, warn = FALSE))
 
   ## Check for local spelling file
   fname = file.path(get_root_dir(), "WORDLIST")
