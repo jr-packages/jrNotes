@@ -92,7 +92,7 @@ collapse_news = function() {
                        rstudioapi::document_position(x, 100)
                      ))
 
-    rstudioapi::insertText(range[1:length(collapsed)],
+    rstudioapi::insertText(range[seq_len(length(collapsed))],
                            collapsed)
     rstudioapi::modifyRange(range[length(collapsed):length(range)],
                             "")
