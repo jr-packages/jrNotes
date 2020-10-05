@@ -11,9 +11,25 @@ check_wordlist = function() {
   return(TRUE)
 }
 
+get_pkg_imports = function(pkg) {
+  imports = packageDescription(pkg)[["Imports"]]
+
+  imports = stringr::str_split(imports, ",")[[1]]
+  imports = stringr::str_squish(imports)
+  imports = stringr::str_split(imports, " ")
+  unlist(lapply(imports, function(import) import[1]))
+}
+
+get_r_imports = function() {
+  pkgs = get_r_pkg_name()
+  pkgs = c("jrNotes", "jrIntroduction")
+  imports = unlist(lapply(pkgs, get_pkg_imports))
+  unique(imports)
+}
+
 get_words = function() {
   ## Get Global spelling file
-  words = c(get_r_pkg_name(), get_python_pkg_name(), get_deb_pkgs())
+  words = c(get_r_imports(), get_python_pkg_name(), get_deb_pkgs())
   fname = system.file("WORDLIST", package = "jrNotes")
   words = c(words, readLines(fname, warn = FALSE))
 
@@ -79,7 +95,7 @@ check_spelling = function() {
   pad = pad - min(pad) + 4
   for (i in seq_len(nrow(in_words))) {
     msg_error(glue("{in_words[i, 1]}{paste(character(pad[i]), collapse = ' ')}{in_words[i, 2]}"),
-             padding = TRUE)
+              padding = TRUE)
   }
   return(invisible(in_words))
 }
