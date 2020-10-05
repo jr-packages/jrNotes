@@ -53,6 +53,7 @@ live_comment_highlight <- function() {
 #' Collapse minor versions of news
 #'
 #' Collapse minor versions of news into one list
+#' To use, open NEWS.md, highlight the sections that you want to collapse, and click the addin.
 #' @export
 collapse_news = function() {
   ctx = rstudioapi::getActiveDocumentContext()
