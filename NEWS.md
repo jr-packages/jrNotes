@@ -1,3 +1,8 @@
+# jrNotes 0.8.7 _2020-10-05_
+  * Improvement: Add the imports from the r_pkg to WORDLIST
+  * Improvement: Output unstaged files
+  * Improvement: Record the error origin
+
 # jrNotes 0.8.6 _2020-09-30_
   * Improvement: `check_url()` prints problem URLs along with their status
 

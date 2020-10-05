@@ -33,6 +33,7 @@ create_final_dir = function(note_name, pracs) {
 
   if (isTRUE(.jrnotes$error)) {
     msg_error("Please fix errors")
+    msg_error(.jrnotes$error_funs)
     stop()
   }
   msg_start("Creating pdf outputs...")
