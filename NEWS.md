@@ -1,3 +1,6 @@
+# jrNotes 0.8.9 _2020-10-05_
+  * Bug: check_pkgs shouldn't raise an error on CI
+
 # jrNotes 0.8.8 _2020-10-05_
   * Improvement: Add the imports from the r_pkg to WORDLIST
   * Improvement: Output unstaged files

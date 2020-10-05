@@ -1,3 +1,18 @@
+pkgs_output = function(pkgs, i) {
+  if (package_version(pkgs$Version.x[i]) > package_version(pkgs$Version.y[i])) {
+    msg = glue("Update {pkgs$Package[i]}: {pkgs$Version.x[i]} > {pkgs$Version.y[i]}") #nolint
+    if (is_gitlab()) {
+      msg_info(msg, padding = TRUE)
+    } else {
+      msg_error(msg, padding = TRUE)
+    }
+  } else {
+    msg = glue("{pkgs$Package[i]} (v{pkgs$Version.x[i]}) is up to date")
+    msg_success(msg, padding = TRUE)
+  }
+  return(invisible(NULL))
+}
+
 # Check packages up to date
 # Hack to detect internet connection on laptops
 #' @importFrom utils available.packages installed.packages
@@ -38,18 +53,12 @@ check_pkgs = function() {
   pkgs = dplyr::left_join(av_p, in_p, by = "Package")
   pkgs$Version.y[is.na(pkgs$Version.y)] = "0.0.0"
   for (i in seq_len(nrow(pkgs))) {
-    if (package_version(pkgs$Version.x[i]) > package_version(pkgs$Version.y[i])) {
-      msg = glue("Update {pkgs$Package[i]}: {pkgs$Version.x[i]} > {pkgs$Version.y[i]}") #nolint
-      msg_error(msg, padding = TRUE)
-    } else {
-      msg = glue("{pkgs$Package[i]} (v{pkgs$Version.x[i]}) is up to date")
-      msg_success(msg, padding = TRUE)
-    }
+    pkgs_output(pkgs, i)
   }
 
   to_update = package_version(pkgs$Version.x) > package_version(pkgs$Version.y)
-  if (sum(to_update) == 0 || nchar(Sys.getenv("GITLAB_CI")) != 0) {
-    msg_success("Pkg versions look good")
+  if (sum(to_update) == 0L || is_gitlab()) {
+    msg_success("Package versions look good")
     return(invisible(NULL))
   }
   msg_info("Automatically updating packages", padding = TRUE)
