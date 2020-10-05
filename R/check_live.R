@@ -106,7 +106,7 @@ check_live = function() {
 
   if (!fs::dir_exists("../live")) return(invisible(NULL))
   chapters = fs::dir_ls("../live", regexp = "../live/chapter")
-  msg_start("Checking live scripts formatting...check_lie()")
+  msg_start("Checking live scripts formatting...check_live()")
 
   correct = vapply(chapters, check_live_files, FUN.VALUE = logical(1))
   if (all(correct)) msg_success("Live script formatting looks good")
