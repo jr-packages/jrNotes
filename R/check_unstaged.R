@@ -5,7 +5,9 @@ check_unstaged = function() {
                    args = c("diff", "--name-only"),
                    stdout = TRUE)
   if (length(output) > 0L) {
-    msg_warning("You have some unstaged files. It's worth commiting, then rerunning make final")
+    msg_warning("You have some unstaged files")
+    msg_warning(output)
+    msg_warning("It's worth commiting, then rerunning make final")
   } else {
     msg_success("Everything committed!")
   }
