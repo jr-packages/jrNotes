@@ -1,3 +1,6 @@
+# jrNotes 0.8.7 _2020-10-01_
+  * Feature: Add addin to collapse minor NEWS versions
+
 # jrNotes 0.8.6 _2020-09-30_
   * Improvement: `check_url()` prints problem URLs along with their status
 
