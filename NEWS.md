@@ -1,3 +1,8 @@
+# jrNotes 0.8.8 _2020-10-05_
+  * Improvement: Add the imports from the r_pkg to WORDLIST
+  * Improvement: Output unstaged files
+  * Improvement: Record the error origin
+  
 # jrNotes 0.8.7 _2020-10-01_
   * Feature: Add addin to collapse minor NEWS versions
 

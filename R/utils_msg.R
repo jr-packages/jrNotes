@@ -21,7 +21,11 @@ msg_error = function(msg, padding = FALSE) {
     on.exit(close_pad())
   }
   cli::cli_alert_danger("{msg}")
-  set_error()
+  error_origin = NULL
+  if (length(sys.calls()) > 1L) {
+    error_origin = deparse(sys.calls()[[sys.nframe() - 1]])
+  }
+  set_error(origin = error_origin)
 }
 
 #' @importFrom glue glue_col
