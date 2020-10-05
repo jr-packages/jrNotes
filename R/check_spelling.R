@@ -22,7 +22,6 @@ get_pkg_imports = function(pkg) {
 
 get_r_imports = function() {
   pkgs = get_r_pkg_name()
-  pkgs = c("jrNotes", "jrIntroduction")
   imports = unlist(lapply(pkgs, get_pkg_imports))
   unique(imports)
 }
