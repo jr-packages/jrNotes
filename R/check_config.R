@@ -13,7 +13,7 @@ check_config = function() {
   ## Check length of title on front page
   front = config::get("front")
   ## Remove line breaks & right hand whitespace
-  front = stringr::str_split(front, "\\\\")[[1]][1]
+  front = stringr::str_split(front, "\\\\\\\\")[[1]][1]
   front = stringr::str_trim(front, side = "right")
   if (stringr::str_length(front) > 25L) {
     msg_error("Title is too long. Add a line break?", padding = TRUE)
