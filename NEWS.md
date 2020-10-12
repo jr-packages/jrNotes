@@ -1,3 +1,6 @@
+# jrNotes 0.9.2 _2020-10-12_
+  * Internal: Add extra LaTeX packages to `jrStyle` to support RStan course
+
 # jrNotes 0.9.1 _2020-10-12_
   * Internal: tidy up `jrStyle.sty`
 
