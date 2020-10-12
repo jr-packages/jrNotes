@@ -1,3 +1,6 @@
+# jrNotes 0.9.1 _2020-10-12_
+  * Internal: tidy up `jrStyle.sty`
+
 # jrNotes 0.9.0 _2020-10-06_
   * Bug: check title length incorrectly detected wrong line breaks
   * Internal: Remove {ggplot2} from Suggests
