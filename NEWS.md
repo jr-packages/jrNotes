@@ -1,36 +1,26 @@
-# jrNotes 0.8.9 _2020-12-05_
+# jrNotes 0.9.1 _2020-10-12_
   * Internal: tidy up `jrStyle.sty`
 
-# jrNotes 0.8.8 _2020-10-05_
-  * Improvement: Add the imports from the r_pkg to WORDLIST
-  * Improvement: Output unstaged files
-  * Improvement: Record the error origin
-  
-# jrNotes 0.8.7 _2020-10-01_
+# jrNotes 0.9.0 _2020-10-06_
+  * Bug: check title length incorrectly detected wrong line breaks
+  * Internal: Remove {ggplot2} from Suggests
+  * Internal: Move {rmarkdown} and {formatR} to Imports
+
+# jrNotes 0.8.* _2020-10-05_
   * Feature: Add addin to collapse minor NEWS versions
-
-# jrNotes 0.8.6 _2020-09-30_
+  * Feature: Point version number shouldn't go past 9
+  * Feature: Check title length
+  * Improvement: Add the imports from the r_pkg to WORDLIST
+  * Improvement: Output unstaged file names
+  * Improvement: Record the error origin
+  * Improvement: specify config_issue = TRUE in check_config.R
   * Improvement: `check_url()` prints problem URLs along with their status
-
-# jrNotes 0.8.5 _2020-09-28_
-  * Feature: Add R, Python & deb_packages to spelling exceptions
-
-# jrNotes 0.8.4 _2020-09-28_
-  * Bug: Fix `get_logo_path()` for python notes
-
-# jrNotes 0.8.3 _2020-09-28_
+  * Improvement: Add R, Python & deb_packages to spelling exceptions
   * Internal: Use `{cli}` instead of our own system
   * Internal: Set `depth` equal to 1 when cloning template
-
-# jrNotes 0.8.2 _2020-09-25_
-  * Feature: Point version number shouldn't go past 9
-
-# jrNotes 0.8.1 _2020-09-24_
-  * Feature: Check title length
-
-# jrNotes 0.8.0 _2020-09-24_
   * Bug: Don't lookup package version twice in get_logo_path()
-  * Improvement: specify config_issue = TRUE in check_config.R
+  * Bug: check_pkgs shouldn't raise an error on CI
+  * Bug: Fix `get_logo_path()` for python notes
 
 # jrNotes 0.7.* _2020-09-24_
   * Improvement: Stop using generic `packages` in config.yml

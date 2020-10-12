@@ -15,14 +15,13 @@ close_pad = function() {
 
 #' @importFrom glue glue_col
 #' @importFrom cli cli_alert_danger
-msg_error = function(msg, padding = FALSE) {
+msg_error = function(msg, padding = FALSE, error_origin = NULL) {
   if (padding > 0) {
     open_pad()
     on.exit(close_pad())
   }
   cli::cli_alert_danger("{msg}")
-  error_origin = NULL
-  if (length(sys.calls()) > 1L) {
+  if (!is.null(error_origin) && length(sys.calls()) > 1L) {
     error_origin = deparse(sys.calls()[[sys.nframe() - 1]])
   }
   set_error(origin = error_origin)

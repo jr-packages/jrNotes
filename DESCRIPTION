@@ -1,7 +1,7 @@
 Type: Package
 Package: jrNotes
 Title: Jumping Rivers: Helper Package for Notes
-Version: 0.8.9
+Version: 0.9.1
 Authors@R:
     person(given = "Jumping",
            family = "Rivers",
@@ -20,6 +20,7 @@ Imports:
     crayon,
     digest,
     dplyr,
+    formatR,
     fs,
     gert,
     glue,
@@ -33,6 +34,7 @@ Imports:
     qpdf,
     reticulate (>= 1.11.1),
     rlang,
+    rmarkdown (>= 2.3),
     rstudioapi,
     spelling,
     stringr,
@@ -43,9 +45,6 @@ Imports:
 Suggests:
     covr,
     drat,
-    formatR,
-    ggplot2,
-    rmarkdown (>= 2.3),
     testthat
 VignetteBuilder: 
     knitr
