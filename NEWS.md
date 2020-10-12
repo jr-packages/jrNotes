@@ -1,3 +1,6 @@
+# jrNotes 0.9.4 _2020-10-13_
+  * Improvement: Allow captioning and cross-referencing of code chunks
+
 # jrNotes 0.9.3 _2020-10-12_
   * Improvement: Improved styling of chapter section and subsections
 

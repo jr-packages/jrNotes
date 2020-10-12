@@ -93,6 +93,15 @@ set_knitr_options = function(tidy = FALSE,
     }
     hook_output(x, options)
   })
+
+  # https://stackoverflow.com/a/50717459/11021886
+  hook_old = knit_hooks$get("chunk")
+  knit_hooks$set(chunk = function(x, options) {
+    x = ifelse(!is.null(options$codecap), paste0(x, "\\captionof{chunk}{", options$codecap, "}"), x)
+    x = ifelse(!is.null(options$ref), paste0(x, "\\label{", options$ref, "}"), x)
+    hook_old(x, options)
+  })
+
   con = config::get()
   if (!is.null(con$knitr)) {
     do.call(knitr::opts_chunk$set, con$knitr)
