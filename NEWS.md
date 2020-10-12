@@ -1,3 +1,6 @@
+# jrNotes 0.8.9 _2020-12-05_
+  * Internal: tidy up `jrStyle.sty`
+
 # jrNotes 0.8.8 _2020-10-05_
   * Improvement: Add the imports from the r_pkg to WORDLIST
   * Improvement: Output unstaged files
