@@ -1,7 +1,13 @@
 %------------------------------------------------------------------------------
 % Packages
 \usepackage{alltt}
+% Bold math fonts
+\usepackage{bm}
 \usepackage{caption}
+% Must be loaded after hyperref. Use \cref for easier references
+% Options: Capitalise references but doesn't abbreviate to fig. tab. etc.
+% Link word Figure, Table etc. not just the corresponding number
+\usepackage[capitalise,noabbrev,nameinlink]{cleveref}
 \usepackage{colortbl}
 \usepackage{etoolbox}
 \usepackage{floatrow}
@@ -9,6 +15,8 @@
 \usepackage{framed}
 \usepackage{microtype}
 \usepackage[parfill]{parskip}
+% Formatting of subfigures
+\usepackage{subfig}
 \usepackage{tabu}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 %-----------------------------------------------------------------------------
