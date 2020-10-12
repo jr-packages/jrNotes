@@ -104,6 +104,8 @@
 \definecolor{messagecolor}{rgb}{0, 0, 0}
 \definecolor{warningcolor}{rgb}{1, 0, 1}
 \definecolor{errorcolor}{rgb}{1, 0, 0}
+
+\definecolor{CTsemi}{gray}{0.55}
 %------------------------------------------------------------------------------
 
 %------------------------------------------------------------------------------
@@ -203,4 +205,50 @@
   \thispagestyle{empty}%
   \clearpage%
 }
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Formatting of chapters, sections, subsections etc.
+
+\newlength\TitleOverhang
+\setlength\TitleOverhang{2.5mm}
+
+% Define titlehang to let sections etc protrude margin
+\newcommand\titlehang[1]{%
+  \llap{%
+    #1\hspace{\TitleOverhang}
+  }%
+}
+
+% Big 'ol chapter number
+\newfontfamily\chapterNumber[Scale=6]{Linux Libertine O}
+
+
+% Format chapter
+\titleformat{\chapter}%
+[display]% shape
+{\relax}% format applied to label+text
+{\mbox{}\marginpar{\vspace*{-3\baselineskip}%
+  \color{CTsemi}\chapterNumber\thechapter}}% label
+{0em}% horizontal separation between label and title body
+{\raggedright\slshape\huge}% before the title body
+[\normalsize\vspace*{.8\baselineskip}\titlerule]% after the title body
+
+% Format section
+\titleformat{\section}%
+[block]% shape
+{\Large}% format applied to label+text
+{\titlehang\thesection}% label with titlehang
+{0em}% horizontal separation between label and title body
+{\slshape}% code before the title body
+[]% after the title body
+
+% Format subsection
+\titleformat{\subsection}%
+[block]% shape
+{\large}% format applied to label+text
+{\titlehang\thesubsection}% label with titlehang
+{0em}% horizontal separation between label and title body
+{\slshape}% before the title body
+[]% after the title body
 %------------------------------------------------------------------------------
