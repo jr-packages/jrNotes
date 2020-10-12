@@ -1,11 +1,48 @@
+%------------------------------------------------------------------------------
+% Packages
+\usepackage{alltt}
+\usepackage{caption}
+\usepackage{colortbl}
+\usepackage{etoolbox}
+\usepackage{floatrow}
+\usepackage{fontspec}
+\usepackage{framed}
+\usepackage{microtype}
 \usepackage[parfill]{parskip}
+\usepackage{tabu}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+%-----------------------------------------------------------------------------
 
+%------------------------------------------------------------------------------
+% Allow images to be links when compiling with xelatex
+% https://tex.stackexchange.com/a/85103/181010
+\ifxetex
+  \usepackage{letltxmacro}
+  \setlength{\XeTeXLinkMargin}{1pt}
+  \LetLtxMacro\SavedIncludeGraphics\includegraphics
+  \def\includegraphics#1#{% #1 catches optional stuff (star/opt. arg.)
+    \IncludeGraphicsAux{#1}%
+  }%
+  \newcommand*{\IncludeGraphicsAux}[2]{%
+    \XeTeXLinkBox{%
+      \SavedIncludeGraphics#1{#2}%
+    }%
+  }%
+\fi
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
 % chapter format
 \makeatletter
 
+% Spacing around chapters, sections, subsections
 \titlespacing*{\chapter}{0pt}{40pt}{30pt}
 \titlespacing*{\section}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
 \titlespacing*{\subsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus.2ex}
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Paragraph indentation
 
 % Paragraph indentation and separation for normal text
 \renewcommand{\@tufte@reset@par}{%
@@ -25,7 +62,23 @@
 }
 \makeatother
 
+% Change size of \indent
 \renewcommand{\indent}{\hspace*{10pt}}
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Remove paragraph indentation after code chunks
+\makeatletter
+\newcommand*{\@doendeq}{%
+  \everypar{{\setbox\z@\lastbox}\everypar{}}%
+}
+
+\newenvironment{knitrout}{\setlength{\topsep}{0mm}}{\aftergroup\@doendeq%
+}
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Colours
 
 \definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
 \newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
@@ -38,8 +91,15 @@
 \newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
 \newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
 \let\hlipl\hlkwb
-\usepackage{microtype}
-\usepackage{framed}
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Define the kframe enviornment
 \makeatletter
 \newenvironment{kframe}{%
  \def\at@end@of@kframe{}%
@@ -57,39 +117,70 @@
  {\par\unskip\endMakeFramed%
  \at@end@of@kframe}
 \makeatother
+%------------------------------------------------------------------------------
 
-\definecolor{shadecolor}{rgb}{.97, .97, .97}
-\definecolor{messagecolor}{rgb}{0, 0, 0}
-\definecolor{warningcolor}{rgb}{1, 0, 1}
-\definecolor{errorcolor}{rgb}{1, 0, 0}
-
-%Remove indent after code chunk
-\makeatletter
-\newcommand*{\@doendeq}{%
-  \everypar{{\setbox\z@\lastbox}\everypar{}}%
-}
-
-\newenvironment{knitrout}{\setlength{\topsep}{0mm}}{\aftergroup\@doendeq%
-}
-\usepackage{alltt}
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-
-
-\usepackage{etoolbox}
-
+%------------------------------------------------------------------------------
 \makeatletter
 \patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
 \patchcmd{\ttlh@hang}{\noindent}{}{}{}
 \makeatother
 \setcounter{secnumdepth}{1}
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% All things font
 
 % Avoids font warning using xelatex (and make the headings a bit nicer)
-\usepackage{fontspec}
 \setmainfont[SmallCapsFeatures={LetterSpace=10}]{Linux Libertine O}
 \setmainfont[SmallCapsFeatures={LetterSpace=15}]{Linux Libertine O}
 
+% Fix spacing on \newthought{}
+% https://tex.stackexchange.com/questions/18947/letterspacing-minion-pro-and-tufte-latex-problem-with-running-header
+\setmainfont{Linux Libertine O}
+
+% Nicer spacing for allcaps and smallcaps
+\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+\renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Add small inline images
+\newcommand*{\inline}[1]{%
+  \raisebox{-.3\baselineskip}{%
+    \includegraphics[
+      height=\baselineskip,
+      width=\baselineskip,
+      keepaspectratio,
+    ]{#1}%
+    }%
+  }
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Fancy headers
+\pagestyle{fancy}
+
+% Remove hrule underneath header
+\renewcommand{\headrulewidth}{0pt}
+% See Figure 3 of fancyhdr documentation
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+
+% Clear current headers
+\fancyhf{}
+
+
+% Left even
+\fancyhead[LE]{\smallcapsspacing{%
+                \scshape{\thepage}\quad%
+                \href{https://jumpingrivers.com}{jumpingrivers.com}}}
+% Right odd
+\fancyhead[RO]{\smallcapsspacing{\scshape{\rightmark\quad\thepage}}}
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
 % Redefine Tufte \maketitle to not capitalise publisher
-  \renewcommand{\maketitlepage}[0]{%
+\renewcommand{\maketitlepage}[0]{%
   \cleardoublepage%
   {%
   \sffamily%
@@ -104,60 +195,4 @@
   \thispagestyle{empty}%
   \clearpage%
 }
-
-% Fix spacing on \newthought{}
-%https://tex.stackexchange.com/questions/18947/letterspacing-minion-pro-and-tufte-latex-problem-with-running-header
-\setmainfont{Linux Libertine O}% or Minion Pro or what have you
-
-% Set up the spacing using fontspec features
-\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
-\renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
-
-% Add small inline images
-\newcommand*{\inline}[1]{%
-  \raisebox{-.3\baselineskip}{%
-    \includegraphics[
-      height=\baselineskip,
-      width=\baselineskip,
-      keepaspectratio,
-    ]{#1}%
-    }%
-  }
-
-\usepackage{tabu}
-\usepackage{colortbl}
-
-
-% Fancy headers
-\pagestyle{fancy}
-
-% Remove hrule underneath header
-\renewcommand{\headrulewidth}{0pt}
-% See Figure 3 of fancyhdr documentation
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-\renewcommand{\sectionmark}[1]{\markright{#1}{}}
-
-\fancyhf{}
-\fancyhead[LE]{\smallcapsspacing{%
-                \scshape{\thepage}\quad%
-                \href{https://jumpingrivers.com}{jumpingrivers.com}}}
-\fancyhead[RO]{\smallcapsspacing{\scshape{\rightmark\quad\thepage}}}
-
-
-% https://tex.stackexchange.com/a/85103/181010 
-% redefine \includgraphics to add \XeTeXLinkBox, allowing images to be links
-\ifxetex
-  \usepackage{letltxmacro}
-  \setlength{\XeTeXLinkMargin}{1pt}
-  \LetLtxMacro\SavedIncludeGraphics\includegraphics
-  \def\includegraphics#1#{% #1 catches optional stuff (star/opt. arg.)
-    \IncludeGraphicsAux{#1}%
-  }%
-  \newcommand*{\IncludeGraphicsAux}[2]{%
-    \XeTeXLinkBox{%
-      \SavedIncludeGraphics#1{#2}%
-    }%
-  }%
-\fi
-
-\usepackage{float}
+%------------------------------------------------------------------------------
