@@ -97,10 +97,14 @@ set_knitr_options = function(tidy = FALSE,
   # https://stackoverflow.com/a/50717459/11021886
   hook_old = knit_hooks$get("chunk")
   knit_hooks$set(chunk = function(x, options) {
-    x = ifelse(!is.null(options$code.cap),
-               paste0(x, "\\captionof{chunk}{", options$code.cap, "}"), x)
-    x = ifelse(!is.null(options$label) & !is.null(options$code.cap),
-               paste0(x, "\\label{chk:", options$label, "}"), x)
+    # Label and caption
+    if (!is.null(options$label) & !is.null(options$code.cap)) {
+      x = paste0("\\marginpar{\\captionof{chunk}{", options$code.cap, "}",
+                 "\\label{chk:", options$label, "}}", x)
+    # Caption, no label
+    } else if (!is.null(options$code.cap)) {
+      x = paste0("\\marginpar{\\captionof{chunk}{", options$code.cap, "}}", x)
+    }
     hook_old(x, options)
   })
 
