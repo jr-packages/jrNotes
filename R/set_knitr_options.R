@@ -93,6 +93,22 @@ set_knitr_options = function(tidy = FALSE,
     }
     hook_output(x, options)
   })
+
+  hook_old = knit_hooks$get("chunk")
+  knit_hooks$set(chunk = function(x, options) {
+    if (!is.null(options$code.cap)) {
+      # Open marginpar and add caption
+      tex = paste0("\\marginpar{\\captionof{chunk}{", options$code.cap, "}")
+      if (!is.null(options$label)) {
+        # Add label inside marginpar
+        tex = paste0(tex, "\\label{chk:", options$label, "}")
+      }
+      # Prepend tex and close marginpar
+      x = paste0(tex, "}", x)
+    }
+    hook_old(x, options)
+  })
+
   con = config::get()
   if (!is.null(con$knitr)) {
     do.call(knitr::opts_chunk$set, con$knitr)
