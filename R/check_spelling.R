@@ -28,7 +28,7 @@ get_r_imports = function() {
 
 get_words = function() {
   ## Get Global spelling file
-  words = c(get_r_imports(), get_python_pkg_name(), get_deb_pkgs())
+  words = c(get_r_imports(), get_r_pkg_name(), get_python_pkg_name(), get_deb_pkgs())
   fname = system.file("WORDLIST", package = "jrNotes")
   words = c(words, readLines(fname, warn = FALSE))
 
