@@ -223,7 +223,6 @@
 % Big 'ol chapter number
 \newfontfamily\chapterNumber[Scale=6]{Linux Libertine O}
 
-
 % Format chapter
 \titleformat{\chapter}%
 [display]% shape
@@ -251,4 +250,12 @@
 {0em}% horizontal separation between label and title body
 {\slshape}% before the title body
 []% after the title body
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Make a new chunk float to attach label and caption to
+\DeclareNewFloatType{chunk}{placement=H, fileext=chk, within=chapter, name=Chunk}
+\crefname{chunk}{Chunk}{chunks}
+\Crefname{chunk}{Chunk}{Chunks}
+\captionsetup[chunk]{font=small}
 %------------------------------------------------------------------------------
