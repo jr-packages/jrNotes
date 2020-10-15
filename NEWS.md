@@ -1,3 +1,6 @@
+# jrNotes 0.9.5 _2020-10-13_
+  * Bug: `config$r_packages` should be added to spelling exemptions
+
 # jrNotes 0.9.4 _2020-10-13_
   * Improvement: Allow captioning and cross-referencing of code chunks
 
