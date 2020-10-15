@@ -10,10 +10,11 @@
 \usepackage[capitalise,noabbrev,nameinlink]{cleveref}
 \usepackage{colortbl}
 \usepackage{etoolbox}
-\usepackage{floatrow}
+\usepackage{float}
 \usepackage{fontspec}
 \usepackage{framed}
 \usepackage{microtype}
+\usepackage{newfloat}
 \usepackage[parfill]{parskip}
 % Formatting of subfigures
 \usepackage{subfig}
@@ -254,8 +255,11 @@
 
 %------------------------------------------------------------------------------
 % Make a new chunk float to attach label and caption to
-\DeclareNewFloatType{chunk}{placement=H, fileext=chk, within=chapter, name=Chunk}
-\crefname{chunk}{Chunk}{chunks}
+\DeclareFloatingEnvironment[fileext=chk,
+                            name=Chunk,
+                            placement=H,
+                            within=chapter]{chunk}
+\crefname{chunk}{Chunk}{Chunks}
 \Crefname{chunk}{Chunk}{Chunks}
 \captionsetup[chunk]{font=small}
 %------------------------------------------------------------------------------
