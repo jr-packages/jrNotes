@@ -1,3 +1,7 @@
+# jrNotes 0.9.6 _2020-10-15_
+  * Bug: `floatrow` and `tufte-book` both define figure\*. Swap `floatrow` for
+    `newfloat`.
+
 # jrNotes 0.9.5 _2020-10-13_
   * Bug: `config$r_packages` should be added to spelling exemptions
 
