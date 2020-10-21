@@ -1,3 +1,6 @@
+# jrNotes 0.9.7 _2020-10-21_
+  * Improvement: display version of jrNotes when building
+
 # jrNotes 0.9.6 _2020-10-15_
   * Bug: `floatrow` and `tufte-book` both define figure\*. Swap `floatrow` for
     `newfloat`.
