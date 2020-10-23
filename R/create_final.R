@@ -5,6 +5,7 @@ create_final_dir = function(note_name, pracs) {
   # Will auto-close at the end of this function
   cli::start_app(theme = get_cli_theme())
 
+  cli::cli_rule("jrNotes v{packageVersion('jrNotes')}")
   cli::cli_h2("Checking Core files")
   check_master()
   check_template()
