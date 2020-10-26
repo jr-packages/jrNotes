@@ -1,3 +1,6 @@
+# jrNotes 0.9.8 _2020-10-26_
+  * Improvement: Number subsections in pdf builds.
+
 # jrNotes 0.9.7 _2020-10-21_
   * Improvement: display version of jrNotes when building
 
