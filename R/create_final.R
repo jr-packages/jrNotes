@@ -133,6 +133,9 @@ create_final = function() {
 #' @export
 create_final_python = function() {
 
+  ## Make sure we're in our virtualenv
+  provision_venv()
+
   pkg = get_python_pkg_name()
   ## locate vignettes in package
   dirs = list.dirs(full.names = TRUE)

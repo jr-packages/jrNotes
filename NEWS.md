@@ -1,30 +1,19 @@
-# jrNotes 0.9.8 _2020-10-27_
-  * Improvement: Use newer RStudio logo on advert page.
+# jrNotes 0.10.0 _2020-11-03_
+  * Internal: Use {reticulate} to provisional virtualenv for python
+    dependencies.
 
-# jrNotes 0.9.7 _2020-10-21_
-  * Improvement: display version of jrNotes when building
-
-# jrNotes 0.9.6 _2020-10-15_
-  * Bug: `floatrow` and `tufte-book` both define figure\*. Swap `floatrow` for
-    `newfloat`.
-
-# jrNotes 0.9.5 _2020-10-13_
-  * Bug: `config$r_packages` should be added to spelling exemptions
-
-# jrNotes 0.9.4 _2020-10-13_
+# jrNotes 0.9.* _2020-10-29_
+  * Improvement: Only use a single core to build notes on non-linux machines
+  * Improvement: Use the newer RStudio logo on advert page
+  * Improvement: Display version of jrNotes when building
   * Improvement: Allow captioning and cross-referencing of code chunks
-
-# jrNotes 0.9.3 _2020-10-12_
   * Improvement: Improved styling of chapter section and subsections
-
-# jrNotes 0.9.2 _2020-10-12_
+  * Bug: Swap LaTeX `floatrow` for `newfloat` to avoid figure\* clash with
+    tufte-book
+  * Bug: `config$r_packages` should be added to spelling exemptions
+  * Bug: Check title length incorrectly detected wrong line breaks
   * Internal: Add extra LaTeX packages to `jrStyle` to support RStan course
-
-# jrNotes 0.9.1 _2020-10-12_
-  * Internal: tidy up `jrStyle.sty`
-
-# jrNotes 0.9.0 _2020-10-06_
-  * Bug: check title length incorrectly detected wrong line breaks
+  * Internal: Tidy up `jrStyle.sty`
   * Internal: Remove {ggplot2} from Suggests
   * Internal: Move {rmarkdown} and {formatR} to Imports
 
