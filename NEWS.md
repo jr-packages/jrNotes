@@ -1,3 +1,6 @@
+# jrNotes 0.9.9 _2020-10-29_
+  * Improvement: Only use a single core on non-linux machines
+
 # jrNotes 0.9.8 _2020-10-27_
   * Improvement: Use newer RStudio logo on advert page.
 

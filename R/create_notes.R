@@ -61,7 +61,12 @@ create_notes = function(fnames = NULL) {
   cores = config::get("cores")
   # Parallel doesn't seem to work well with knit_child
   # If something is wrong, errors, don't really work
-  if (is.null(cores) || cores == 1L) {
+  # mclapply works on Linux. Mac seems to be dodgy
+  if (Sys.info()["sysname"] != "Linux") {
+    cli::cli_alert_info("Non-linux OS - using a single core")
+    cores = 1
+  }
+  if (is.null(cores) || cores == 1) {
     out = lapply(fnames, knit_rmd, hashes = hashes)
   } else {
     out = parallel::mclapply(fnames, knit_rmd,
