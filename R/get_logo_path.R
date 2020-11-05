@@ -103,10 +103,9 @@ create_version = function() {
   if (length(version_dots) != 3) {
     stop("Version should take the form of X.Y.Z", call. = FALSE)
   }
-  version_str = glue::glue("\\begin{table*}[!b]
+  version_str = glue::glue("\\fancyfoot{
      Version <version> \\qquad (\\textbf{<pkg_name>} v<pkg_ver>) \\hfill
-     \\textcopyright Jumping Rivers Ltd <year>
-     \\end{table*}",
+     \\textcopyright Jumping Rivers Ltd <year>}",
                            .open = "<", .close = ">")
   version_str
 }
