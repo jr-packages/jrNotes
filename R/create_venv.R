@@ -11,7 +11,7 @@ provision_venv = function() {
 
   ## If no python packages listed don't do anything
   if (length(pkgs) == 0L) return(invisible(NULL))
-  
+
   venv_path = file.path(get_root_dir(), "notes", "venv")
   ## If a virtualenv hasn't already been made, make it
   if (!dir.exists(venv_path)) {
