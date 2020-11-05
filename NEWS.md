@@ -1,3 +1,6 @@
+# jrNotes 0.10.1 _2020-11-03_
+  * Improvement: Improve spacing on advert page
+
 # jrNotes 0.10.0 _2020-11-03_
   * Internal: Use {reticulate} to provisional virtualenv for python
     dependencies.
