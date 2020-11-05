@@ -33,13 +33,13 @@ create_venv = function(pkgs) {
   ## By default reticulate creates virtualenvs in ~/.virtualenv
   ## To change where the virtualenv is created we have to use
   ## the WORKON_HOME environment variable
+  workon_home = Sys.getenv("WORKON_HOME")
+  on.exit(Sys.setenv(WORKON_HOME = workon_home))
   Sys.setenv(WORKON_HOME = file.path(get_root_dir(), "notes"))
 
   ## Create the virtualenv
   reticulate::virtualenv_create(envname = "venv",
                                 python = system2("which", "python3", stdout = TRUE),
                                 packages = pkgs)
-
-  ## Clear environment variable now we're done with it
-  Sys.unsetenv("WORKON_HOME")
+  return(invisible(NULL))
 }
