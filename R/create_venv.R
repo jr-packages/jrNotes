@@ -10,19 +10,16 @@ provision_venv = function() {
   pkgs = get_python_pkg_name()
 
   ## If no python packages listed don't do anything
-  if (length(pkgs) == 0L) {
-    return(invisible(NULL))
-  } else {
-    venv_path = file.path(get_root_dir(), "notes", "venv")
-
-    ## If a virtualenv hasn't already been made, make it
-    if (!dir.exists(venv_path)) {
-      create_venv(pkgs)
-    }
-
-    ## Activate the virtualenv
-    reticulate::use_virtualenv(venv_path)
+  if (length(pkgs) == 0L) return(invisible(NULL))
+  
+  venv_path = file.path(get_root_dir(), "notes", "venv")
+  ## If a virtualenv hasn't already been made, make it
+  if (!dir.exists(venv_path)) {
+    create_venv(pkgs)
   }
+
+  ## Activate the virtualenv
+  reticulate::use_virtualenv(venv_path)
 }
 
 #' @importFrom reticulate virtualenv_create
