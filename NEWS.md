@@ -1,3 +1,7 @@
+# jrNotes 0.10.2 _2020-11-06_
+  * Bug: Code now wraps without excluding spaces
+  * Dependency: Add stringi
+
 # jrNotes 0.10.1 _2020-11-03_
   * Improvement: Improve spacing on advert page
 
