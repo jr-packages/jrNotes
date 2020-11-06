@@ -37,6 +37,7 @@ Imports:
     rmarkdown (>= 2.3),
     rstudioapi,
     spelling,
+    stringi,
     stringr,
     tibble,
     tidyr,
