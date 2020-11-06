@@ -81,7 +81,9 @@ set_knitr_options = function(tidy = FALSE,
     if (!is.null(n <- options$linewidth)) {
       x = split_lines(x)
       # any lines wider than n should be wrapped
-      if (any(nchar(x) > n)) x = strwrap(x, width = n)
+      if (any(nchar(x) > n)) x = stringi::stri_wrap(x,
+                                                    width = n,
+                                                    normalise = FALSE)
       # which lines need a comment adding?
       need_comment = grep(pattern = comment, x, invert = TRUE)
       # don't add comment to ```
