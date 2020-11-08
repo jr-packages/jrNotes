@@ -1,5 +1,6 @@
 # jrNotes 0.10.3 _2020-11-06_
   * Improvement: Warn user about code lines in chunks which are too long
+  * Improvement: Return file sizes of notes & practicals
 
 # jrNotes 0.10.2 _2020-11-06_
   * Bug: Code now wraps without excluding spaces
