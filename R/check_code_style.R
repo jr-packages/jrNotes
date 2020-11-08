@@ -15,13 +15,13 @@ check_line_lengths = function(fname) {
   echos = tibble::tibble(rcode = rcode,
                          line = seq_along(rcode),
                          echo = NA, eval = NA) %>%
-    mutate(echo = ifelse(chunks, TRUE, echo), ## Set to default knitr values
-           eval = ifelse(chunks, TRUE, eval),
-           echo = ifelse(echo_false, FALSE, echo),   ## Detect differences
-           eval = ifelse(eval_false, FALSE, eval)) %>%
+    mutate(echo = ifelse(chunks, TRUE, .data$echo), ## Set to default knitr values
+           eval = ifelse(chunks, TRUE, .data$eval),
+           echo = ifelse(echo_false, FALSE, .data$echo),   ## Detect differences
+           eval = ifelse(eval_false, FALSE, .data$eval)) %>%
     tidyr::fill(.data$echo, .direction = "down") %>%
     tidyr::fill(.data$eval, .direction = "down") %>%
-    mutate(echo = ifelse(chunks, FALSE, echo)) ## Reset chunk titles to FALSE
+    mutate(echo = ifelse(chunks, FALSE, .data$echo)) ## Reset chunk titles to FALSE
 
   ## Linewidth of current document
   ## linewidth = knitr::opts_chunk$get()$linewidth # nolint
@@ -29,11 +29,11 @@ check_line_lengths = function(fname) {
   linewidth = 59
   df = echos %>%
     dplyr::mutate(rcode = stringr::str_sub(rcode, 1 + 3 * !echos$eval),
-                  linewidth = stringr::str_length(rcode),
-                  too_long = stringr::str_length(rcode) > 59,
+                  linewidth = stringr::str_length(.data$rcode),
+                  too_long = stringr::str_length(.data$rcode) > 59,
                   fname = fname) %>%
-    dplyr::filter(echo & too_long) %>%
-    dplyr::select(line, rcode)
+    dplyr::filter(.data$echo & .data$too_long) %>%
+    dplyr::select(.data$line, .data$rcode)
 
   if (nrow(df) == 0) return(invisible(TRUE))
   msg = glue::glue("Some code lines are longer than {linewidth} characters!")

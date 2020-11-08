@@ -11,6 +11,6 @@ lint_notes(fnames = NULL)
 }
 \description{
 Run lintr on a vector of files. If \code{fnames} is \code{NULL}
-then use the regular expression \code{^c.*Rmd$}. If
+then use the regular expression \code{^c.*\\.Rmd$}. If
 \code{config::get("lintr")} is \code{FALSE}, no lint used.
 }
