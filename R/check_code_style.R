@@ -2,6 +2,7 @@
 check_line_lengths = function(fname) {
   ## Extract code from code chunks
   contents = readLines(fname)
+  ## purl doesn't knitr headers with python
   rcode = stringr::str_split(
     knitr::purl(text = contents, documentation = 1, quiet = TRUE),
     "\n")[[1]]

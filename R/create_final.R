@@ -9,7 +9,6 @@ create_final_dir = function(note_name, pracs) {
   cli::cli_h2("Checking Core files")
   check_master()
   check_template()
-  check_pkgs()
 
   cli::cli_h2("Checking Notes")
   check_spelling()
