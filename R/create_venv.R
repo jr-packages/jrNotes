@@ -20,6 +20,7 @@ provision_venv = function() {
 
   ## Activate the virtualenv
   reticulate::use_virtualenv(venv_path)
+  Sys.setenv("RETICULATE_PYTHON" = file.path(venv_path, "/bin/python"))
 }
 
 #' @importFrom reticulate virtualenv_create
