@@ -9,7 +9,6 @@ create_final_dir = function(note_name, pracs) {
   cli::cli_h2("Checking Core files")
   check_master()
   check_template()
-  check_pkgs()
 
   cli::cli_h2("Checking Notes")
   check_spelling()
@@ -44,17 +43,20 @@ create_final_dir = function(note_name, pracs) {
   # add notes
   notes_loc = glue("final/notes_{note_name}_{Sys.Date()}.pdf")
   fs::file_copy("main.pdf", notes_loc, overwrite = TRUE)
-  msg_success(glue("Created {notes_loc}"), padding = TRUE)
+  file_size = fs::file_size(notes_loc)
+  msg_success(glue("Created {notes_loc} - ({file_size})"), padding = TRUE)
 
-  if (fs::file_size(notes_loc) < 50) {
+  if (file_size < 50) {
     msg_warning("The notes look suspiciously small!", padding = TRUE)
   }
 
   # combine practicals into single file
   prac_loc = glue("final/practicals_{note_name}_{Sys.Date()}.pdf")
   qpdf::pdf_combine(pracs, prac_loc)
-  msg_success(glue("Created {prac_loc}"), padding = TRUE)
-  if (fs::file_size(prac_loc) < 50) {
+  file_size = fs::file_size(prac_loc)
+  msg_success(glue("Created {prac_loc} - ({file_size})"), padding = TRUE)
+
+ if (fs::file_size(prac_loc) < 50) {
     msg_warning("The practicals look suspiciously small!", padding = TRUE)
   }
   msg_success("PDF outputs created in final/")

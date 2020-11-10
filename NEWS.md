@@ -1,3 +1,9 @@
+# jrNotes 0.10.3 _2020-11-09_
+  * Improvement: Warn user about code lines in chunks which are too long
+  * Improvement: Return file sizes of notes & practicals
+  * Improvement: Set `cores: 0`, to use the max_cores -1 when building
+  * Improvement: `render()` for making notes. Make `check_pkgs()` to the start of `render()`
+
 # jrNotes 0.10.2 _2020-11-06_
   * Bug: Code now wraps without excluding spaces
   * Dependency: Add stringi

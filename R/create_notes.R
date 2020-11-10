@@ -1,3 +1,17 @@
+#' Render notes
+#'
+#' A simple wrapper around renv, rmarkdown::render and latexmk
+#'
+#' Necessary as venv sets temporary ENV variables.
+#' @export
+render = function() {
+  check_pkgs()
+  provision_venv()
+  rmarkdown::render("main.Rmd")
+  latexmk("main.tex")
+}
+
+
 # Only knit the document if the hash has changed
 #' @importFrom stringr str_replace
 #' @importFrom knitr opts_knit
@@ -66,6 +80,11 @@ create_notes = function(fnames = NULL) {
     cli::cli_alert_info("Non-linux OS - using a single core")
     cores = 1
   }
+
+  if (cores == 0) {
+    cores = max(1, parallel::detectCores() - 1)
+  }
+
   if (is.null(cores) || cores == 1) {
     out = lapply(fnames, knit_rmd, hashes = hashes)
   } else {

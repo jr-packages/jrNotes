@@ -20,11 +20,11 @@ pkgs_output = function(pkgs, i) {
 #' @importFrom tibble as_tibble
 #' @importFrom utils install.packages
 check_pkgs = function() {
+  msg_start("Checking package versions...check_pkgs()")
   if (httr::GET("www.google.com")$status != 200) {
     msg_info("No internet connection - skipping PKG check")
     return(invisible(NULL))
   }
-  msg_start("Checking package versions...check_pkgs()")
   r = getOption("repos")
   jr_pkgs = "https://jr-packages.github.io/drat/"
   if (!(jr_pkgs %in% r)) {
@@ -38,11 +38,11 @@ check_pkgs = function() {
     pkgs = "reticulate"
   }
 
-  pkgs_to_update = c(pkgs, "jrNotes", "jrPresentation",
+  pkgs_to_update = sort(c(pkgs, "jrNotes", "jrPresentation",
                      "knitr", "rmarkdown", "lintr", "tufte",
-                     "ggplot2", "dplyr")
+                     "ggplot2", "dplyr"))
 
-  av_p =  available.packages()[, c("Package", "Version")]
+  av_p = available.packages()[, c("Package", "Version")]
   av_p = tibble::as_tibble(av_p)
   av_p = av_p[av_p$Package %in% pkgs_to_update, ]
 
@@ -63,7 +63,9 @@ check_pkgs = function() {
   }
   msg_info("Automatically updating packages", padding = TRUE)
   install.packages(pkgs$Package[to_update])
-  clean()
-  msg_error("Packages have been updated. Please run make final again")
-  stop()
+  msg_info("Packages have been updated")
+
+  # Remove cached latex file
+  if (file.exists("jrnotes_cache")) fs::dir_delete("jrnotes_cache/")
+  return(invisible(NULL))
 }
