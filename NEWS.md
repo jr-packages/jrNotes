@@ -1,3 +1,6 @@
+# jrNotes 0.10.4 _2020-11-10_
+  * Bug: Remove extra whitespaces in clean_title
+
 # jrNotes 0.10.3 _2020-11-09_
   * Improvement: Warn user about code lines in chunks which are too long
   * Improvement: Return file sizes of notes & practicals
@@ -6,7 +9,7 @@
 
 # jrNotes 0.10.2 _2020-11-06_
   * Bug: Code now wraps without excluding spaces
-  * Dependency: Add stringi
+  * Dependency: Add {stringi}
 
 # jrNotes 0.10.1 _2020-11-03_
   * Improvement: Improve spacing on advert page
