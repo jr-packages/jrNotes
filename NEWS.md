@@ -1,3 +1,6 @@
+# jrNotes 0.10.5 _2020-11-14_
+  * Spelling: Ignore LaTeX commands when spell checking
+
 # jrNotes 0.10.4 _2020-11-10_
   * Bug: Remove extra whitespaces in clean_title
 
