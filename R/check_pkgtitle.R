@@ -1,7 +1,6 @@
 #' @title Check PKG and Notes title
 #' @description Package title should start with "Jumping Rivers: ".
 #' Notes and Package titles should then be the same (excluding "Jumping Rivers: ").
-#' @importFrom utils packageDescription
 #' @importFrom stringr str_remove_all str_squish str_starts str_remove
 #' @export
 check_pkgtitle = function() {
@@ -10,7 +9,7 @@ check_pkgtitle = function() {
   language = get_repo_language()
   if (language == "r") {
     r_pkg = get_r_pkg_name()
-    pkg_title = packageDescription(r_pkg)$Title
+    pkg_title = utils::packageDescription(r_pkg)$Title
   } else if (language == "python") {
     python_pkg = get_python_pkg_name()
     pkg_title = system2("pip", args = c("show", python_pkg,
@@ -21,7 +20,7 @@ check_pkgtitle = function() {
     return(NULL)
   }
 
-  con = config::get()
+  con = get_config()
   # Remove line breaks
   notes_title = stringr::str_remove_all(con$front, pattern = "\\\\")
   notes_title = stringr::str_squish(notes_title)

@@ -12,9 +12,8 @@ tokenise = function() {
 }
 
 globalVariables("text")
-#' @importFrom utils read.delim
 read_tokens = function() {
-  tokens = read.delim("extractor.csv", sep = "|",
+  tokens = utils::read.delim("extractor.csv", sep = "|",
                       header = FALSE,
                       col.names = c("X1", "X2", "X3"),
                       stringsAsFactors = FALSE)

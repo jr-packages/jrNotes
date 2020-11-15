@@ -1,3 +1,11 @@
+is_connected = function() {
+  if (isTRUE(httr::http_error("https://www.google.com"))) {
+    msg_warning("No internet connection")
+    return(FALSE)
+  }
+  return(TRUE)
+}
+
 cross = cli::symbol$cross
 star = cli::symbol$star
 

@@ -1,4 +1,3 @@
-#' @importFrom praise praise
 #' @importFrom qpdf pdf_combine
 create_final_dir = function(note_name, pracs) {
   # This will start our cli theme.
@@ -61,15 +60,16 @@ create_final_dir = function(note_name, pracs) {
   }
   msg_success("PDF outputs created in final/")
 
-  message(green("\n\n", star, star, praise::praise(), star, star))
+  if (requireNamespace("praise")) {
+    message(cli::col_green("\n\n", star, star, praise::praise(), star, star))
+  }
   return(invisible(NULL))
 }
-
 
 #' @export
 #' @rdname create_final
 get_deb_pkgs = function() {
-  con = config::get()
+  con = get_config()
   pkgs = unlist(con$deb_packages)
   return(pkgs)
 }
@@ -77,7 +77,7 @@ get_deb_pkgs = function() {
 #' @export
 #' @rdname create_final
 get_python_pkg_name = function() {
-  con = config::get()
+  con = get_config()
   pkgs = unlist(con$python_packages)
   return(pkgs)
 }
@@ -85,14 +85,14 @@ get_python_pkg_name = function() {
 #' @export
 #' @rdname create_final
 get_r_pkg_name = function() {
-  con = config::get()
+  con = get_config()
   pkgs = unlist(con$r_packages)
   return(pkgs)
 }
 
 # Replace spaces with -
 get_concat_course_name = function() {
-  con = config::get()
+  con = get_config()
   title = con$running
   title = gsub(" ", "-", title)
   return(title)
@@ -119,7 +119,8 @@ check_pkg_vignettes = function(pkg, pkg_loc) {
 #' @export
 create_final = function() {
   note_name = get_concat_course_name()
-  if (isFALSE(config::get()$vignettes)) {
+  config = get_config()
+  if (isFALSE(config$vignettes)) {
     pracs = NULL
   } else {
     pkg = get_r_pkg_name()

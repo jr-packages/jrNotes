@@ -16,7 +16,7 @@ set_nice_par = function(mar = c(3, 3, 2, 1),
          las = 1,
          mfrow = c(1, 1),
          ...) {
-  par(mar = mar,
+  graphics::par(mar = mar,
       mgp = mgp, tck = tck,
       cex.axis = cex.axis, las = las,
       mfrow = mfrow, ...)

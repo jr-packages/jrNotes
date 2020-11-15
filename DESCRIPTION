@@ -16,8 +16,6 @@ Depends:
 Imports: 
     bookdown,
     cli,
-    config,
-    crayon,
     digest,
     dplyr,
     formatR,
@@ -28,24 +26,25 @@ Imports:
     knitr (>= 1.29),
     lintr (>= 2.0.1),
     magrittr,
-    namer (>= 0.1.4),
-    praise,
     purrr,
     qpdf,
     reticulate (>= 1.11.1),
     rlang,
     rmarkdown (>= 2.3),
-    rstudioapi,
     spelling,
     stringi,
     stringr,
     tibble,
     tidyr,
     tufte (>= 0.5),
+    yaml,
     zip
 Suggests:
     covr,
     drat,
+    namer (>= 0.1.4),
+    praise,
+    rstudioapi,
     testthat
 VignetteBuilder: 
     knitr

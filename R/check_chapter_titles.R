@@ -3,7 +3,6 @@
 #\\chapter{\\texorpdfstring{Graphics with \\textbf{ggplot2}}{Graphics with ggplot2}}\\label{graphics-with-ggplot2}}
 #\\chapter{Introduction}\\label{introduction}}
 # nolint end
-#' @importFrom stringr str_match str_trim
 #' @importFrom dplyr mutate if_else pull select
 check_chapter_titles = function() {
   if (!required_texlive(2017)) return(invisible(NULL))
@@ -13,12 +12,13 @@ check_chapter_titles = function() {
   tokens = read_tokens()
   chapters = tokens %>%
     dplyr::filter(X1 == "chapter") %>%
-    dplyr::mutate(texorpdf = str_detect(X3, "\\\\texorpdf")) %>% #nolint
+    dplyr::mutate(texorpdf = stringr::str_detect(X3, "\\\\texorpdf")) %>% #nolint
     dplyr::mutate(text = X3) %>%
-    dplyr::mutate(text = if_else(texorpdf,
-                                 str_match(X3, "^\\\\texorpdfstring \\{(.*)\\}\\{.*\\}$")[, 2],
-                                 text)) %>%
-    dplyr::mutate(text = str_trim(text)) %>%
+    dplyr::mutate(text =
+                    if_else(texorpdf,
+                            stringr::str_match(X3, "^\\\\texorpdfstring \\{(.*)\\}\\{.*\\}$")[, 2],
+                            text)) %>%
+    dplyr::mutate(text = stringr::str_trim(text)) %>%
     dplyr::select(text) %>%
     dplyr::pull()
 

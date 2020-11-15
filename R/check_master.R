@@ -1,8 +1,6 @@
 check_master = function() {
-  if (httr::GET("www.google.com")$status != 200) {
-    msg_info("No internet connection - skipping URL check")
-    return(invisible(NULL))
-  }
+  if (!is_connected()) return(invisible(NULL))
+
   ## Needed for runner
   system2("git", args = c("fetch", "origin"))
   msg_start("Comparing to master")

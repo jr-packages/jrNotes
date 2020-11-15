@@ -3,7 +3,6 @@
 #'
 #' @description Create and use a virtualenv with python packages listed in config.yml
 #' installed
-#' @importFrom reticulate use_virtualenv
 #' @export
 provision_venv = function() {
   ## Get python packages listed in config.yml

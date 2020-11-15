@@ -112,7 +112,7 @@ set_knitr_options = function(tidy = FALSE,
     hook_old(x, options)
   })
 
-  con = config::get()
+  con = get_config()
   if (!is.null(con$knitr)) {
     do.call(knitr::opts_chunk$set, con$knitr)
   }

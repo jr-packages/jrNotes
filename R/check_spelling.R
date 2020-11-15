@@ -12,7 +12,7 @@ check_wordlist = function() {
 }
 
 get_pkg_imports = function(pkg) {
-  imports = packageDescription(pkg)[["Imports"]]
+  imports = utils::packageDescription(pkg)[["Imports"]]
 
   imports = stringr::str_split(imports, ",")[[1]]
   imports = stringr::str_squish(imports)

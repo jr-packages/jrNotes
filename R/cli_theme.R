@@ -11,13 +11,13 @@ get_cli_theme = function() {
                 paste0(symbol$line, symbol$line, " ", x, " ", symbol$line, symbol$line)),
     h3 = list(`margin-top` = 1,
               fmt = function(x) {
-                crayon::cyan(paste0(symbol$line, symbol$line, " ", x, " "))
+                cli::col_cyan(paste0(symbol$line, symbol$line, " ", x, " "))
               }),
     .alert = list(before = paste0(symbol$arrow_right, " ")),
-    `.alert-success` = list(before = paste0(crayon::green(symbol$tick), " "), color = "green"),
-    `.alert-danger` = list(before = paste0(crayon::red(symbol$cross), " "), color = "red"),
-    `.alert-warning` = list(before = paste0(crayon::yellow(symbol$warning), " ")),
-    `.alert-info` = list(before = paste0(crayon::cyan(symbol$info), " "))
+    `.alert-success` = list(before = paste0(cli::col_green(symbol$tick), " "), color = "green"),
+    `.alert-danger` = list(before = paste0(cli::col_red(symbol$cross), " "), color = "red"),
+    `.alert-warning` = list(before = paste0(cli::col_yellow(symbol$warning), " ")),
+    `.alert-info` = list(before = paste0(cli::col_cyan(symbol$info), " "))
   )
   theme
 }

@@ -1,6 +1,5 @@
 globalVariables(c("X1", "X2", "X3"))
 
-#' @importFrom httr HEAD http_status
 url_info = function(url) {
   ping = try(httr::HEAD(url), silent = TRUE)
   if (class(ping) == "try-error") {
@@ -13,19 +12,13 @@ url_info = function(url) {
   list(exists = url_exists, url = url, status = status)
 }
 
-#' @importFrom httr http_error
-#' @importFrom crayon yellow red green blue
 check_urls = function() {
   if (!required_texlive(2017)) return(invisible(NULL))
+  if (!is_connected()) return(invisible(NULL))
 
-  # Hack to detect internet connection on laptops
-  if (isTRUE(httr::http_error("https://www.google.com"))) {
-    msg_info("No internet connection - skipping URL check")
-    return(invisible(NULL))
-  }
   msg_start("Checking URLS...check_urls()")
   tokens = read_tokens()
-  urls = dplyr::filter(tokens, X1 == "url")$X3 #nolint
+  urls = dplyr::filter(tokens, .data$X1 == "url")$X3 #nolint
 
   msg_info("Checking explict urls...", padding = TRUE)
   urls_good = TRUE

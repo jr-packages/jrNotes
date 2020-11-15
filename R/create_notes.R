@@ -48,7 +48,6 @@ knit_rmd = function(fname, hashes) {
 #' Scans for chaptersX.Rmd and appendix.Rmd and builds main.pdf
 #' @param fnames If \code{NULL} scans for chaptersX.Rmd and appendix.Rmd.
 #' Otherwise, just uses the names passed.
-#' @importFrom digest digest
 #' @export
 create_notes = function(fnames = NULL) {
 
@@ -72,7 +71,8 @@ create_notes = function(fnames = NULL) {
   set_knitr_options()
   set_options()
 
-  cores = config::get("cores")
+  config = get_config()
+  cores = config$cores
   # Parallel doesn't seem to work well with knit_child
   # If something is wrong, errors, don't really work
   # mclapply works on Linux. Mac seems to be dodgy
@@ -85,7 +85,7 @@ create_notes = function(fnames = NULL) {
     cores = max(1, parallel::detectCores() - 1)
   }
 
-  if (is.null(cores) || cores == 1) {
+  if (cores == 1) {
     out = lapply(fnames, knit_rmd, hashes = hashes)
   } else {
     out = parallel::mclapply(fnames, knit_rmd,
@@ -100,8 +100,7 @@ create_notes = function(fnames = NULL) {
   for (i in seq_along(fnames)) {
     if (is_error[i] == "try-error") {
       err_message = glue(
-        "\n\n{fnames[i]} did not knit correctly.
-       {out[[i]]}")
+        "\n\n{fnames[i]} did not knit correctly.\n{out[[i]]}")
       stop(err_message, call. = FALSE)
     }
   }
@@ -112,12 +111,12 @@ create_notes = function(fnames = NULL) {
     out[[1]] = "\\include{quote}\n"
   }
 
-  if (!is.null(config::get("advert"))) {
+  if (!is.null(config$advert)) {
     out[seq_along(out) + 1] = out
-    out[[1]] = glue("\\include{{{config::get('advert')}}}\n")
+    out[[1]] = glue("\\include{{{config$advert}}}\n")
   }
-  if (!is.null(config::get("courses"))) {
-    out[[length(out) + 1]] = glue("\\input{{{config::get('courses')}}}\n")
+  if (!is.null(config$courses)) {
+    out[[length(out) + 1]] = glue("\\input{{{config$courses}}}\n")
   }
 
   # Add version to last page
