@@ -10,7 +10,7 @@ set_palette(set = 0, alpha = 255)
 \item{set}{default 0 (the standard R colour palette). \code{set=1} for
 alternative palette}
 
-\item{alpha}{Value between 0 and 255. Sets the transparancy level. Default 255.}
+\item{alpha}{Value between 0 and 255. Sets the transparency level. Default 255.}
 }
 \description{
 Set a consistent colour palette
