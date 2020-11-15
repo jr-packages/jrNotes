@@ -9,7 +9,7 @@
 \usage{
 get_logos()
 
-create_title_page(main = NULL, running = NULL, rss = NULL)
+create_title_page(main = NULL, running = NULL)
 
 create_jrStyle()
 
@@ -19,8 +19,6 @@ create_version()
 \item{main}{Front page title}
 
 \item{running}{Running title}
-
-\item{rss}{RSS boolean}
 }
 \description{
 Get logos, sty files and title pages
