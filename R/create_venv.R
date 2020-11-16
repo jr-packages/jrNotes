@@ -22,7 +22,6 @@ provision_venv = function() {
   Sys.setenv("RETICULATE_PYTHON" = file.path(venv_path, "/bin/python"))
 }
 
-#' @importFrom reticulate virtualenv_create
 create_venv = function(pkgs) {
   ## Unique in case jrpytests or jupytext listed in config.yml
   pkgs = unique(c(pkgs, "jrpytests", "jupytext"))

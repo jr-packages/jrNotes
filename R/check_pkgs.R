@@ -15,7 +15,6 @@ pkgs_output = function(pkgs, i) {
 
 # Check packages up to date
 #' @importFrom dplyr left_join
-#' @importFrom tibble as_tibble
 check_pkgs = function() {
   msg_start("Checking package versions...check_pkgs()")
   if (!is_connected()) return(invisible(NULL))

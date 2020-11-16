@@ -113,7 +113,6 @@ check_pkg_vignettes = function(pkg, pkg_loc) {
 #' Renames main.pdf to notes_pkg.pdf. Also retrieves
 #' the practials from the package and combines them.
 #' @importFrom fs dir_ls file_copy
-#' @importFrom utils vignette
 #' @importFrom stringr str_sub
 #' @importFrom glue glue
 #' @export

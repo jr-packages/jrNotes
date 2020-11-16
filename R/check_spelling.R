@@ -66,7 +66,6 @@ make_wordlist = function(spelling_results) {
 #'
 #' @description check_spelling runs a spell check on all c*.Rmd files.
 #' @importFrom spelling spell_check_files
-#' @importFrom tidyr unnest
 #' @importFrom rlang .data
 #' @importFrom dplyr arrange
 #' @export
