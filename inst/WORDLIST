@@ -3,45 +3,6 @@ etc
 IMDB
 YAML
 
-## Latex
-bigskip
-bottomrule
-cdots
-center
-centering
-clearpage
-cmidrule
-columnwidth
-emph
-hspace
-includegraphics
-ldots
-marginfigure
-marginnote
-margintable
-mbox
-medskip
-midrule
-newcommand
-newpage
-newthought
-noindent
-resizebox
-sidenote
-smallskip
-textbackslash
-textbf
-textit
-textrm
-textsc
-textsl
-texttt
-textwidth
-tilda
-toprule
-vdots
-vspace
-
 ## Names
 RStudio
 

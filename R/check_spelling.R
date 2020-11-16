@@ -80,6 +80,11 @@ check_spelling = function() {
   words = get_words()
   fnames = list.files(pattern = "^c.*\\.Rmd$")
   in_words = spelling::spell_check_files(fnames, lang = "en_GB", ignore = words)
+  ## Spell check main.tex with LaTeX filter
+  main_words = spelling::spell_check_files("main.tex", lang = "en_GB", ignore = words)
+  ## Words that don't appear in main are OK
+  in_words = in_words[in_words$word %in% main_words$word, ]
+
   if (nrow(in_words) == 0L) {
     msg_success("Spell check passed")
     return(invisible(NULL))
