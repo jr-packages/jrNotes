@@ -14,17 +14,11 @@ pkgs_output = function(pkgs, i) {
 }
 
 # Check packages up to date
-# Hack to detect internet connection on laptops
-#' @importFrom utils available.packages installed.packages
 #' @importFrom dplyr left_join
-#' @importFrom tibble as_tibble
-#' @importFrom utils install.packages
 check_pkgs = function() {
   msg_start("Checking package versions...check_pkgs()")
-  if (httr::GET("www.google.com")$status != 200) {
-    msg_info("No internet connection - skipping PKG check")
-    return(invisible(NULL))
-  }
+  if (!is_connected()) return(invisible(NULL))
+
   r = getOption("repos")
   jr_pkgs = "https://jr-packages.github.io/drat/"
   if (!(jr_pkgs %in% r)) {
@@ -42,11 +36,11 @@ check_pkgs = function() {
                      "knitr", "rmarkdown", "lintr", "tufte",
                      "ggplot2", "dplyr"))
 
-  av_p = available.packages()[, c("Package", "Version")]
+  av_p = utils::available.packages()[, c("Package", "Version")]
   av_p = tibble::as_tibble(av_p)
   av_p = av_p[av_p$Package %in% pkgs_to_update, ]
 
-  in_p = installed.packages()
+  in_p = utils::installed.packages()
   in_p = tibble::as_tibble(in_p)[, c("Package", "Version")]
   in_p = in_p[in_p$Package %in% pkgs_to_update, ]
 
@@ -62,7 +56,7 @@ check_pkgs = function() {
     return(invisible(NULL))
   }
   msg_info("Automatically updating packages", padding = TRUE)
-  install.packages(pkgs$Package[to_update])
+  utils::install.packages(pkgs$Package[to_update])
   msg_info("Packages have been updated")
 
   # Remove cached latex file

@@ -5,7 +5,7 @@ get_section_tibble = function() {
   tokens = tibble::as_tibble(tokens)
   sections = tokens %>%
     dplyr::filter(X1 %in% c("chapter", "section", "subsection")) %>%
-    dplyr::mutate(id = row_number(),
+    dplyr::mutate(id = dplyr::row_number(),
                   texorpdf = str_detect(X3, "\\\\texorpdf"),
                   label = str_detect(X3, "\\\\label"),
                   footnote = str_detect(X3, "\\\\footnote")) %>% #nolint

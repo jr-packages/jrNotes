@@ -15,19 +15,14 @@ get_logos = function() {
 
 #' @param main Front page title
 #' @param running Running title
-#' @param rss RSS boolean
 #' @rdname get_logos
 #' @export
-create_title_page = function(main = NULL, running = NULL, rss = NULL) {
-  if (is.null(main)) main = config::get("front")
-  if (is.null(running)) running = config::get("running")
-  if (is.null(rss)) {
-    rss = isTRUE(config::get("rss"))
-  } else {
-    rss = isTRUE(rss)
-  }
+create_title_page = function(main = NULL, running = NULL) {
+  config = get_config()
+  if (is.null(main)) main = config$front
+  if (is.null(running)) running = config$running
 
-  if (rss) {
+  if (isTRUE(config$rss)) {
     rss = "Accredited by the Royal Statistical Society."
   } else {
     rss = ""
@@ -53,7 +48,7 @@ create_jrStyle = function() { #nolint
   fname = system.file("extdata", "jrStyle.sty",
                       package = "jrNotes", mustWork = TRUE)
   file.copy(fname, to = "jrStyle.sty", overwrite = TRUE)
-  con = config::get()
+  con = get_config()
   watermark = con$watermark
   if (!is.null(watermark)) {
     f = file("jrStyle.sty", "a")
@@ -81,17 +76,16 @@ create_course_dep = function() {
   file.copy(fname, to = "course-dependencies.tex", overwrite = TRUE)
 }
 
-#' @importFrom utils packageVersion
 #' @export
 #' @rdname  get_logos
 create_version = function() {
   year = substr(Sys.Date(), 1, 4) #nolint
-  con = config::get()
+  con = get_config()
 
   version = con$version
   if (get_repo_language() == "r") {
     pkg_name = get_r_pkg_name()[1]
-    pkg_ver = packageVersion(pkg_name)
+    pkg_ver = utils::packageVersion(pkg_name)
   } else {
     pkg_name = get_python_pkg_name()[1]
     pkg_ver = system2("pip", c("show", pkg_name, "|",

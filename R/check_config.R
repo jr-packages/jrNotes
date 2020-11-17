@@ -9,9 +9,9 @@
 check_config = function() {
   msg_start("Checking config file...check_config()")
   config_issue = FALSE
-
+  con = get_config()
   ## Check length of title on front page
-  front = config::get("front")
+  front = con$front
   ## Remove line breaks & right hand whitespace
   front = stringr::str_split(front, "\\\\\\\\")[[1]][1]
   front = stringr::str_trim(front, side = "right")
@@ -21,7 +21,7 @@ check_config = function() {
   }
 
   ## Check version
-  version = config::get("version")
+  version = con$version
   version = as.integer(stringr::str_split(version, "\\.")[[1]])
   if (version[3] > 9L) {
     msg_error("Point version larger than 10", padding = 2)
@@ -31,19 +31,19 @@ check_config = function() {
     config_issue = TRUE
   }
 
-  if (is.null(config::get("advert"))) {
+  if (is.null(con$advert)) {
     msg_error("Advert missing from config.", padding = TRUE)
     msg_error("Add 'advert: advert'", padding = TRUE)
     config_issue = TRUE
   }
 
-  if (is.null(config::get("courses"))) {
+  if (is.null(con$courses)) {
     msg_info("Course dependency graph has not been included.", padding = TRUE)
     msg_info("Add 'courses: course-dependencies' to the config.yml", padding = TRUE)
     config_issue = TRUE
   }
 
-  p = config::get("packages")
+  p = con$packages
   if (!is.null(p)) {
     lang = get_repo_language()
     msg_error("Old style pkg config detected. Please remove", padding = TRUE)

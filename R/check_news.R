@@ -26,7 +26,7 @@ check_news = function() {
   }
 
   news = readLines("../NEWS.md")
-  con = config::get()
+  con = get_config()
 
   # Check first line
   header_pattern  = glue::glue("^# {con$running}$")

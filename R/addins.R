@@ -1,7 +1,6 @@
 #' Insert \code{#> } .
 #'
 #' Call this function as an addin to insert \code{#> } at the cursor position.
-#' @importFrom rstudioapi insertText
 #' @export
 insert_live_comment <- function() {
   rstudioapi::insertText("#> ")
@@ -10,17 +9,14 @@ insert_live_comment <- function() {
 #' Insert banner
 #'
 #' Call this function as an addin to insert a banner at the cursor position.
-#' @importFrom rstudioapi insertText
 #' @export
 insert_banner <- function() {
   rstudioapi::insertText("## ===============================================")
 }
 
-
 #' Inserts \code{#> }  in front of highlighted text.
 #'
 #' Call this function as insert \code{#> } at the start of highlighted text.
-#' @importFrom rstudioapi getActiveDocumentContext insertText
 #' @export
 live_comment_highlight <- function() {
   # Gets The active Document

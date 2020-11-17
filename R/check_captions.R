@@ -1,4 +1,3 @@
-#' @importFrom dplyr distinct
 check_captions = function() {
   tokens = read_tokens()
   tokens %>%

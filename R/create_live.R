@@ -5,7 +5,6 @@
 #' Creates tutor.R and tutor_blank.R from master_tutor.R
 #' Zips VM folder ready to be exposed as an artifact
 #' @importFrom fs dir_ls file_copy
-#' @importFrom zip zipr
 #' @importFrom stringr str_to_lower str_subset str_replace
 #' @export
 create_live_scripts = function() {
@@ -119,7 +118,6 @@ create_live_scripts = function() {
 #' Zips VM folder ready to be exposed as an artifact
 #'
 #' @importFrom fs dir_ls file_copy
-#' @importFrom zip zipr
 #' @importFrom glue glue
 create_live_python = function() {
 

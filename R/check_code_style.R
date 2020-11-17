@@ -50,7 +50,8 @@ check_line_lengths = function(fname) {
 
 check_r_style = function() {
   msg_start("Checking lint...check_code_style()")
-  if (isFALSE(config::get("lintr"))) {
+  config = get_config()
+  if (isFALSE(config$lintr)) {
     return(invisible(NULL))
   }
   fnames = list.files(pattern = "^c.*\\.Rmd$")
@@ -121,11 +122,12 @@ check_code_style = function() {
 #'
 #' Run lintr on a vector of files. If \code{fnames} is \code{NULL}
 #' then use the regular expression \code{^c.*\\.Rmd$}. If
-#' \code{config::get("lintr")} is \code{FALSE}, no lint used.
+#' lintr is \code{no} in the config file, no lint used.
 #' @param fnames An optional vector of filenames
 #' @export
 lint_notes = function(fnames = NULL) {
-  if (isFALSE(config::get("lintr"))) {
+  config = get_config()
+  if (isFALSE(config$lintr)) {
     return(invisible(NULL))
   }
   if (is.null(fnames)) {

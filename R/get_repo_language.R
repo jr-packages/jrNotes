@@ -2,7 +2,6 @@
 #'
 #' Get the language for the R repo
 #' @export
-#' @importFrom gert git_config
 get_repo_language = function() {
   config = gert::git_config()
   origin_url = config[config$name == "remote.origin.url", ]$value

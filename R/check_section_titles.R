@@ -19,7 +19,6 @@ latex_environments = function(title, title_case) {
 }
 
 #' @importFrom stringr str_match str_to_title str_replace
-#' @importFrom dplyr row_number
 standard_exceptions = function(title, title_case) {
   from = c("r", "shiny", "dt", "rstudio", "anova", "uk", "usa",
            "html", "yaml", "csv", "python", "loocv", "oop", "esri",
@@ -74,7 +73,7 @@ check_section_titles = function() {
   tokens = tibble::as_tibble(tokens)
   sections = tokens %>%
     dplyr::filter(X1 %in% c("chapter", "section", "subsection")) %>%
-    dplyr::mutate(id = row_number(),
+    dplyr::mutate(id = dplyr::row_number(),
                   texorpdf = str_detect(X3, "\\\\texorpdf"),
                   label = str_detect(X3, "\\\\label"),
                   footnote = str_detect(X3, "\\\\footnote")) %>% #nolint

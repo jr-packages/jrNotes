@@ -28,7 +28,6 @@ split_lines = function(x) {
 #' @param dev.args If \code{dev} changed to \code{png}, use \code{cairo-png}
 #' @param ... Additional arguments passed to opt_chunk
 #' @export
-#' @importFrom stringi stri_wrap
 #' @importFrom knitr opts_chunk knit_hooks
 set_knitr_options = function(tidy = FALSE,
                              echo = TRUE,
@@ -112,7 +111,7 @@ set_knitr_options = function(tidy = FALSE,
     hook_old(x, options)
   })
 
-  con = config::get()
+  con = get_config()
   if (!is.null(con$knitr)) {
     do.call(knitr::opts_chunk$set, con$knitr)
   }
