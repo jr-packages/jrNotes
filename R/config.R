@@ -1,6 +1,7 @@
 get_config = function() {
   path = get_root_dir()
-  config = yaml::read_yaml(file.path(path, "notes", "config.yml"))
+  config = yaml::read_yaml(file.path(path, "notes", "config.yml"),
+                           eval.expr = TRUE)
   config = config$default
 
   rss = config$rss
