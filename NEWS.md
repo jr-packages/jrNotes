@@ -1,3 +1,6 @@
+# jrNotes 0.10.7 _2020-11-24_
+  * Bug: Assume lintr and vignettes is TRUE if missing in config.yml
+
 # jrNotes 0.10.6 _2020-11-16_
   * Internal: Use {yaml} instead of {config}.
   * Internal: Move {praise}, {rstudioapi}, {namer} to Suggests
