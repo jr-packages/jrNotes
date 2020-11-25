@@ -4,14 +4,16 @@ get_config = function() {
                            eval.expr = TRUE)
   config = config$default
 
+  ## If missing, then assume FALSE
   rss = config$rss
   config$rss = !is.null(rss) && (isTRUE(rss) || rss == "yes")
 
+  ## If missing, assume TRUE
   lintr = config$lintr
-  config$lintr = !is.null(lintr) && (isTRUE(lintr) || lintr == "yes")
+  config$lintr = is.null(lintr) || (isTRUE(lintr) || lintr == "yes")
 
   vignettes = config$vignettes
-  config$vignettes = !is.null(vignettes) && (isTRUE(vignettes) || vignettes == "yes")
+  config$vignettes = is.null(vignettes) || (isTRUE(vignettes) || vignettes == "yes")
 
   cores = config$cores
   config$cores = ifelse(is.null(cores), 1, cores)
