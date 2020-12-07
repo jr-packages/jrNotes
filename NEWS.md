@@ -1,3 +1,6 @@
+# jrNotes 0.10.8 _2020-12-07_
+  * Bug: Update `get_pkg_imports()` to factor in pkgs with no defined imports
+
 # jrNotes 0.10.7 _2020-11-24_
   * Bug: Assume lintr and vignettes is TRUE if missing in config.yml
 
