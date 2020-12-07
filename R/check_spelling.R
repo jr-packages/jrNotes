@@ -15,12 +15,11 @@ get_pkg_imports = function(pkg) {
   imports = utils::packageDescription(pkg)[["Imports"]]
   if (is.null(imports)) {
     return(NULL)
-  } else {
-    imports = stringr::str_split(imports, ",")[[1]]
-    imports = stringr::str_squish(imports)
-    imports = stringr::str_split(imports, " ")
-    unlist(lapply(imports, function(import) import[1]))
   }
+  imports = stringr::str_split(imports, ",")[[1]]
+  imports = stringr::str_squish(imports)
+  imports = stringr::str_split(imports, " ")
+  unlist(lapply(imports, function(import) import[1]))
 }
 
 get_r_imports = function() {
