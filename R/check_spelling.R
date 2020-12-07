@@ -13,7 +13,9 @@ check_wordlist = function() {
 
 get_pkg_imports = function(pkg) {
   imports = utils::packageDescription(pkg)[["Imports"]]
-
+  if (is.null(imports)) {
+    return(NULL)
+  }
   imports = stringr::str_split(imports, ",")[[1]]
   imports = stringr::str_squish(imports)
   imports = stringr::str_split(imports, " ")
