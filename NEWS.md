@@ -1,3 +1,6 @@
+# jrNotes 0.10.9 _2020-12-09_
+  * Refactor `create_live()` to allow different paths
+
 # jrNotes 0.10.8 _2020-12-07_
   * Bug: Update `get_pkg_imports()` to factor in pkgs with no defined imports
 

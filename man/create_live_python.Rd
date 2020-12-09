@@ -4,7 +4,10 @@
 \alias{create_live_python}
 \title{Create live python}
 \usage{
-create_live_python()
+create_live_python(live_path)
+}
+\arguments{
+\item{live_path}{The location to the live directory}
 }
 \description{
 Creates a vm_scripts folder
