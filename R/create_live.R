@@ -9,12 +9,14 @@
 #' @param live_path The path to the live directory
 #' @export
 create_live_scripts = function(live_path = "../live") {
+
+  if (!fs::dir_exists(live_path)) return(invisible(NULL))
+
+  msg_start("Creating scripts for VM...")
+
   if (get_repo_language() == "python") {
     create_live_python(live_path = live_path)
   } else {
-    if (!fs::dir_exists(live_path)) return(invisible(NULL))
-
-    msg_start("Creating scripts for VM...")
 
     # Create new folders and ensure empty
     chapters = list.files(path = live_path, pattern = "chapter")
@@ -123,10 +125,6 @@ create_live_scripts = function(live_path = "../live") {
 #' @importFrom glue glue
 #' @param live_path The location to the live directory
 create_live_python = function(live_path) {
-
-  if (!fs::dir_exists(live_path)) return(invisible(NULL))
-
-  msg_start("Creating scripts for VM...")
 
   chapters = list.files(path = live_path, pattern = "chapter")
 
