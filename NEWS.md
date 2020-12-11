@@ -1,3 +1,6 @@
+# jrNotes 0.10.8 _2020-12-11_
+  * Improvement: Improve tango syntax highlighting support for Python
+
 # jrNotes 0.10.7 _2020-11-24_
   * Bug: Assume lintr and vignettes is TRUE if missing in config.yml
 
