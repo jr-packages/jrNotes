@@ -4,7 +4,10 @@
 \alias{create_live_scripts}
 \title{Create scripts for online training}
 \usage{
-create_live_scripts()
+create_live_scripts(live_path = "../live")
+}
+\arguments{
+\item{live_path}{The path to the live directory}
 }
 \description{
 Creates a vm_scripts folder

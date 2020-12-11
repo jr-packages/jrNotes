@@ -1,5 +1,11 @@
-# jrNotes 0.10.8 _2020-12-11_
+# jrNotes 0.10.10 _2020-12-11_
   * Improvement: Improve tango syntax highlighting support for Python
+
+# jrNotes 0.10.9 _2020-12-09_
+  * Refactor `create_live()` to allow different paths
+
+# jrNotes 0.10.8 _2020-12-07_
+  * Bug: Update `get_pkg_imports()` to factor in pkgs with no defined imports
 
 # jrNotes 0.10.7 _2020-11-24_
   * Bug: Assume lintr and vignettes is TRUE if missing in config.yml
