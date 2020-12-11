@@ -263,3 +263,27 @@
 \Crefname{chunk}{Chunk}{Chunks}
 \captionsetup[chunk]{font=small}
 %------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Highlight the background of inline code as happens in code blocks
+% Solution courtesy of: https://tex.stackexchange.com/a/466736/181010
+\makeatletter
+\let\FV@CMD\relax
+\define@key{FV}{wrapwith}[\relax]{\def\FV@CMD{#1}}
+\begingroup
+\catcode`\^^M=\active%
+\gdef\FVC@Verb#1{%
+  \begingroup%
+    \FV@UseKeyValues%
+    \FV@FormattingPrep%
+    \FV@CatCodes%
+    \outer\def^^M{}%
+    \catcode`#1=12%
+    \def\@tempa{\def\FancyVerbGetVerb####1####2}%
+    \expandafter\@tempa\string#1{\mbox{\FV@CMD{##2}}\endgroup}%
+    \FancyVerbGetVerb\FV@EOL}%
+\endgroup
+\makeatother
+
+\fvset{wrapwith=\colorbox{shadecolor}}
+%------------------------------------------------------------------------------
