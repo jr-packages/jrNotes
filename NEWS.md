@@ -1,3 +1,6 @@
+# jrNotes 0.10.10 _2020-12-11_
+  * Improvement: Improve tango syntax highlighting support for Python
+
 # jrNotes 0.10.9 _2020-12-09_
   * Refactor `create_live()` to allow different paths
 
