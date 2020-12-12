@@ -1,5 +1,8 @@
+# jrNotes 0.10.11 _2020-12-12_
+  * Improvement: Add background colour to inline code chunks which are tagged with a language
+
 # jrNotes 0.10.10 _2020-12-11_
-  * Improvement: Add background colour to inline code chunks
+  * Improvement: Improve tango syntax highlighting support for Python
 
 # jrNotes 0.10.9 _2020-12-09_
   * Refactor `create_live()` to allow different paths

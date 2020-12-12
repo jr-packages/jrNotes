@@ -265,7 +265,7 @@
 %------------------------------------------------------------------------------
 
 %------------------------------------------------------------------------------
-% Highlight the background of inline code as happens in code blocks
+% Highlight the background of inline code tagged with a language
 % Solution courtesy of: https://tex.stackexchange.com/a/466736/181010
 \makeatletter
 \let\FV@CMD\relax
@@ -286,4 +286,39 @@
 \makeatother
 
 \fvset{wrapwith=\colorbox{shadecolor}}
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Toks of the tango theme (with minor alterations for better python support)
+\renewcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\renewcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textsl{#1}}}}
+\renewcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\renewcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\renewcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\renewcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\renewcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textsl{#1}}}
+\renewcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textsl{#1}}}}
+\renewcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\renewcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\renewcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\renewcommand{\DecValTok}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\renewcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textsl{#1}}}}
+\renewcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\renewcommand{\ExtensionTok}[1]{#1}
+\renewcommand{\FloatTok}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\renewcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\renewcommand{\ImportTok}[1]{\textcolor[rgb]{0.659,0.133,0.482}{\textbf{#1}}}%
+\renewcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textsl{#1}}}}
+\renewcommand{\KeywordTok}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\renewcommand{\NormalTok}[1]{#1}
+\renewcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\renewcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\renewcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textsl{#1}}}
+\renewcommand{\RegionMarkerTok}[1]{#1}
+\renewcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\renewcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\renewcommand{\StringTok}[1]{\textcolor[rgb]{0.333,0.533,0.09}{#1}}%
+\renewcommand{\VariableTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{#1}}}
+\renewcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\renewcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textsl{#1}}}}
 %------------------------------------------------------------------------------
