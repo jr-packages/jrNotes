@@ -5,9 +5,13 @@
 \title{Create and use a virtualenv with python packages listed in config.yml
 installed}
 \usage{
-provision_venv()
+provision_venv(venv_dir = "notes")
+}
+\arguments{
+\item{venv_dir}{The directory in which to create the virtualenv (typically
+"notes" or "slides")
+installed}
 }
 \description{
 Create and use a virtualenv with python packages listed in config.yml
-installed
 }
