@@ -1,3 +1,7 @@
+# jrNotes 0.11.1 _2020-12-14_
+  * Internal: Allow `provision_venv()` to create virtualenv in places other
+    than just the `notes/` directory
+
 # jrNotes 0.10.10 _2020-12-11_
   * Improvement: Improve tango syntax highlighting support for Python
 
