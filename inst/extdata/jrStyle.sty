@@ -265,7 +265,31 @@
 %------------------------------------------------------------------------------
 
 %------------------------------------------------------------------------------
-% Toks of the tango theme (with minor alterations)
+% Highlight the background of inline code tagged with a language
+% Solution courtesy of: https://tex.stackexchange.com/a/466736/181010
+\makeatletter
+\let\FV@CMD\relax
+\define@key{FV}{wrapwith}[\relax]{\def\FV@CMD{#1}}
+\begingroup
+\catcode`\^^M=\active%
+\gdef\FVC@Verb#1{%
+  \begingroup%
+    \FV@UseKeyValues%
+    \FV@FormattingPrep%
+    \FV@CatCodes%
+    \outer\def^^M{}%
+    \catcode`#1=12%
+    \def\@tempa{\def\FancyVerbGetVerb####1####2}%
+    \expandafter\@tempa\string#1{\mbox{\FV@CMD{##2}}\endgroup}%
+    \FancyVerbGetVerb\FV@EOL}%
+\endgroup
+\makeatother
+
+\fvset{wrapwith=\colorbox{shadecolor}}
+%------------------------------------------------------------------------------
+
+%------------------------------------------------------------------------------
+% Toks of the tango theme (with minor alterations for better python support)
 \renewcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \renewcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textsl{#1}}}}
 \renewcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
