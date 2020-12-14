@@ -1,42 +1,24 @@
-# jrNotes 0.10.10 _2020-12-11_
-  * Improvement: Improve tango syntax highlighting support for Python
+# jrNotes 0.11.0 _2020-12-12_
+  * Improvement: Add background colour to inline code chunks which are tagged with a language
 
-# jrNotes 0.10.9 _2020-12-09_
-  * Refactor `create_live()` to allow different paths
-
-# jrNotes 0.10.8 _2020-12-07_
+# jrNotes 0.10.* _2020-12-11_
   * Bug: Update `get_pkg_imports()` to factor in pkgs with no defined imports
-
-# jrNotes 0.10.7 _2020-11-24_
   * Bug: Assume lintr and vignettes is TRUE if missing in config.yml
-
-# jrNotes 0.10.6 _2020-11-16_
-  * Internal: Use {yaml} instead of {config}.
-  * Internal: Move {praise}, {rstudioapi}, {namer} to Suggests
-  * Internal: Remove `importFrom` - be explicit
-
-# jrNotes 0.10.5 _2020-11-14_
-  * Spelling: Ignore LaTeX commands when spell checking
-
-# jrNotes 0.10.4 _2020-11-10_
   * Bug: Remove extra whitespaces in `clean_title()`
-
-# jrNotes 0.10.3 _2020-11-09_
+  * Bug: Code now wraps without excluding spaces
+  * Improvement: Improve tango syntax highlighting support for Python
   * Improvement: Warn user about code lines in chunks which are too long
   * Improvement: Return file sizes of notes & practicals
   * Improvement: Set `cores: 0`, to use the `max_cores - 1` when building
-  * Improvement: `render()` for making notes. Make `check_pkgs()` to the start of `render()`
-
-# jrNotes 0.10.2 _2020-11-06_
-  * Bug: Code now wraps without excluding spaces
-  * Dependency: Add {stringi}
-
-# jrNotes 0.10.1 _2020-11-03_
   * Improvement: Improve spacing on advert page
-
-# jrNotes 0.10.0 _2020-11-03_
+  * Improvement: Ignore LaTeX commands when spell checking
+  * Internal: `render()` for making notes. Move `check_pkgs()` to the start of `render()`
+  * Internal `create_live()` to allow different paths
+  * Internal: Use {yaml} instead of {config}.
+  * Internal: Move {praise}, {rstudioapi}, {namer} to Suggests
   * Internal: Use {reticulate} to provisional virtualenv for python
     dependencies.
+  * Internal: Add {stringi}
 
 # jrNotes 0.9.* _2020-10-29_
   * Improvement: Only use a single core to build notes on non-linux machines
