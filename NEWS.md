@@ -1,3 +1,7 @@
+# jrNotes 0.11.1 _2020-12-14_
+  * Internal: Allow `provision_venv()` to create virtualenv in places other
+    than just the `notes/` directory
+   
 # jrNotes 0.11.0 _2020-12-12_
   * Improvement: Add background colour to inline code chunks which are tagged with a language
 
